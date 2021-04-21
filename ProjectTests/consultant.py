@@ -62,11 +62,11 @@ def formatter(text):
     return text
 
 # Make the query on wikipedia
-def search_def():
+def search_def(text):
     try:
-        query = input("What do you want to research on Wikipedia?: ")
+        query = text
         print(query)
-        #wikipedia.set_lang('es')
+        wikipedia.set_lang('es')
         text = wikipedia.summary(query, 10)
         text = formatter(text)
         return text
@@ -76,29 +76,20 @@ def search_def():
         print("\nError. Ambiguous word, it is not possible to find a single definition. \n")
         print(f'{err}\n')
         print("Try option 2.")
-        main()
+        #main()
 
-def main():
-    global saludo
-
-    print(f"\n{saludo}:\n\t1)Look up a definition on wikipedia.\n\t2)Do a google search (I feel lucky)\n\t3)Exit")
-    saludo = "What do you want to do this time?"
-
-    opc = int(input())
+def main(text, opc = 1):
 
     if opc == 1:
-        print(get_info(texto=search_def()))
-        main()
+        return get_info(texto=search_def(text))
     elif opc == 2:
         print(get_info(link=google_url()))
-        main()
     elif opc == 3:
         exit()
     else:
         print('Incorrect option.')
-        main()
     
     #get_info1()
 
 if __name__ == '__main__':
-    main()
+    print(main("Estudiantes"))

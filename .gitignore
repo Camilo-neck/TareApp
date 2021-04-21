@@ -1,3 +1,6 @@
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -130,3 +133,74 @@ dmypy.json
 
 # VsCode
 .vscode/
+
+# Qt Creator AUTO-GENERATED
+Codigo_Fuente/Interface/UI/*~
+Codigo_Fuente/Interface/UI/*.autosave
+Codigo_Fuente/Interface/UI/*.a
+Codigo_Fuente/Interface/UI/*.core
+Codigo_Fuente/Interface/UI/*.moc
+Codigo_Fuente/Interface/UI/*.o
+Codigo_Fuente/Interface/UI/*.obj
+Codigo_Fuente/Interface/UI/*.orig
+Codigo_Fuente/Interface/UI/*.rej
+Codigo_Fuente/Interface/UI/*.so
+Codigo_Fuente/Interface/UI/*.so.*
+Codigo_Fuente/Interface/UI/*_pch.h.cpp
+Codigo_Fuente/Interface/UI/*_resource.rc
+Codigo_Fuente/Interface/UI/*.qm
+Codigo_Fuente/Interface/UI/.#*
+Codigo_Fuente/Interface/UI/*.*#
+Codigo_Fuente/Interface/UI/core
+Codigo_Fuente/Interface/UI/!core/
+Codigo_Fuente/Interface/UI/tags
+Codigo_Fuente/Interface/UI/.DS_Store
+Codigo_Fuente/Interface/UI/.directory
+Codigo_Fuente/Interface/UI/*.debug
+Codigo_Fuente/Interface/UI/Makefile*
+Codigo_Fuente/Interface/UI/*.prl
+Codigo_Fuente/Interface/UI/*.app
+Codigo_Fuente/Interface/UI/moc_*.cpp
+Codigo_Fuente/Interface/UI/ui_*.h
+Codigo_Fuente/Interface/UI/qrc_*.cpp
+Codigo_Fuente/Interface/UI/Thumbs.db
+Codigo_Fuente/Interface/UI/*.res
+Codigo_Fuente/Interface/UI/*.rc
+Codigo_Fuente/Interface/UI/.qmake.cache
+Codigo_Fuente/Interface/UI/.qmake.stash
+
+# qtcreator generated files
+Codigo_Fuente/Interface/UI/*.pro.user*
+
+# xemacs temporary files
+Codigo_Fuente/Interface/UI/*.flc
+
+# Vim temporary files
+Codigo_Fuente/Interface/UI/.*.swp
+
+# Visual Studio generated files
+Codigo_Fuente/Interface/UI/*.ib_pdb_index
+Codigo_Fuente/Interface/UI/*.idb
+Codigo_Fuente/Interface/UI/*.ilk
+Codigo_Fuente/Interface/UI/*.pdb
+Codigo_Fuente/Interface/UI/*.sln
+Codigo_Fuente/Interface/UI/*.suo
+Codigo_Fuente/Interface/UI/*.vcproj
+Codigo_Fuente/Interface/UI/*vcproj.*.*.user
+Codigo_Fuente/Interface/UI/*.ncb
+Codigo_Fuente/Interface/UI/*.sdf
+Codigo_Fuente/Interface/UI/*.opensdf
+Codigo_Fuente/Interface/UI/*.vcxproj
+Codigo_Fuente/Interface/UI/*vcxproj.*
+
+# MinGW generated files
+Codigo_Fuente/Interface/UI/*.Debug
+Codigo_Fuente/Interface/UI/*.Release
+
+# Python byte code
+Codigo_Fuente/Interface/UI/*.pyc
+
+# Binaries
+# --------
+Codigo_Fuente/Interface/UI/*.exe
+Codigo_Fuente/Interface/UI/*.dll
