@@ -280,6 +280,8 @@ Window {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
+                                btnTest.isActiveMenu = false
+                                btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                             }
                         }
@@ -294,6 +296,8 @@ Window {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = true
+                                btnTest.isActiveMenu = false
+                                btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                                 fileOpen.open()
                             }
@@ -340,6 +344,8 @@ Window {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = true
+                                btnTest.isActiveMenu = false
+                                btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                             }
                         }
@@ -351,7 +357,28 @@ Window {
                             btnIconSource: "../images/icons/icon_restore.png"
                             isActiveMenu: false
                             onClicked: {
+                                btnHome.isActiveMenu = false
+                                btnSettings.isActiveMenu = false
+                                btnEdit.isActiveMenu = false
+                                btnTest.isActiveMenu = true
+                                btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/testPage.qml"))
+                            }
+                        }
+
+                        LeftMenuBtn {
+                            id: btnPdf
+                            width: leftMenu.width
+                            text: qsTr("Home")
+                            btnIconSource: "../images/icons/icon_restore.png"
+                            isActiveMenu: false
+                            onClicked: {
+                                btnHome.isActiveMenu = false
+                                btnSettings.isActiveMenu = false
+                                btnEdit.isActiveMenu = false
+                                btnTest.isActiveMenu = false
+                                btnPdf.isActiveMenu = true
+                                stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
                             }
                         }
                     }
@@ -557,6 +584,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}D{i:27}
+    D{i:0;formeditorZoom:0.9}D{i:28}
 }
 ##^##*/

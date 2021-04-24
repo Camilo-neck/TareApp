@@ -7,7 +7,7 @@ from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
 import consultant
-
+import PDF as pdf
 
 class MainWindow(QObject):
     def __init__(self):
@@ -34,6 +34,17 @@ class MainWindow(QObject):
 
     # Result
     result = Signal(str)
+
+    # Merge pdfs
+    @Slot(str, str)
+    def mergePdf(self, filePaths, output_name):
+        filePaths = [
+        path.replace('file:///', '') for path in filePaths.split(',')
+        ]
+        print(filePaths)
+        if ".pdf" not in output_name:
+            output_name += ".pdf"
+        pdf.merge_pdfs(filePaths, output_name)
 
     # Send text
     @Slot(str)
