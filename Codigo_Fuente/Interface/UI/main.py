@@ -2,6 +2,7 @@
 import sys
 import os
 import datetime
+import pdfApp
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
@@ -80,6 +81,14 @@ class MainWindow(QObject):
         else:
             self.setName.emit(f"Welcome, {name}")
 
+    @Slot(str,str)
+    def mergePdf(self, filePaths, output_name):
+
+        if ".pdf" not in output_name:
+            output_name += ".pdf"
+
+        filePaths = [e.replace('file:///','') for e in filePaths.split(',')]
+        pdfApp.merge_pdfs(filePaths,output_name)
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
