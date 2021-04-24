@@ -280,7 +280,6 @@ Window {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
-                                btnTest.isActiveMenu = false
                                 btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                             }
@@ -353,7 +352,7 @@ Window {
                         LeftMenuBtn {
                             id: btnTest
                             width: leftMenu.width
-                            text: qsTr("Home")
+                            text: qsTr("Test")
                             btnIconSource: "../images/icons/icon_restore.png"
                             isActiveMenu: false
                             onClicked: {
@@ -369,14 +368,13 @@ Window {
                         LeftMenuBtn {
                             id: btnPdf
                             width: leftMenu.width
-                            text: qsTr("Home")
-                            btnIconSource: "../images/icons/icon_restore.png"
+                            text: qsTr("Pdf")
+                            btnIconSource: "../images/icons/pdf.svg"
                             isActiveMenu: false
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
-                                btnTest.isActiveMenu = false
                                 btnPdf.isActiveMenu = true
                                 stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
                             }

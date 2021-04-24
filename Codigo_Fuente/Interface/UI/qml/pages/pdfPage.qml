@@ -4,7 +4,10 @@ import "../controls"
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.3
 
+
 Item {
+    property var i: 1
+    property var urls: []
     Rectangle {
         id: bg
         color: "#2c313c"
@@ -30,7 +33,7 @@ Item {
                 y: 5
                 height: 33
                 color: "#6b737a"
-                text: qsTr("Merge PDF")
+                text: qsTr("Unir PDF")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignLeft
@@ -50,6 +53,36 @@ Item {
                 anchors.bottomMargin: 17
                 anchors.rightMargin: 10
                 anchors.leftMargin: 10
+
+                Label {
+                    id: urlsLabel
+                    color: "#ffffff"
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: mergeInfoLabel.bottom
+                    anchors.bottom: parent.bottom
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.bottomMargin: 236
+                    anchors.topMargin: 10
+                    font.pointSize: 15
+                }
+
+                Label {
+                    id: mergeInfoLabel
+                    color: "#8a8a8a"
+                    text: qsTr("")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.leftMargin: 10
+                    font.pointSize: 9
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 274
+                    anchors.rightMargin: 10
+                }
             }
 
             Rectangle {
@@ -62,7 +95,7 @@ Item {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.topMargin: 40
-                anchors.rightMargin: 50
+                anchors.rightMargin: 10
                 anchors.leftMargin: 10
                 radius: 12
 
@@ -74,33 +107,93 @@ Item {
                     columns:  3
                     CustomTextField {
                         id: mergePdfText
+                        placeholderText: "Ingrese el nombre el nuevo PDF"
                         Layout.fillWidth: true
                         Layout.fillHeight: false
                     }
 
                     CustomButton {
-                        id: mergePdfBtn
+                        id: addPdfBtn
+                        width: 50
                         text: "Add"
+                        btnColorMouseOver: "#26fb4a"
+                        btnColorDefault: "#09e13a"
+                        btnColorClicked: "#4ef573"
                         Layout.maximumHeight: 65535
-                        Layout.maximumWidth: 100
+                        Layout.maximumWidth: 50
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
                         Layout.preferredWidth: 250
 
                         onClicked: {
+                            mergeInfoLabel.text = ""
                             fileOpen.open()
                         }
+
                         FileDialog {
                             id: fileOpen
                             title: "Please Choose a file"
-                            selectMultiple: true
+                            selectMultiple: false
                             nameFilters: ["PDF File (*.pdf)"]
+
                             onAccepted: {
-                                backend.mergePdf(fileOpen.fileUrls, mergePdfText.text)
-                                mergePdfText.text = ""
+
+                                function basename(str){
+                                    return (String(str).slice(String(str).lastIndexOf("/")+1))
+                                }
+
+                                var fileName = basename(fileOpen.fileUrl)
+
+
+                                if(urlsLabel.text == ""){
+                                    urlsLabel.text += "["+i+"] "+fileName
+                                }else{
+                                    urlsLabel.text += ", ["+i+"] "+fileName
+                                }
+
+                                i++
+
+                                var url = fileOpen.fileUrl
+                                urls.push(url)
+
                             }
                         }
 
+                    }
+
+                    CustomButton {
+                        id: mergePdfBtn1
+                        width: 50
+                        text: "Unir"
+                        Layout.preferredWidth: 250
+                        Layout.maximumHeight: 65535
+                        onClicked: {
+                            if(mergePdfText.text != "" && urls.length >= 2){
+                                mergePdfText.placeholderTextColor = "#c3d3e1"
+                                mergeInfoLabel.text = ""
+                                backend.mergePdf(urls, mergePdfText.text)
+                                mergePdfText.text = ""
+                                urlsLabel.text = ""
+                                i = 1
+                                urls = []
+
+                            }
+                            else{
+
+                                if(mergePdfText.text == "") {
+                                    mergePdfText.placeholderTextColor = "#FF0000"
+                                }
+
+                                if(urls.length < 2) {
+                                    mergeInfoLabel.text = "Debe agregar como minimo 2 PDF para unirlos"
+                                }
+                            }
+
+                        }
+
+                        Layout.maximumWidth: 100
+                        Layout.preferredHeight: 40
+                        Layout.fillWidth: true
                     }
                 }
 
@@ -118,6 +211,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:800}
+    D{i:0;autoSize:true;height:480;width:800}D{i:5}
 }
 ##^##*/
