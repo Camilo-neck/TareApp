@@ -2,13 +2,12 @@
 import sys
 import os
 import datetime
-import pdfApp
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
 import consultant
-import PDF as pdf
+import pdfApp
 
 class MainWindow(QObject):
     def __init__(self):
@@ -37,15 +36,14 @@ class MainWindow(QObject):
     result = Signal(str)
 
     # Merge pdfs
-    @Slot(str, str)
-    def mergePdf(self, filePaths, output_name):
-        filePaths = [
-        path.replace('file:///', '') for path in filePaths.split(',')
-        ]
-        print(filePaths)
+    @Slot(str,str)
+    def mergePdf(self, file_paths, output_name):
+
         if ".pdf" not in output_name:
             output_name += ".pdf"
-        pdf.merge_pdfs(filePaths, output_name)
+
+        file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
+        pdfApp.merge_pdfs(file_paths,output_name)
 
     # Send text
     @Slot(str)
@@ -91,15 +89,6 @@ class MainWindow(QObject):
             self.setName.emit("Welcome")
         else:
             self.setName.emit(f"Welcome, {name}")
-
-    @Slot(str,str)
-    def mergePdf(self, filePaths, output_name):
-
-        if ".pdf" not in output_name:
-            output_name += ".pdf"
-
-        filePaths = [e.replace('file:///','') for e in filePaths.split(',')]
-        pdfApp.merge_pdfs(filePaths,output_name)
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)

@@ -280,6 +280,7 @@ Window {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
+                                btnSearch.isActiveMenu = false
                                 btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                             }
@@ -295,7 +296,7 @@ Window {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = true
-                                btnTest.isActiveMenu = false
+                                btnSearch.isActiveMenu = false
                                 btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                                 fileOpen.open()
@@ -343,23 +344,23 @@ Window {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = true
-                                btnTest.isActiveMenu = false
+                                btnSearch.isActiveMenu = false
                                 btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                             }
                         }
 
                         LeftMenuBtn {
-                            id: btnTest
+                            id: btnSearch
                             width: leftMenu.width
-                            text: qsTr("Test")
-                            btnIconSource: "../images/icons/icon_restore.png"
+                            text: qsTr("Search")
+                            btnIconSource: "../images/icons/search_icon.svg"
                             isActiveMenu: false
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
-                                btnTest.isActiveMenu = true
+                                btnSearch.isActiveMenu = true
                                 btnPdf.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/testPage.qml"))
                             }
@@ -368,13 +369,14 @@ Window {
                         LeftMenuBtn {
                             id: btnPdf
                             width: leftMenu.width
-                            text: qsTr("Pdf")
+                            text: qsTr("PDFs Editor")
                             btnIconSource: "../images/icons/pdf.svg"
                             isActiveMenu: false
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnEdit.isActiveMenu = false
+                                btnSearch.isActiveMenu = false
                                 btnPdf.isActiveMenu = true
                                 stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
                             }
