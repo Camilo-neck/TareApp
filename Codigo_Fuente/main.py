@@ -99,7 +99,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("backend", main)
 
     # Load QML File
-    engine.load(os.path.join(os.path.dirname(__file__), "qml/main.qml"))
+    engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
 
     if not engine.rootObjects():
         sys.exit(-1)

@@ -143,13 +143,12 @@ Item {
             // }
             Flickable {
                 id: flickable
-                anchors.fill: parent
                 clip: true
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: dateLabel.bottom
                 anchors.bottom: parent.bottom
-                anchors.topMargin: 10
+                anchors.topMargin: 5
                 anchors.bottomMargin: 17
                 anchors.rightMargin: 10
                 anchors.leftMargin: 10
@@ -181,3 +180,9 @@ Item {
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
