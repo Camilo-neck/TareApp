@@ -67,6 +67,40 @@ Item {
                     anchors.bottomMargin: 236
                     anchors.topMargin: 10
                     font.pointSize: 15
+
+                    DropArea {
+                        id: dropArea;
+                        x: 0
+                        y: -84
+                        anchors.fill: parent
+                        anchors.rightMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.leftMargin: 0
+                        anchors.topMargin: 0
+                        onEntered: {
+                            root.color = "gray";
+                            drag.accept (Qt.LinkAction);
+                        }
+                        onDropped: {
+                            urls = []
+
+                            function basename(str){
+                                return (String(str).slice(String(str).lastIndexOf("/")+1))
+                            }
+
+                            var fileNames = ""
+                            for(var i = 0; i<drop.urls.length; i++){
+                                urls.push(drop.urls[i])
+                                fileNames += basename(drop.urls[i]) + " "
+                            }
+
+                            urlsLabel.text = fileNames
+                            root.color = "white"
+                        }
+                        onExited: {
+                            root.color = "white";
+                        }
+                    }
                 }
 
                 Label {
@@ -211,6 +245,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:800}D{i:5}
+    D{i:0;autoSize:true;height:480;width:800}
 }
 ##^##*/
