@@ -1,12 +1,5 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-import tkinter as tk
-from tkinter import Tk     # from tkinter import Tk for Python 3.x
-from tkinter import ttk
-from tkinter.filedialog import askopenfilename
-from tkinter import messagebox
-from tkinter import simpledialog
-
 def merge_pdfs(paths,output_name):
     pdf_writer = PdfFileWriter()
 
@@ -15,7 +8,7 @@ def merge_pdfs(paths,output_name):
         for page in range(pdf_reader.getNumPages()):
             pdf_writer.addPage(pdf_reader.getPage(page))
 
-    with open(dir+output_name, 'wb') as out:
+    with open(output_name, 'wb') as out:
         pdf_writer.write(out)
 
 def extract_page(path,page):

@@ -7,29 +7,44 @@ Item {
     property string setText: ""
 
     Rectangle {
-        id: rectangle
-        color: "#2c313c"
+        id: bg
+        color: "#89c2db"
         anchors.fill: parent
+        Rectangle {
+            id: content
+            color: "#ffffff"
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            anchors.topMargin: 10
+            radius: 10
+            Flickable {
+                id: flickable
+                anchors.fill: parent
+                clip: true
 
-        Flickable {
-            id: flickable
-            anchors.fill: parent
-            clip: true
+                TextArea.flickable: TextArea {
+                    id: textArea
+                    padding: 10
+                    wrapMode: Text.WordWrap
+                    placeholderTextColor: "#000000"
+                    textFormat: Text.AutoText
+                    selectByMouse: true
+                    selectedTextColor: "#ffffff"
+                    selectionColor: "#ff007f"
+                    color: "#000000"
+                    font.pointSize: 12
+                    text: setText
 
-            TextArea.flickable: TextArea {
-                id: textArea
-                padding: 10
-                wrapMode: Text.WordWrap
-                textFormat: Text.AutoText
-                selectByMouse: true
-                selectedTextColor: "#ffffff"
-                selectionColor: "#ff007f"
-                color: "#ffffff"
-                font.pointSize: 12
-                text: setText
-            }
 
-            ScrollBar.vertical: ScrollBar{}
+                }
+
+                ScrollBar.vertical: ScrollBar{}
+        }
         }
     }
 

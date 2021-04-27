@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.11
 Item {
     Rectangle {
         id: bg
-        color: "#2c313c"
+        color: "#89c2db"
         anchors.fill: parent
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
@@ -15,7 +15,7 @@ Item {
 
         Rectangle {
             id: rectangleTop
-            color: "#5c667d"
+            color: "#ffffff"
             height: 69
             anchors.left: parent.left
             anchors.right: parent.right
@@ -33,6 +33,8 @@ Item {
                 columns:  3
                 CustomTextField {
                     id: inputText
+                    bgColor: "#03a678"
+                    placeholderTextColor: "#ffffff"
                     Layout.fillWidth: true
                     Layout.fillHeight: false
                     Keys.onEnterPressed: {
@@ -49,7 +51,9 @@ Item {
                 CustomButton {
                     id: customBtn
                     text: "Button"
-                    Layout.maximumWidth: 200
+                    btnColorMouseOver: "#84ee80"
+                    btnColorDefault: "#02735e"
+                    Layout.maximumWidth: 150
                     Layout.fillWidth: true
                     Layout.preferredHeight: 40
                     Layout.preferredWidth: 250
@@ -81,7 +85,7 @@ Item {
 
         Rectangle {
             id: rectangleVisible
-            color: "#1d2129"
+            color: "#ffffff"
             radius: 12
             anchors.fill: parent
             anchors.rightMargin: 50
@@ -93,7 +97,7 @@ Item {
                 id: welcomeLabel
                 y: 5
                 height: 33
-                color: "#6b737a"
+                color: "#060607"
                 text: qsTr("Welcome")
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -108,7 +112,7 @@ Item {
                 id: dateLabel
                 y: 31
                 height: 33
-                color: "#24ced7"
+                color: "#21a8c0"
                 text: qsTr("Date")
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -132,10 +136,10 @@ Item {
                 anchors.leftMargin: 10
 
                 Text {
-                        id: textHome
-                        color: "#a9b2c8"
-                        text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\n</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">GNU GENERAL PUBLIC LICENSE</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Version 3, 29 June 2007</p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright (c) 2021 <span style=\" font-weight:600;\">Camilo A. Cuello</span></p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#55aaff;\">Attention</span>: this project was created with the Open Souce tools from Qt Company,</p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">this project can be used for studies or personal non-commercial projects. </p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">If you are going to use it for </span><span style=\" font-weight:600; color:#55aaff;\">commercial use</span><span style=\" font-weight:600;\">, you need to purchase a license at &quot;https://www.qt.io&quot;.</span></p></body></html>"
-                        anchors.fill: parent
+                    id: textHome
+                    color: "#131418"
+                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\n</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">GNU GENERAL PUBLIC LICENSE</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Version 3, 29 June 2007</p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright (c) 2021 <span style=\" font-weight:600;\">Camilo A. Cuello</span></p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#f98125;\">Attention</span>: this project was created with the Open Souce tools from Qt Company,</p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">this project can be used for studies or personal non-commercial projects. </p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">If you are going to use it for </span><span style=\" font-weight:600; color:#f98125;\">commercial use</span><span style=\" font-weight:600;\">, you need to purchase a license at &quot;https://www.qt.io&quot;.</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Search page Powered by<span style=\" color:#00aaff;\"> </span><span style=\" font-weight:600; color:#55aaff;\">Open AI GPT-3 API.</span></p></body></html>"
+                    anchors.fill: parent
                         font.pixelSize: 12
                         textFormat: Text.RichText
                     }

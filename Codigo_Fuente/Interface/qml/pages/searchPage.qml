@@ -6,7 +6,7 @@ import QtQuick.Layouts 1.11
 Item {
     Rectangle {
         id: bg
-        color: "#2c313c"
+        color: "#89c2db"
         anchors.fill: parent
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
@@ -15,7 +15,7 @@ Item {
 
         Rectangle {
             id: rectangleTop
-            color: "#5c667d"
+            color: "#03738c"
             height: 69
             anchors.left: parent.left
             anchors.right: parent.right
@@ -33,6 +33,9 @@ Item {
                 columns:  3
                 CustomTextField {
                     id: inputText
+                    fontColor: "#151212"
+                    placeholderTextColor: "#121314"
+                    bgColor: "#ffffff"
                     Layout.fillWidth: true
                     Layout.fillHeight: false
                     Keys.onEnterPressed: {
@@ -48,8 +51,12 @@ Item {
 
                 CustomButton {
                     id: customBtn
-                    text: "Button"
-                    Layout.maximumWidth: 200
+                    text: "Buscar"
+                    btnColorMouseOver: "#fb9850"
+                    btnColorClicked: "#009925"
+                    Layout.maximumHeight: 65535
+                    btnColorDefault: "#f98125"
+                    Layout.maximumWidth: 150
                     Layout.fillWidth: true
                     Layout.preferredHeight: 40
                     Layout.preferredWidth: 250
@@ -80,7 +87,7 @@ Item {
 
         Rectangle {
             id: rectangleVisible
-            color: "#1d2129"
+            color: "#ffffff"
             radius: 12
             anchors.fill: parent
             anchors.rightMargin: 50
@@ -92,7 +99,7 @@ Item {
                 id: welcomeLabel
                 y: 5
                 height: 33
-                color: "#6b737a"
+                color: "#12181d"
                 text: qsTr("Welcome")
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -107,7 +114,7 @@ Item {
                 id: dateLabel
                 y: 31
                 height: 33
-                color: "#24ced7"
+                color: "#eeb211"
                 text: qsTr("Date")
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -157,16 +164,67 @@ Item {
                     id: textHome
                     padding: 10
                     wrapMode: Text.WordWrap
+                    placeholderTextColor: "#0c1012"
                     textFormat: Text.AutoText
                     selectByMouse: true
                     selectedTextColor: "#ffffff"
                     selectionColor: "#ff007f"
-                    color: "#a9b2c8"
+                    color: "#000000"
                     font.pixelSize: 12
                     text: ""
+
+                    ColumnLayout {
+                        id: columnLayout
+                        x: 227
+                        y: 185
+                        width: 100
+                        height: 100
+                    }
                 }
 
                 ScrollBar.vertical: ScrollBar{}
+            }
+        }
+
+        Column {
+            id: column
+            x: 294
+            width: 200
+            anchors.top: rectangleVisible.bottom
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenterOffset: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 7
+            anchors.topMargin: 7
+
+            Label {
+                id: label
+                color: "#000000"
+                text: qsTr("Powered by ")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                font.pointSize: 11
+                anchors.bottomMargin: 0
+                anchors.topMargin: 0
+                anchors.rightMargin: 130
+                anchors.leftMargin: 0
+            }
+
+            Image {
+                id: image
+                anchors.left: label.right
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                source: "../../images/icons/OpenAI_Logo.svg"
+                antialiasing: true
+                anchors.topMargin: 0
+                anchors.bottomMargin: 0
+                anchors.rightMargin: 0
+                anchors.leftMargin: 5
+                fillMode: Image.PreserveAspectFit
             }
         }
     }
@@ -179,10 +237,11 @@ Item {
         }
     }
 
+
 }
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:800}D{i:15}D{i:16}D{i:14;locked:true}
 }
 ##^##*/

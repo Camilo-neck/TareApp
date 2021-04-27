@@ -8,7 +8,7 @@ Button {
 
     //CUSTOM PROPERTIES
     property url btnIconSource: "../../images/icons/home_icon.svg"
-    property color btnColorDefault: "#1c1d20"
+    property color btnColorDefault: "#012e40"
     property color btnColorMouseOver: "#23272e"
     property color btnColorClicked: "#00a1f1"
     property int iconWidth: 18
@@ -78,7 +78,7 @@ Button {
         ColorOverlay {
             anchors.fill: iconBtn
             source: iconBtn
-            color: "#48DEF4"
+            color: "#20bfd7"
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             antialiasing: true

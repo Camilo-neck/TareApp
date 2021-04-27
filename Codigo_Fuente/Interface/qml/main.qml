@@ -84,7 +84,7 @@ Window {
             Rectangle {
                 id: topBar
                 height: 60
-                color: "#1c1d20"
+                color: "#012e40"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -93,6 +93,7 @@ Window {
                 anchors.topMargin: 0
 
                 ToggleButton {
+                    btnColorDefault: "#012e40"
                     onClicked: animationMenu.running = true
                 }
 
@@ -102,7 +103,7 @@ Window {
                     y: 438
                     width: 528
                     height: 25
-                    color: "#282c34"
+                    color: "#03738c"
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
@@ -112,8 +113,8 @@ Window {
 
                     Label {
                         id: labelTopInfo
-                        color: "#5f6a82"
-                        text: qsTr("Application Description")
+                        color: "#1efae7"
+                        text: qsTr("La mejor App para hacer tus tareas.")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -128,8 +129,8 @@ Window {
                     }
 
                     Label {
-                        id: label1
-                        color: "#5f6a82"
+                        id: location
+                        color: "#1efae7"
                         text: qsTr("| Home")
                         anchors.left: labelTopInfo.right
                         anchors.right: parent.right
@@ -180,7 +181,7 @@ Window {
                     Label {
                         id: label
                         color: "#c3cbdd"
-                        text: qsTr("My Application Title")
+                        text: qsTr("TareApp")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -204,19 +205,6 @@ Window {
                     anchors.topMargin: 0
 
                     TopBarButton {
-                        id: minimizeBtn
-                        btnColorMouseOver: "#b7f4a9"
-                        btnColorClicked: "#4afb00"
-                        onClicked: {
-
-                            mainwindow.showMinimized()
-                            internal.restoreMargins()
-
-                        }
-
-                    }
-
-                    TopBarButton {
                         id: maximizeRestoreBtn
                         btnIconSource: "../images/icons/icon_maximize.png"
                         btnColorMouseOver: "#ecd393"
@@ -233,7 +221,20 @@ Window {
                         anchors.leftMargin: 70
                         onClicked: mainwindow.close()
                     }
-                }
+
+                    TopBarButton {
+                        id: minimizeBtn
+                        btnColorMouseOver: "#b7f4a9"
+                        btnColorClicked: "#4afb00"
+                        onClicked: {
+
+                            mainwindow.showMinimized()
+                            internal.restoreMargins()
+
+                        }
+
+                    }
+    }
             }
 
             Rectangle {
@@ -248,7 +249,7 @@ Window {
                 Rectangle {
                     id: leftMenu
                     width: 70
-                    color: "#1c1d20"
+                    color: "#012e40"
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
@@ -265,120 +266,134 @@ Window {
                         easing.type: Easing.OutBounce
                     }
 
-                    Column {
-                        id: columnMenus
+                    ScrollView {
                         width: 70
-                        anchors.fill: parent
                         anchors.bottomMargin: 90
-
-                        LeftMenuBtn {
-                            id: btnHome
-                            width: leftMenu.width
-                            text: qsTr("Home")
-                            isActiveMenu: true
-                            onClicked: {
-                                btnHome.isActiveMenu = true
-                                btnSettings.isActiveMenu = false
-                                btnEdit.isActiveMenu = false
-                                btnSearch.isActiveMenu = false
-                                btnPdf.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
-                            }
-                        }
-
-                        LeftMenuBtn {
-                            id: btnOpen
-                            width: 70
-                            text: qsTr("Open")
-                            btnIconSource: "../images/icons/open_icon.svg"
-
-                            onPressed: {
-                                btnHome.isActiveMenu = false
-                                btnSettings.isActiveMenu = false
-                                btnEdit.isActiveMenu = true
-                                btnSearch.isActiveMenu = false
-                                btnPdf.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
-                                fileOpen.open()
-                            }
-
-                            FileDialog {
-                                id: fileOpen
-                                title: "Please Choose a file"
-                                selectMultiple: false
-                                nameFilters: ["Text File (*.txt)"]
-                                onAccepted: {
-                                    backend.openFile(fileOpen.fileUrl)
+                        anchors.fill: parent
+                        anchors.topMargin: 0
+                        Column {
+                            id: columnMenus
+                            anchors.fill: parent
+                            LeftMenuBtn {
+                                id: btnHome
+                                width: leftMenu.width
+                                text: qsTr("Home")
+                                btnColorDefault: "#012e40"
+                                isActiveMenu: true
+                                onClicked: {
+                                    btnHome.isActiveMenu = true
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    location.text = qsTr("| Home")
+                                    stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                                 }
                             }
-                        }
 
-                        LeftMenuBtn {
-                            id: btnSave
-                            width: leftMenu.width
-                            text: qsTr("Save")
-                            btnIconSource: "../images/icons/save_icon.svg"
-                            onPressed: {
-                                fileSave.open()
-                            }
+                            LeftMenuBtn {
+                                id: btnOpen
+                                width: 70
+                                text: qsTr("Open")
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/open_icon.svg"
 
-                            FileDialog {
-                                id: fileSave
-                                title: "Save file"
-                                folder: shortcuts.home
-                                nameFilters: ["Text File (*.txt)"]
-                                selectExisting: false
-                                onAccepted: {
-                                    backend.getTextField(actualPage.getText)
-                                    backend.writeFile(fileSave.fileUrl)
+                                onPressed: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = true
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    location.text = qsTr("| Text Editor")
+                                    stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
+                                    fileOpen.open()
+                                }
+
+                                FileDialog {
+                                    id: fileOpen
+                                    title: "Please Choose a file"
+                                    selectMultiple: false
+                                    nameFilters: ["Text File (*.txt)"]
+                                    onAccepted: {
+                                        backend.openFile(fileOpen.fileUrl)
+                                    }
                                 }
                             }
-                        }
 
-                        LeftMenuBtn {
-                            id: btnEdit
-                            width: leftMenu.width
-                            text: qsTr("Edit File")
-                            btnIconSource: "../images/icons/icon_editor.png"
-                            onClicked: {
-                                btnHome.isActiveMenu = false
-                                btnSettings.isActiveMenu = false
-                                btnEdit.isActiveMenu = true
-                                btnSearch.isActiveMenu = false
-                                btnPdf.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
+                            LeftMenuBtn {
+                                id: btnSave
+                                width: leftMenu.width
+                                text: qsTr("Save")
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/save_icon.svg"
+                                onPressed: {
+                                    fileSave.open()
+                                }
+
+                                FileDialog {
+                                    id: fileSave
+                                    title: "Save file"
+                                    folder: shortcuts.home
+                                    nameFilters: ["Text File (*.txt)"]
+                                    selectExisting: false
+                                    onAccepted: {
+                                        backend.getTextField(actualPage.getText)
+                                        backend.writeFile(fileSave.fileUrl)
+                                    }
+                                }
                             }
-                        }
 
-                        LeftMenuBtn {
-                            id: btnSearch
-                            width: leftMenu.width
-                            text: qsTr("Search")
-                            btnIconSource: "../images/icons/search_icon.svg"
-                            isActiveMenu: false
-                            onClicked: {
-                                btnHome.isActiveMenu = false
-                                btnSettings.isActiveMenu = false
-                                btnEdit.isActiveMenu = false
-                                btnSearch.isActiveMenu = true
-                                btnPdf.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/testPage.qml"))
+                            LeftMenuBtn {
+                                id: btnEdit
+                                width: leftMenu.width
+                                text: qsTr("Edit File")
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/icon_editor.png"
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = true
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    location.text = qsTr("| Text Editor")
+                                    stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
+                                }
                             }
-                        }
 
-                        LeftMenuBtn {
-                            id: btnPdf
-                            width: leftMenu.width
-                            text: qsTr("PDFs Editor")
-                            btnIconSource: "../images/icons/pdf.svg"
-                            isActiveMenu: false
-                            onClicked: {
-                                btnHome.isActiveMenu = false
-                                btnSettings.isActiveMenu = false
-                                btnEdit.isActiveMenu = false
-                                btnSearch.isActiveMenu = false
-                                btnPdf.isActiveMenu = true
-                                stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
+                            LeftMenuBtn {
+                                id: btnSearch
+                                width: leftMenu.width
+                                text: qsTr("Search")
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/search_icon.svg"
+                                isActiveMenu: false
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = true
+                                    btnPdf.isActiveMenu = false
+                                    location.text = qsTr("| Search")
+                                    stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
+                                }
+                            }
+
+                            LeftMenuBtn {
+                                id: btnPdf
+                                width: leftMenu.width
+                                text: qsTr("PDFs Editor")
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/pdf.svg"
+                                isActiveMenu: false
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = true
+                                    location.text = qsTr("| PDF Editor")
+                                    stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
+                                }
                             }
                         }
                     }
@@ -390,6 +405,7 @@ Window {
                         width: leftMenu.width
                         text: qsTr("Settings")
                         anchors.bottom: parent.bottom
+                        btnColorDefault: "#012e40"
                         btnIconSource: "../images/icons/settings_icon.svg"
                         anchors.bottomMargin: 25
                         onClicked: {
@@ -421,7 +437,7 @@ Window {
 
                 Rectangle {
                     id: rectangle
-                    color: "#282c34"
+                    color: "#03738c"
                     anchors.left: leftMenu.right
                     anchors.right: parent.right
                     anchors.top: contentPages.bottom
@@ -431,7 +447,7 @@ Window {
 
                     Label {
                         id: labelTopInfo1
-                        color: "#5f6a82"
+                        color: "#1efae7"
                         text: qsTr("Application Description")
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -584,6 +600,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}D{i:28}
+    D{i:0;formeditorZoom:0.9}
 }
 ##^##*/

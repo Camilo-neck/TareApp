@@ -26,7 +26,7 @@ Button {
     height: 35
     background: Rectangle {
         id: bgBtn
-        color: "#1c1d20"
+        color: "#012e40"
 
         Image {
             id: iconBtn

@@ -4,13 +4,15 @@ import QtQuick.Controls 2.15
 TextField {
     id: textField
 
+    property color bgColor: "#03a678"
+    property color fontColor: "#ffffff"
 
     placeholderText: qsTr("Type Something Here")
-    color: "#ffffff"
+    color: fontColor
     implicitWidth: 300
     implicitHeight: 40
     background: Rectangle {
-        color: "#1d2129"
+        color: bgColor
         anchors.fill: parent
         radius: 10
     }
