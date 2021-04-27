@@ -55,6 +55,7 @@ Item {
                     anchors.right: parent.right
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
+                    font.family: "Sans Serif"
                     anchors.rightMargin: 8
                     anchors.leftMargin: 12
                     font.pointSize: 16
@@ -83,6 +84,8 @@ Item {
                         CustomTextField {
                             id: mergePdfText
                             width: 590
+                            font.pointSize: 10
+                            font.family: "Sans Serif"
                             placeholderTextColor: "#ffffff"
                             placeholderText: "Ingrese el nombre el nuevo PDF"
                             Layout.fillWidth: true
@@ -91,51 +94,17 @@ Item {
 
 
                         CustomButton {
-                            id: addPdfBtn
-                            width: 50
-                            text: "Add"
-                            btnColorMouseOver: "#78ede7"
-                            btnColorDefault: "#009aeb"
-                            btnColorClicked: "#4ef573"
-                            Layout.maximumHeight: 65535
-                            Layout.maximumWidth: 50
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
-                            Layout.preferredWidth: 250
-
-                            onClicked: {
-                                mergeInfoLabel.text = ""
-                                fileOpen.open()
-                            }
-
-                            FileDialog {
-                                id: fileOpen
-                                title: "Please Choose a file"
-                                selectMultiple: false
-                                nameFilters: ["PDF File (*.pdf)"]
-
-                                onAccepted: {
-
-                                    var url = fileOpen.fileUrl
-                                    var fileName = basename(url)
-                                    addFileToLabel(fileName)
-                                    urls.push(url)
-
-                                }
-                            }
-
-                        }
-
-                        CustomButton {
                             id: clearMergeBtn
                             width: 50
-                            text: "Clear"
+                            text: "Limpiar"
+                            font.pointSize: 10
+                            font.family: "Sans Serif"
                             Layout.preferredWidth: 250
-                            Layout.maximumWidth: 50
-                            btnColorMouseOver: "#fc3636"
+                            Layout.maximumWidth: 70
+                            btnColorMouseOver: "#78ede7"
                             Layout.maximumHeight: 65535
                             btnColorClicked: "#ec0606"
-                            btnColorDefault: "#fa1212"
+                            btnColorDefault: "#009aeb"
                             Layout.fillWidth: true
                             Layout.preferredHeight: 40
                             onClicked: {
@@ -152,6 +121,8 @@ Item {
                             width: 50
                             visible: true
                             text: "Unir"
+                            font.pointSize: 10
+                            font.family: "Sans Serif"
                             btnColorMouseOver: "#fb9b50"
                             btnColorDefault: "#f98125"
                             Layout.preferredWidth: 250
@@ -198,7 +169,7 @@ Item {
                     id: rectangle
                     x: 10
                     y: 119
-                    height: 200
+                    height: 244
                     color: "#ffffff"
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -222,21 +193,78 @@ Item {
                             anchors.bottom: parent.bottom
                             anchors.rightMargin: 10
                             anchors.leftMargin: 10
-                            anchors.bottomMargin: 118
+                            anchors.bottomMargin: 102
                             anchors.topMargin: 5
                             font.pointSize: 15
+                        }
+
+                        Label {
+                            id: mergeInfoLabel
+                            color: "#000000"
+                            text: qsTr("")
+                            anchors.left: parent.left
+                            anchors.right: dropAreaBg.left
+                            anchors.top: urlsLabel.top
+                            anchors.bottom: parent.bottom
+                            anchors.leftMargin: 10
+                            font.pointSize: 9
+                            anchors.topMargin: 61
+                            anchors.bottomMargin: 150
+                            anchors.rightMargin: 10
+                        }
+
+                        Rectangle {
+                            id: dropAreaBg
+                            x: 721
+                            y: 5
+                            width: 177
+                            color: "#c1e4fd"
+                            radius: 10
+                            border.color: "#0797bd"
+                            border.width: 1
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            clip: urlsLabel.font.weight
+                            anchors.rightMargin: 10
+                            anchors.bottomMargin: 100
+                            anchors.topMargin: 0
+
+                            MouseArea {
+                                id: chooseFile
+                                anchors.fill: parent
+                                onClicked: {
+                                    mergeInfoLabel.text = ""
+                                    openFile.open()
+                                }
+
+                                FileDialog {
+                                    id: openFile
+                                    title: "Please Choose a file"
+                                    selectMultiple: false
+                                    nameFilters: ["PDF File (*.pdf)"]
+
+                                    onAccepted: {
+                                        var url = openFile.fileUrl
+                                        var fileName = basename(url)
+                                        addFileToLabel(fileName)
+                                        urls.push(url)
+
+                                    }
+                                }
+                            }
 
                             DropArea {
                                 id: dropArea;
-                                y: -84
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.leftMargin: 600
-                                anchors.rightMargin: 0
-                                anchors.bottomMargin: 0
-                                anchors.topMargin: 0
+                                x: -550
+                                y: 0
+                                anchors.fill: parent
+                                Layout.fillHeight: false
+                                Layout.maximumHeight: 75
+                                Layout.maximumWidth: 80
+                                Layout.preferredHeight: 100
+                                Layout.preferredWidth: 200
+                                Layout.fillWidth: true
                                 onEntered: {
                                     drag.accept (Qt.LinkAction);
                                 }
@@ -251,69 +279,62 @@ Item {
                                 onExited: {
                                 }
 
-                                Rectangle {
-                                    id: rectangle1
-                                    x: 0
-                                    y: 0
-                                    color: "#c1e4fd"
-                                    radius: 10
-                                    border.color: "#0797bd"
-                                    border.width: 1
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-                                    anchors.top: parent.top
-                                    anchors.bottom: parent.bottom
-                                    anchors.rightMargin: 0
-                                    anchors.leftMargin: 0
-                                    anchors.bottomMargin: 0
-                                    anchors.topMargin: 0
-
+                                ColumnLayout {
+                                    id: dragDropRow
+                                    anchors.fill: parent
+                                    transformOrigin: Item.Center
                                     Image {
                                         id: image
-                                        anchors.left: parent.left
-                                        anchors.right: parent.right
-                                        anchors.top: parent.top
-                                        anchors.bottom: parent.bottom
-                                        source: "../../images/icons/drag-and-drop.png"
-                                        anchors.rightMargin: 19
-                                        anchors.leftMargin: 20
-                                        anchors.bottomMargin: 13
-                                        anchors.topMargin: 13
+                                        x: 25
+                                        y: 5
+                                        width: 100
+                                        source: "../../images/icons/drag_drop_icon.svg"
+                                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                        Layout.maximumHeight: 90
+                                        Layout.maximumWidth: 100
+                                        Layout.preferredHeight: 100
+                                        Layout.preferredWidth: 200
+                                        Layout.fillWidth: true
+                                        asynchronous: false
+                                        sourceSize.width: 0
                                         fillMode: Image.PreserveAspectFit
                                     }
+                                    Label {
+                                        id: dargDropDesc
+                                        x: 10
+                                        text: "Choose a file or drag it here"
+                                        horizontalAlignment: Text.AlignHCenter
+                                        verticalAlignment: Text.AlignVCenter
+                                        font.family: "Sans Serif"
+                                        font.pointSize: 10
+                                        font.bold: false
+                                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                                        Layout.fillHeight: false
+                                        Layout.fillWidth: true
+                                        Layout.maximumHeight: 20
+                                        Layout.maximumWidth: 200
+                                        Layout.preferredHeight: 50
+                                        Layout.preferredWidth: 1000
+                                    }
                                 }
-                            }
-                        }
 
-                        Label {
-                            id: mergeInfoLabel
-                            color: "#000000"
-                            text: qsTr("")
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: urlsLabel.bottom
-                            anchors.bottom: parent.bottom
-                            anchors.leftMargin: 10
-                            font.pointSize: 9
-                            anchors.topMargin: -32
-                            anchors.bottomMargin: 150
-                            anchors.rightMargin: 10
+                            }
                         }
                     }
                 }
             }
         }
     }
-
     Connections {
         target: backend
 
     }
-
 }
+
+
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:800}D{i:10}D{i:17}D{i:16}D{i:15}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/

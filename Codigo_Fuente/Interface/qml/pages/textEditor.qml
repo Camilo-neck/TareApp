@@ -22,6 +22,7 @@ Item {
             anchors.bottomMargin: 10
             anchors.topMargin: 10
             radius: 10
+            border.width: 1
             Flickable {
                 id: flickable
                 anchors.fill: parent
@@ -31,13 +32,14 @@ Item {
                     id: textArea
                     padding: 10
                     wrapMode: Text.WordWrap
+                    font.family: "Sans Serif"
                     placeholderTextColor: "#000000"
                     textFormat: Text.AutoText
                     selectByMouse: true
                     selectedTextColor: "#ffffff"
                     selectionColor: "#ff007f"
                     color: "#000000"
-                    font.pointSize: 12
+                    font.pointSize: 14
                     text: setText
 
 

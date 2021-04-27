@@ -33,6 +33,8 @@ Item {
                 columns:  3
                 CustomTextField {
                     id: inputText
+                    font.pointSize: 10
+                    font.family: "Sans Serif"
                     fontColor: "#151212"
                     placeholderTextColor: "#121314"
                     bgColor: "#ffffff"
@@ -52,6 +54,8 @@ Item {
                 CustomButton {
                     id: customBtn
                     text: "Buscar"
+                    font.pointSize: 10
+                    font.family: "Sans Serif"
                     btnColorMouseOver: "#fb9850"
                     btnColorClicked: "#009925"
                     Layout.maximumHeight: 65535
@@ -105,9 +109,10 @@ Item {
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.family: "Sans Serif"
                 anchors.rightMargin: 8
                 anchors.leftMargin: 12
-                font.pointSize: 14
+                font.pointSize: 16
             }
 
             Label {
@@ -120,10 +125,11 @@ Item {
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
+                font.family: "Sans Serif"
                 font.bold: false
                 anchors.rightMargin: 8
                 anchors.leftMargin: 12
-                font.pointSize: 12
+                font.pointSize: 14
             }
 
             // ScrollView {
@@ -164,13 +170,14 @@ Item {
                     id: textHome
                     padding: 10
                     wrapMode: Text.WordWrap
+                    font.family: "Sans Serif"
                     placeholderTextColor: "#0c1012"
                     textFormat: Text.AutoText
                     selectByMouse: true
                     selectedTextColor: "#ffffff"
                     selectionColor: "#ff007f"
                     color: "#000000"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
                     text: ""
 
                     ColumnLayout {
@@ -205,6 +212,7 @@ Item {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
+                font.family: "Sans Serif"
                 font.pointSize: 11
                 anchors.bottomMargin: 0
                 anchors.topMargin: 0

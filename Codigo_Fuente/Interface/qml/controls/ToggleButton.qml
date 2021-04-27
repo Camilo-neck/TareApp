@@ -42,7 +42,7 @@ Button {
         ColorOverlay {
             anchors.fill: iconBtn
             source: iconBtn
-            color: "#48DEF4"
+            color: "#15d8ee"
             antialiasing: false
         }
     }

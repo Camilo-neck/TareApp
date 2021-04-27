@@ -8,13 +8,13 @@ Button {
 
     //CUSTOM PROPERTIES
     property url btnIconSource: "../../images/icons/home_icon.svg"
-    property color btnColorDefault: "#012e40"
+    property color btnColorDefault: "#04bfbf"
     property color btnColorMouseOver: "#23272e"
     property color btnColorClicked: "#00a1f1"
     property int iconWidth: 18
     property int iconHeight: 18
     property color activeMenuColor: "#c00"
-    property color activeMenuColorRight : "#2c313c"
+    property color activeMenuColorRight : "#89c2db"
     property bool isActiveMenu: false
 
     QtObject {
@@ -63,11 +63,11 @@ Button {
         Image {
             id: iconBtn
             source: btnIconSource
+            sourceSize.height: 25
+            sourceSize.width: 25
             anchors.leftMargin: 26
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            sourceSize.width: iconWidth
-            sourceSize.height: iconHeight
             height: iconWidth
             width: iconHeight
             fillMode: Image.PreserveAspectFit
@@ -78,7 +78,7 @@ Button {
         ColorOverlay {
             anchors.fill: iconBtn
             source: iconBtn
-            color: "#20bfd7"
+            color: "#15d8ee"
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             antialiasing: true

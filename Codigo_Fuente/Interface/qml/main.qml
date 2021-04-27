@@ -8,8 +8,8 @@ import QtQuick.Dialogs 1.3
 
 Window {
     id: mainwindow
-    width: 1000
-    height: 580
+    width: 1080
+    height: 720
     minimumWidth: 800
     minimumHeight: 500
     visible: true
@@ -84,7 +84,7 @@ Window {
             Rectangle {
                 id: topBar
                 height: 60
-                color: "#012e40"
+                color: "#ffffff"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -93,6 +93,7 @@ Window {
                 anchors.topMargin: 0
 
                 ToggleButton {
+                    checked: true
                     btnColorDefault: "#012e40"
                     onClicked: animationMenu.running = true
                 }
@@ -114,14 +115,15 @@ Window {
                     Label {
                         id: labelTopInfo
                         color: "#1efae7"
-                        text: qsTr("La mejor App para hacer tus tareas.")
+                        text: qsTr("Bienvenidos")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 9
+                        font.family: "Sans Serif"
+                        font.pointSize: 10
                         anchors.bottomMargin: 0
                         anchors.rightMargin: 300
                         anchors.leftMargin: 20
@@ -138,7 +140,8 @@ Window {
                         anchors.bottom: parent.bottom
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 9
+                        font.family: "Sans Serif"
+                        font.pointSize: 10
                         anchors.rightMargin: 10
                         anchors.leftMargin: 0
                         anchors.bottomMargin: 0
@@ -149,7 +152,7 @@ Window {
                 Rectangle {
                     id: titleBar
                     height: 35
-                    color: "#00000000"
+                    color: "#012e40"
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -171,7 +174,13 @@ Window {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        source: "../images/icons/icon_app_top.svg"
+                        source: "../images/icons/hat_logo_temp_icon.svg"
+                        autoTransform: false
+                        mipmap: false
+                        mirror: false
+                        smooth: true
+                        cache: true
+                        asynchronous: false
                         anchors.bottomMargin: 0
                         anchors.leftMargin: 5
                         anchors.topMargin: 0
@@ -180,7 +189,7 @@ Window {
 
                     Label {
                         id: label
-                        color: "#c3cbdd"
+                        color: "#ffffff"
                         text: qsTr("TareApp")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
@@ -189,6 +198,7 @@ Window {
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
                         font.pointSize: 10
+                        font.family: "Sans Serif"
                         anchors.leftMargin: 5
                     }
                 }
@@ -234,7 +244,7 @@ Window {
                         }
 
                     }
-    }
+                }
             }
 
             Rectangle {
@@ -287,6 +297,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     location.text = qsTr("| Home")
+                                    labelTopInfo.text = qsTr("Bienvenidos")
                                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
                                 }
                             }
@@ -305,6 +316,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
+                                    labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                                     fileOpen.open()
                                 }
@@ -356,6 +368,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
+                                    labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
                                 }
                             }
@@ -374,6 +387,7 @@ Window {
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
                                     location.text = qsTr("| Search")
+                                    labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
                                 }
                             }
@@ -392,6 +406,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
                                     location.text = qsTr("| PDF Editor")
+                                    labelTopInfo.text = qsTr("Edita tus PDFs como nunca antes.")
                                     stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
                                 }
                             }
@@ -419,7 +434,7 @@ Window {
 
                 Rectangle {
                     id: contentPages
-                    color: "#2c313c"
+                    color: "#89c2db"
                     anchors.left: leftMenu.right
                     anchors.right: parent.right
                     anchors.top: parent.top
@@ -446,18 +461,19 @@ Window {
                     anchors.topMargin: 0
 
                     Label {
-                        id: labelTopInfo1
+                        id: labelBottomInfo
                         color: "#1efae7"
-                        text: qsTr("Application Description")
+                        text: qsTr("La mejor App para hacer tus tareas")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
+                        font.family: "Sans Serif"
                         anchors.rightMargin: 30
                         anchors.topMargin: 0
-                        font.pointSize: 9
+                        font.pointSize: 10
                         anchors.bottomMargin: 0
                         anchors.leftMargin: 20
                     }
@@ -600,6 +616,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}
 }
 ##^##*/
