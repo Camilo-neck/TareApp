@@ -20,8 +20,7 @@ Item {
         index++
     }
     function formatUrls(str) {
-        var newUrl = str.replace("file:///","")
-        return newUrl
+        return str.replace("file:///","")
     }
 
     Rectangle {
