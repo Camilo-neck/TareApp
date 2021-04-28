@@ -6,10 +6,11 @@ import QtQuick.Dialogs 1.3
 
 
 Item {
+    id: item1
     property var index: 1
     property var urls: pdfsList.urls
     function basename(str){
-        return (String(str).slice(String(str).lastIndexOf("/")+1))
+        return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, -4)
     }
     function addFileToLabel(fileName){
         if(urlsLabel.text === ""){
@@ -109,14 +110,12 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 40
                             onClicked: {
+                                //pdfsList.destroyObjects()
                                 //urls = []
                                 //index = 1
                                 urlsLabel.text = ""
                                 mergeInfoLabel.text = ""
                                 mergePdfText.text = ""
-                                // Por ahora este botón muestra la lista de urls
-                                // En un futuro ejecutara la funcion de destruir objetos.
-                                console.log(urls)
                             }
                         }
 
@@ -140,8 +139,8 @@ Item {
                                     mergeInfoLabel.text = "PDFS UNIDOS SATISFACTORIAMENTE"
                                     mergePdfText.text = ""
                                     urlsLabel.text = ""
-                                    index = 1
-                                    urls = []
+                                    //index = 1
+                                    //urls = []
 
                                 }
                                 else{
@@ -338,15 +337,16 @@ Item {
                             }
                         }
 
-                        }
                     }
                 }
-            }
-        }
-        Connections {
-            target: backend
 
+                }
         }
+    }
+    Connections {
+        target: backend
+
+    }
     }
 
 

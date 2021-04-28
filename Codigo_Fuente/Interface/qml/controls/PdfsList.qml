@@ -8,25 +8,44 @@ Item {
     property var urls : []
     property var listIndex : 0
     property var held: true
+    property var componentList: []
 
     function createSpriteObjects(basename,urls) {
         var url = urls[listIndex];
-        var color = "#78ede7";
+        var color = "#c1e4fd";
         var urlText = basename
-        var strListElement = 'import QtQuick 2.0; import QtQml.Models 2.2; ListElement {property var colore : "'+color+'" ; property var url : "'+url+'"; property var urlText: "'+urlText+'"}'
+        var strListElement = 'import QtQuick 2.0;
+                              import QtQml.Models 2.2;
+                              ListElement {property var colore : "'+color+'" ;
+                              property var url : "'+url+'";
+                              property var urlText: "'+urlText+'"}'      
+
         var component = Qt.createQmlObject(strListElement,
                                        timelineModel,
                                        "dynamicSnippet1");
+
+        componentList.push(component)
 
         if (ListElement === null) {
             // Error Handling
             console.log("Error creating object");
             return 0
         }
-        timelineModel.append(component)
 
+
+        timelineModel.append(component)
         listIndex++
 
+    }
+
+    function destroyObjects(){
+        for(var i =0;i< componentList.length;i++){
+            console.log("i")
+            componentList[i].destroy()
+        }
+        listIndex = 0
+        componentList= []
+        urls = []
     }
 
     function updateUrlsList() {
@@ -53,6 +72,7 @@ Item {
                 id: timeline
                 anchors.fill: parent
                 orientation: ListView.Horizontal
+                spacing: 2
                 model: visualModel
                 delegate: timelineDelegate
 
@@ -76,7 +96,7 @@ Item {
                     MouseArea {
                         id: dragArea
 
-                        width: 100; height: 100
+                        width: 100; height: 40
 
                         property bool held: false
 
@@ -95,9 +115,11 @@ Item {
                             anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
                             width: 100
-                            height: 100
+                            height: 40
                             opacity: dragArea.held ? 0.8 : 1.0
-
+                            border.color: "#0797bd"
+                            border.width: 2
+                            radius: 5
 
                             color: colore
 
