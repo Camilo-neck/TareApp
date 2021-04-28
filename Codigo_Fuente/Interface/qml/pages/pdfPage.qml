@@ -110,9 +110,9 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 40
                             onClicked: {
-                                //pdfsList.destroyObjects()
-                                //urls = []
-                                //index = 1
+                                pdfsList.destroyObjects()
+                                urls = []
+                                index = 1
                                 urlsLabel.text = ""
                                 mergeInfoLabel.text = ""
                                 mergePdfText.text = ""

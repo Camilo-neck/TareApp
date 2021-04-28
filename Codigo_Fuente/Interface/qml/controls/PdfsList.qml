@@ -18,7 +18,7 @@ Item {
                               import QtQml.Models 2.2;
                               ListElement {property var colore : "'+color+'" ;
                               property var url : "'+url+'";
-                              property var urlText: "'+urlText+'"}'      
+                              property var urlText: "'+urlText+'"}'
 
         var component = Qt.createQmlObject(strListElement,
                                        timelineModel,
@@ -39,13 +39,11 @@ Item {
     }
 
     function destroyObjects(){
-        for(var i =0;i< componentList.length;i++){
-            console.log("i")
-            componentList[i].destroy()
-        }
         listIndex = 0
         componentList= []
         urls = []
+        timelineModel.clear()
+        console.log(timelineModel.count)
     }
 
     function updateUrlsList() {
