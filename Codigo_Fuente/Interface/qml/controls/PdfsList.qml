@@ -6,25 +6,18 @@ import "../controls"
 
 Item {
     property var urls : []
-    property var listIndex : 0
     property var held: true
-    property var componentList: []
 
-    function createSpriteObjects(basename,urls) {
-        var url = urls[listIndex];
+    function createListObject(name,url) {
         var color = "#c1e4fd";
-        var urlText = basename
-        var strListElement = 'import QtQuick 2.0;
+        var urlText = name
+        var ListElementQML = 'import QtQuick 2.0;
                               import QtQml.Models 2.2;
                               ListElement {property var colore : "'+color+'" ;
                               property var url : "'+url+'";
-                              property var urlText: "'+urlText+'"}'      
+                              property var urlText: "'+urlText+'"}'
 
-        var component = Qt.createQmlObject(strListElement,
-                                       timelineModel,
-                                       "dynamicSnippet1");
-
-        componentList.push(component)
+        var component = Qt.createQmlObject(ListElementQML,timelineModel,"dynamicSnippet1");
 
         if (ListElement === null) {
             // Error Handling
@@ -32,30 +25,22 @@ Item {
             return 0
         }
 
-
+        urls.push(url)
         timelineModel.append(component)
-        listIndex++
 
     }
 
-    function destroyObjects(){
-        for(var i =0;i< componentList.length;i++){
-            console.log("i")
-            componentList[i].destroy()
-        }
-        listIndex = 0
-        componentList= []
+    function clearModel(){
+
         urls = []
+        timelineModel.clear()
     }
 
     function updateUrlsList() {
         urls = []
-        var listOnModel = "{";
         for(var i = 0; i < visualModel.items.count; i++){
             urls.push(visualModel.items.get(i).model.url)
-            listOnModel += visualModel.items.get(i).model.url + ", "
         }
-        //console.log("List: " + listOnModel + "}");
     }
 
     Rectangle {
@@ -129,14 +114,53 @@ Item {
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 text : urlText
-                                //text: index
                                 font.pixelSize: 20
                             }
+
+                            CustomButton {
+                                id: delBttn
+                                customRadius : 5
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                font.pointSize: 25
+                                anchors.rightMargin: 85
+                                anchors.bottomMargin: 25
+                                anchors.leftMargin: 0
+                                anchors.topMargin: 0
+                                Layout.preferredWidth: 10
+                                Layout.maximumWidth: 10
+                                btnColorMouseOver: "#78ede7"
+                                Layout.maximumHeight: 65535
+                                btnColorClicked: "#ec0606"
+                                btnColorDefault: "#0797bd"
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 10
+                                onClicked: {
+                                    timelineModel.remove(index,1)
+                                    updateUrlsList()
+                                }
+
+                                Text{
+                                    color: "#ffffff"
+                                    text: "-"
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    anchors.bottomMargin: 4
+                                    font.pointSize: 25
+                                    minimumPixelSize: 12
+                                }
+                            }
+
+
 
                             Drag.active: dragArea.held
                             Drag.source: dragArea
                             Drag.hotSpot.x: width / 2
                             Drag.hotSpot.y: height / 2
+
 
                             states: State{
                                 when: dragArea.held
@@ -160,6 +184,7 @@ Item {
 
                 ListModel {
                     id: timelineModel
+                    //here goes the listElements that defines the rectangles
 
                 }
             }

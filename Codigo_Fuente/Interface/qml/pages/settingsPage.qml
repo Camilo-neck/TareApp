@@ -1,137 +1,88 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.11
+import QtQuick 2.7
+import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.0
 import QtQml.Models 2.2
+import "../controls"
 
-Item {
-    property var listaTest : ["pdf1","pdf2","pdf3"]
-
+Item{
     Rectangle {
         id: bg
-        visible: true
         color: "#89c2db"
         anchors.fill: parent
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
+            Rectangle {
+                id: content
 
-        Rectangle {
-                anchors.fill: parent;
+                anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
-                ListView{
-                    id: timeline
-                    anchors.fill: parent
-                    orientation: ListView.Horizontal
-                    model: visualModel
-                    delegate: timelineDelegate
+                width: 100
+                height: 40
+                opacity: dragArea.held ? 0.8 : 1.0
+                border.color: "#0797bd"
+                border.width: 2
+                radius: 5
 
-                    moveDisplaced: Transition {
-                        NumberAnimation{
-                            properties: "x,y"
-                            duration: 200
-                        }
+
+
+                Text{
+                    text: "urlText"
+
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    font.pixelSize: 20
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                CustomButton {
+                    id: delBttn
+                    customRadius : 5
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    font.pointSize: 25
+                    anchors.rightMargin: 85
+                    anchors.bottomMargin: 25
+                    anchors.leftMargin: 0
+                    anchors.topMargin: 0
+                    Layout.preferredWidth: 10
+                    Layout.maximumWidth: 10
+                    btnColorMouseOver: "#78ede7"
+                    Layout.maximumHeight: 65535
+                    btnColorClicked: "#ec0606"
+                    btnColorDefault: "#0797bd"
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 10
+                    onClicked: {
+                        timelineModel.remove(index,1)
+                        updateUrlsList()
                     }
 
-                    DelegateModel {
-                        id: visualModel
-                        model: timelineModel
-                        delegate: timelineDelegate
-                    }
-
-                    Component {
-                        id: timelineDelegate
-
-
-                        MouseArea {
-                            id: dragArea
-
-                            width: 100; height: 100
-
-                            property bool held: false
-
-                            drag.target: held ? content : undefined
-                            drag.axis: Drag.XAxis
-
-                            onPressAndHold: held = true
-                            onReleased: {
-                                held = false
-                                var listOnModel = "{";
-                                for(var i = 0; i < visualModel.items.count; i++){
-                                    listOnModel += visualModel.items.get(i).model.url + ", "
-                                }
-                                console.log("List: " + listOnModel + "}");
-                            }
-
-                            Rectangle {
-                                id: content
-
-                                anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
-                                width: 100
-                                height: 100
-
-                                color: colore
-                                opacity: dragArea.held ? 0.8 : 1.0
-
-                                Text{
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    text : listaTest[index]
-                                    //text: index
-                                    font.pixelSize: 20
-                                }
-
-                                Drag.active: dragArea.held
-                                Drag.source: dragArea
-                                Drag.hotSpot.x: width / 2
-                                Drag.hotSpot.y: height / 2
-
-                                states: State{
-                                    when: dragArea.held
-                                    ParentChange { target: content; parent: timeline }
-                                    AnchorChanges {
-                                        target: content
-                                        anchors { horizontalCenter: undefined; verticalCenter: undefined }
-                                    }
-                                }
-                            }
-
-                            DropArea {
-                                anchors.fill: parent
-                                onEntered: {
-                                    visualModel.items.move( drag.source.DelegateModel.itemsIndex, dragArea.DelegateModel.itemsIndex);
-                                }
-
-                            }
-                        }
-                    }
-
-                    ListModel {
-                        id: timelineModel
-
-                        ListElement {
-                            colore: "blue"
-                            property var url: "url1"
-                        }
-
-                        ListElement {
-                            colore: "green"
-                            property var url: "url2"
-                        }
-
-                        ListElement {
-                            colore: "orange"
-                            property var url: "url3"
-                        }
-
+                    Text{
+                        color: "#ffffff"
+                        text: "-"
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.bottomMargin: 4
+                        font.pointSize: 25
+                        minimumPixelSize: 12
                     }
                 }
+
             }
-     }
+
+    }
 }
+
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.33;height:480;width:800}
+    D{i:0;formeditorZoom:1.1;height:480;width:800}
 }
 ##^##*/
