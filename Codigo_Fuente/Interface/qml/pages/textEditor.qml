@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.11
 
 Item {
     // PROPERTIES
@@ -41,8 +42,6 @@ Item {
                     color: "#000000"
                     font.pointSize: 14
                     text: setText
-
-
                 }
 
                 ScrollBar.vertical: ScrollBar{}

@@ -172,11 +172,12 @@ Item {
                     id: rectangle
                     x: 10
                     y: 119
-                    height: 244
                     color: "#ffffff"
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: rectangleTop.bottom
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 219
                     anchors.rightMargin: 10
                     anchors.leftMargin: 10
                     anchors.topMargin: 10
@@ -193,23 +194,15 @@ Item {
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             anchors.topMargin: 5
-                            anchors.bottomMargin: 150
+                            anchors.bottomMargin: 97
                             anchors.rightMargin: 10
                             anchors.leftMargin: 5
-                        }
-                        Label {
-                            id: urlsLabel
-                            color: "#0797bd"
-                            text: qsTr("")
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: mergeInfoLabel.bottom
-                            anchors.bottom: parent.bottom
-                            anchors.rightMargin: 10
-                            anchors.leftMargin: 10
-                            anchors.bottomMargin: 30
-                            anchors.topMargin: 20
-                            font.pointSize: 15
+
+                            BusyIndicator {
+                                id: busyIndicator
+                                x: 382
+                                y: 69
+                            }
                         }
                         Label {
                             id: mergeInfoLabel
@@ -221,8 +214,8 @@ Item {
                             anchors.bottom: parent.bottom
                             anchors.leftMargin: 10
                             font.pointSize: 9
-                            anchors.topMargin: 115
-                            anchors.bottomMargin: 100
+                            anchors.topMargin: 145
+                            anchors.bottomMargin: 40
                             anchors.rightMargin: 10
                         }
 
@@ -238,9 +231,9 @@ Item {
                             anchors.right: parent.right
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 71
                             clip: urlsLabel.font.weight
                             anchors.rightMargin: 10
-                            anchors.bottomMargin: 100
                             anchors.topMargin: 0
 
                             MouseArea {
@@ -338,9 +331,10 @@ Item {
                         }
 
                     }
+                    ScrollBar {}
                 }
 
-                }
+            }
         }
     }
     Connections {
