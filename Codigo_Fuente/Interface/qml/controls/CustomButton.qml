@@ -8,6 +8,7 @@ Button {
     property color btnColorDefault: "#388de9"
     property color btnColorMouseOver: "#55aaff"
     property color btnColorClicked: "#3f7ebd"
+    property int customRadius : 12
 
     QtObject {
         id: internal
@@ -37,7 +38,7 @@ Button {
         id: bg
         color: internal.dynamicColor
         anchors.fill:parent
-        radius: 12
+        radius: customRadius
 
     }
 }
