@@ -189,12 +189,13 @@ Item {
                         anchors.fill: parent
                         PdfsList {
                             id: pdfsList
+                            height: 100
                             anchors.left: parent.left
                             anchors.right: dropAreaBg.left
                             anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             anchors.topMargin: 5
-                            anchors.bottomMargin: 244
+                            anchors.bottomMargin: 150
                             anchors.rightMargin: 10
                             anchors.leftMargin: 5
                         }
@@ -255,14 +256,17 @@ Item {
                                 FileDialog {
                                     id: openFile
                                     title: "Please Choose a file"
-                                    selectMultiple: false
+                                    selectMultiple: true
                                     nameFilters: ["PDF File (*.pdf)"]
 
                                     onAccepted: {
-                                        var url = openFile.fileUrl
-                                        var fileName = basename(url)
-                                        addFileToLabel(fileName)
-                                        urls.push(url)
+                                        var urlss = openFile.fileUrls
+                                        for(var i = 0; i<urlss.length; i++){
+                                            var fileName = basename(urlss[i])
+                                            urls.push(formatUrls(String(urlss[i])))
+                                            pdfsList.createSpriteObjects(basename(urlss[i]), urls);
+                                            //addFileToLabel(fileName)
+                                        }
 
                                     }
                                 }

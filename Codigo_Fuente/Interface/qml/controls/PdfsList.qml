@@ -44,11 +44,6 @@ Item {
         visible: true
         color: "#89c2db"
         anchors.fill: parent
-        anchors.rightMargin: 0
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        anchors.topMargin: 0
-
 
 
         Rectangle {
