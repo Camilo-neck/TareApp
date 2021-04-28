@@ -7,17 +7,21 @@ import QtQuick.Dialogs 1.3
 
 Item {
     property var index: 1
-    property var urls: []
+    property var urls: pdfsList.urls
     function basename(str){
         return (String(str).slice(String(str).lastIndexOf("/")+1))
     }
     function addFileToLabel(fileName){
-        if(urlsLabel.text == ""){
+        if(urlsLabel.text === ""){
             urlsLabel.text += "["+index+"] "+fileName
         }else{
             urlsLabel.text += ", ["+index+"] "+fileName
         }
         index++
+    }
+    function formatUrls(str) {
+        var newUrl = str.replace("file:///","")
+        return newUrl
     }
 
     Rectangle {
@@ -34,7 +38,6 @@ Item {
             color: "#03738c"
             radius: 12
             anchors.fill: parent
-            clip: true
             anchors.rightMargin: 30
             anchors.bottomMargin: 30
             anchors.leftMargin: 30
@@ -43,7 +46,6 @@ Item {
             ScrollView {
                 id: scrollView1
                 anchors.fill: parent
-
                 Label {
                     id: mergePdfLabel
                     x: 12
@@ -108,11 +110,14 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 40
                             onClicked: {
-                                urls = []
-                                index = 1
+                                //urls = []
+                                //index = 1
                                 urlsLabel.text = ""
                                 mergeInfoLabel.text = ""
                                 mergePdfText.text = ""
+                                // Por ahora este botón muestra la lista de urls
+                                // En un futuro ejecutara la funcion de destruir objetos.
+                                console.log(urls)
                             }
                         }
 
@@ -182,34 +187,43 @@ Item {
                     ScrollView {
                         id: scrollView
                         anchors.fill: parent
-
+                        PdfsList {
+                            id: pdfsList
+                            anchors.left: parent.left
+                            anchors.right: dropAreaBg.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.topMargin: 5
+                            anchors.bottomMargin: 244
+                            anchors.rightMargin: 10
+                            anchors.leftMargin: 5
+                        }
                         Label {
                             id: urlsLabel
                             color: "#0797bd"
                             text: qsTr("")
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            anchors.top: parent.top
+                            anchors.top: mergeInfoLabel.bottom
                             anchors.bottom: parent.bottom
                             anchors.rightMargin: 10
                             anchors.leftMargin: 10
-                            anchors.bottomMargin: 102
-                            anchors.topMargin: 5
+                            anchors.bottomMargin: 30
+                            anchors.topMargin: 20
                             font.pointSize: 15
                         }
-
                         Label {
                             id: mergeInfoLabel
                             color: "#000000"
                             text: qsTr("")
                             anchors.left: parent.left
                             anchors.right: dropAreaBg.left
-                            anchors.top: urlsLabel.top
+                            anchors.top: parent.top
                             anchors.bottom: parent.bottom
                             anchors.leftMargin: 10
                             font.pointSize: 9
-                            anchors.topMargin: 61
-                            anchors.bottomMargin: 150
+                            anchors.topMargin: 115
+                            anchors.bottomMargin: 100
                             anchors.rightMargin: 10
                         }
 
@@ -269,11 +283,12 @@ Item {
                                     drag.accept (Qt.LinkAction);
                                 }
                                 onDropped: {
-
                                     for(var i = 0; i<drop.urls.length; i++){
-                                        urls.push(drop.urls[i])
-                                        addFileToLabel(basename(drop.urls[i]))
+                                        urls.push(formatUrls(drop.urls[i]))
+                                        //addFileToLabel(basename(drop.urls[i]))
+                                        pdfsList.createSpriteObjects(basename(drop.urls[i]), urls);
                                     }
+                                    pdfsList.updateUrlsList()
 
                                 }
                                 onExited: {
@@ -317,24 +332,24 @@ Item {
                                         Layout.preferredWidth: 1000
                                     }
                                 }
-
                             }
+                        }
+
                         }
                     }
                 }
             }
         }
-    }
-    Connections {
-        target: backend
+        Connections {
+            target: backend
 
+        }
     }
-}
 
 
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:613;width:988}
 }
 ##^##*/
