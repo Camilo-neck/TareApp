@@ -3,8 +3,11 @@ import QtQuick.Controls 2.15
 import "../controls"
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.3
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
 Item {
     id: item1
     property var index: 1
@@ -23,6 +26,7 @@ Item {
     function formatUrls(str) {
         return str.replace("file:///","")
     }
+<<<<<<< HEAD
 
     function oA(fileUrls,fileNames){
         for(var i = 0; i<fileUrls.length;i++){
@@ -32,6 +36,8 @@ Item {
         pdfsList.updateUrlsList()
     }
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
     Rectangle {
         id: bg
         color: "#89c2db"
@@ -40,7 +46,10 @@ Item {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
         Rectangle {
             id: rectangleVisible
             color: "#03738c"
@@ -50,11 +59,17 @@ Item {
             anchors.bottomMargin: 30
             anchors.leftMargin: 30
             anchors.topMargin: 30
+<<<<<<< HEAD
 
             ScrollView {
                 id: scrollView1
                 anchors.fill: parent
                 clip: true
+=======
+            ScrollView {
+                id: scrollView1
+                anchors.fill: parent
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                 Label {
                     id: mergePdfLabel
                     x: 12
@@ -71,7 +86,10 @@ Item {
                     anchors.leftMargin: 12
                     font.pointSize: 16
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                 Rectangle {
                     id: rectangleTop
                     x: 10
@@ -85,7 +103,10 @@ Item {
                     anchors.rightMargin: 10
                     anchors.leftMargin: 10
                     radius: 12
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                     GridLayout {
                         anchors.fill: parent
                         anchors.rightMargin: 10
@@ -102,8 +123,11 @@ Item {
                             Layout.fillWidth: true
                             Layout.fillHeight: false
                         }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                         CustomButton {
                             id: clearMergeBtn
                             width: 50
@@ -141,15 +165,20 @@ Item {
                             Layout.maximumHeight: 65535
                             onClicked: {
                                 if(mergePdfText.text != "" && urls.length >= 2){
+<<<<<<< HEAD
 
                                     backend.mergePdf(urls, mergePdfText.text)
 
+=======
+                                    backend.mergePdf(urls, mergePdfText.text)
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                                     mergePdfText.placeholderTextColor = "#c3d3e1"
                                     mergeInfoLabel.text = "PDFS UNIDOS SATISFACTORIAMENTE"
                                     mergePdfText.text = ""
                                     urlsLabel.text = ""
                                     //index = 1
                                     //urls = []
+<<<<<<< HEAD
 
                                 }
                                 else{
@@ -158,17 +187,29 @@ Item {
                                         mergePdfText.placeholderTextColor = "#FF0000"
                                     }
 
+=======
+                                }
+                                else{
+                                    if(mergePdfText.text == "") {
+                                        mergePdfText.placeholderTextColor = "#FF0000"
+                                    }
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                                     if(urls.length < 2) {
                                         mergeInfoLabel.text = "Debe agregar como minimo 2 PDF para unirlos"
                                     }
                                 }
+<<<<<<< HEAD
 
                             }
 
+=======
+                            }
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                             Layout.maximumWidth: 100
                             Layout.preferredHeight: 40
                             Layout.fillWidth: true
                         }
+<<<<<<< HEAD
 
 
 
@@ -177,6 +218,10 @@ Item {
 
                 }
 
+=======
+                    }
+                }
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
                 Rectangle {
                     id: rectangle
                     x: 10
@@ -356,6 +401,7 @@ Item {
                             }
                         }
                     }
+<<<<<<< HEAD
 
 
                     DropFilesArea {
@@ -370,6 +416,10 @@ Item {
 
 
                 }
+=======
+                }
+
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
             }
         }
     }
@@ -382,6 +432,10 @@ Item {
 
 /*##^##
 Designer {
+<<<<<<< HEAD
     D{i:0;autoSize:true;formeditorZoom:0.9;height:613;width:988}
+=======
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:613;width:988}
+>>>>>>> 55cdc30d4979ccaede5be0c3ab9a6fd4b391d553
 }
 ##^##*/
