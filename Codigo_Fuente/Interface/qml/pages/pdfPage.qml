@@ -6,7 +6,7 @@ import QtQuick.Dialogs 1.3
 
 
 Item {
-    id: item1
+    id: pdfPage
     property var index: 1
     property var urls: pdfsList.urls
     function basename(str){
@@ -24,7 +24,7 @@ Item {
         return str.replace("file:///","")
     }
 
-    function oA(fileUrls,fileNames){
+    function addPDFs(fileUrls,fileNames){
         for(var i = 0; i<fileUrls.length;i++){
             urls.push(formatUrls(String(fileUrls[i])))
             pdfsList.createListObject(fileNames[i], fileUrls[i]);
@@ -363,9 +363,7 @@ Item {
                         x: 513; y: 6
                         width: 176
                         height: 138
-                        //onAcceptedF: () => {console.log(dropFiles1.urls)}
-
-                        //onDropedF: function () { console.log("ON DROPED")}
+                        customFunction: (fileUrls,filenames) => pdfPage.addPDFs(fileUrls,filenames)
                     }
 
 
@@ -382,6 +380,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.9;height:613;width:988}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/

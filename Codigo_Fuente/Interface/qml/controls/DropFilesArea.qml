@@ -6,9 +6,12 @@ import "../pages"
 
 Rectangle {
     id: root
+    color: "#aaecff"
+    radius: 5
+    border.color: "#0797bd"
+    border.width: 2
 
-    //property var onAcceptedF: function() {}
-    //property var onDropedF: function() {}
+    property var customFunction: function() {}
 
     function basename(str){
         return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, -4)
@@ -16,6 +19,17 @@ Rectangle {
 
     function formatUrls(str) {
         return str.replace("file:///","")
+    }
+
+    function getFilenames(fileUrls){
+        var fileNames = []
+
+        for(var i = 0; i<fileUrls.length; i++){
+            var fileName = basename(fileUrls[i])
+            fileNames.push(fileName)
+            }
+
+        return fileNames
     }
 
 
@@ -33,21 +47,11 @@ Rectangle {
             nameFilters: ["PDF File (*.pdf)"]
 
             onAccepted: {
-                //console.log(String(openFile.fileUrls))
 
                 var fileUrls = openFile.fileUrls
-                var fileNames = []
-                for(var i = 0; i<fileUrls.length; i++){
+                customFunction(fileUrls,getFilenames(fileUrls))
+                //pdfPage.addPDFs(fileUrls,getFilenames(fileUrls))
 
-                    var fileUrl = fileUrls[i]
-                    var fileName = basename(fileUrl)
-
-
-                    fileNames.push(fileName)
-
-                    }
-
-                item1.oA(fileUrls,fileNames)
             }
         }
     }
@@ -56,39 +60,31 @@ Rectangle {
         id: dropArea;
         anchors.fill: parent
         onEntered: {
-            root.color = "gray";
+            root.color = "#7dd3ec";
             drag.accept (Qt.LinkAction);
         }
         onDropped: {
+
+            root.color = "#aaecff"
             var fileUrls = drop.urls
-            var fileNames = []
-            for(var i = 0; i<fileUrls.length; i++){
+            customFunction(fileUrls,getFilenames(fileUrls))
 
-                var fileUrl = fileUrls[i]
-                var fileName = basename(fileUrl)
-
-
-                fileNames.push(fileName)
-
-                }
-
-            item1.oA(fileUrls,fileNames)
-            root.color = "white"
         }
         onExited: {
-            root.color = "white";
+            root.color = "#aaecff";
         }
 
         ColumnLayout {
             id: dragDropRow
             anchors.fill: parent
+            anchors.rightMargin: 0
             transformOrigin: Item.Center
             Image {
                 id: image
                 x: 25
                 y: 5
                 width: 100
-                source: "../../images/icons/drag_drop_icon.svg"
+                source: "../../images/icons/drag-and-drop.png"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.maximumHeight: 90
                 Layout.maximumWidth: 100
@@ -102,11 +98,11 @@ Rectangle {
             Label {
                 id: dargDropDesc
                 x: 10
-                text: "Choose a file or drag it here"
+                text: "Escoja un PDF o arrestrelo aqui"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: "Sans Serif"
-                font.pointSize: 10
+                font.pointSize: 8
                 font.bold: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                 Layout.fillHeight: false
