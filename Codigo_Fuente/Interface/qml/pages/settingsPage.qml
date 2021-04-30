@@ -77,6 +77,15 @@ Item{
 
             }
 
+            DropFilesArea {
+                id : dropFiles2
+                x: 427; y: 29
+                width: 177
+                height: 128
+                //onAcceptedF: function() { console.log("1") }
+                //onDropedF: function() { console.log("2") }
+            }
+
     }
 }
 
