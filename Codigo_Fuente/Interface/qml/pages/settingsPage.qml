@@ -77,13 +77,19 @@ Item{
 
             }
 
+
+
             DropFilesArea {
+
+                function testF(fileUrls,fileNames){
+                    console.log("Ventana Settings\nURLS: "+fileUrls+"\nNAMES: "+fileNames)
+                }
+
                 id : dropFiles2
-                x: 427; y: 29
+                x: 615; y: 8
                 width: 177
                 height: 128
-                //onAcceptedF: function() { console.log("1") }
-                //onDropedF: function() { console.log("2") }
+                customFunction: (fileUrls,fileNames) => testF(fileUrls,fileNames)
             }
 
     }

@@ -12,25 +12,40 @@ Rectangle {
     border.width: 2
 
     property var customFunction: function() {}
+    property var fileExtensions: ["ALL"]
+    property var customText: "Select a file or drop it here"
 
     function basename(str){
-        return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, -4)
+        var extensionLength = - (getExtension(str).length +1)
+        return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, extensionLength)
     }
 
-    function formatUrls(str) {
-        return str.replace("file:///","")
+    function getExtension(str){
+        return str.split('.').pop();
     }
 
     function getFilenames(fileUrls){
-        var fileNames = []
-
-        for(var i = 0; i<fileUrls.length; i++){
-            var fileName = basename(fileUrls[i])
-            fileNames.push(fileName)
-            }
-
-        return fileNames
+        return fileUrls.map((url) => basename(url))
     }
+
+    function getNameFilters(){
+        if (!(fileExtensions.includes("ALL"))){
+            var nameFilers = "("
+            fileExtensions.forEach(ext => {nameFilers += "*."+ext+" "})
+            nameFilers += ")"
+            return nameFilers
+        }
+
+        return "(*)"
+    }
+
+    /*
+    function getNF(){
+        var nf = fileExtensions.reduce((acum, ext) => (acum += '*.'+ext+' '))
+        console.log(nf)
+        return `(${nf})`
+    }
+    */
 
 
     MouseArea {
@@ -44,13 +59,13 @@ Rectangle {
             id: openFile
             title: "Please Choose a file"
             selectMultiple: true
-            nameFilters: ["PDF File (*.pdf)"]
+
+            nameFilters: [getNameFilters()]
 
             onAccepted: {
 
-                var fileUrls = openFile.fileUrls
+                var fileUrls = openFile.fileUrls.map((url) => url.replace("file:///",""))
                 customFunction(fileUrls,getFilenames(fileUrls))
-                //pdfPage.addPDFs(fileUrls,getFilenames(fileUrls))
 
             }
         }
@@ -66,8 +81,39 @@ Rectangle {
         onDropped: {
 
             root.color = "#aaecff"
-            var fileUrls = drop.urls
+
+            /*
+            for(var j in drop.urls){
+                fileUrls.push(drop.urls[j])
+            }
+            */
+
+            var fileUrls = drop.urls.map((url) => url.replace("file:///",""))
+            /*
+
+            var realfileUrls = []
+
+            if (!(fileExtensions.includes("ALL"))){
+
+                for(var i = 0;i<fileUrls.length;i++){
+
+                    var ext = getExtension(fileUrls[i])
+                    if(fileExtensions.includes(ext)){
+                        realfileUrls.push(fileUrls[i])
+                    }
+                }
+            }else{
+                realfileUrls = fileUrls
+            }
+
+            */
+
+            if (!(fileExtensions.includes("ALL"))){
+                fileUrls = fileUrls.filter((url) => fileExtensions.includes(getExtension(url)))
+            }
+
             customFunction(fileUrls,getFilenames(fileUrls))
+
 
         }
         onExited: {
@@ -81,16 +127,20 @@ Rectangle {
             transformOrigin: Item.Center
             Image {
                 id: image
-                x: 25
+                x: 30
                 y: 5
                 width: 100
+                height: 50
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
                 source: "../../images/icons/drag-and-drop.png"
+                Layout.fillHeight: false
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.maximumHeight: 90
                 Layout.maximumWidth: 100
                 Layout.preferredHeight: 100
                 Layout.preferredWidth: 200
-                Layout.fillWidth: true
+                Layout.fillWidth: false
                 asynchronous: false
                 sourceSize.width: 0
                 fillMode: Image.PreserveAspectFit
@@ -98,7 +148,7 @@ Rectangle {
             Label {
                 id: dargDropDesc
                 x: 10
-                text: "Escoja un PDF o arrestrelo aqui"
+                text: customText
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: "Sans Serif"
@@ -119,6 +169,6 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:130;width:160}
+    D{i:0;autoSize:true;formeditorZoom:1.5;height:130;width:160}
 }
 ##^##*/

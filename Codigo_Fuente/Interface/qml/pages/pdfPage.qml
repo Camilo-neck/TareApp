@@ -1,35 +1,41 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
-import "../controls"
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.3
+import Qt.labs.folderlistmodel 2.12
+import Qt.labs.animation 1.0
+import "../controls"
 
 
 Item {
     id: pdfPage
-    property var index: 1
     property var urls: pdfsList.urls
-    function basename(str){
-        return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, -4)
-    }
-    function addFileToLabel(fileName){
-        if(urlsLabel.text === ""){
-            urlsLabel.text += "["+index+"] "+fileName
-        }else{
-            urlsLabel.text += ", ["+index+"] "+fileName
-        }
-        index++
-    }
+    property var pages: pagesList.urls
+
+    /*
     function formatUrls(str) {
         return str.replace("file:///","")
     }
+    */
 
     function addPDFs(fileUrls,fileNames){
-        for(var i = 0; i<fileUrls.length;i++){
-            urls.push(formatUrls(String(fileUrls[i])))
+        for(var i in fileUrls){
+            urls.push(String(fileUrls[i]))
             pdfsList.createListObject(fileNames[i], fileUrls[i]);
         }
         pdfsList.updateUrlsList()
+    }
+
+    function addPages(fileUrl){
+        var numPages = backend.getPages(fileUrl[0])
+        //console.log(numPages)
+        for(var i = 0; i<numPages;i++){
+            //urls.push(formatUrls(String(fileUrls[i])))
+            var pageName = "PAG "+(i+1)
+
+            pagesList.createListObject(pageName, i);
+        }
+        pagesList.updateUrlsList()
     }
 
     Rectangle {
@@ -61,7 +67,7 @@ Item {
                     y: 5
                     height: 33
                     color: "#ffffff"
-                    text: qsTr("Unir PDF")
+                    text: qsTr("Unir PDFs")
                     anchors.left: parent.left
                     anchors.right: parent.right
                     horizontalAlignment: Text.AlignLeft
@@ -98,7 +104,7 @@ Item {
                             font.pointSize: 10
                             font.family: "Sans Serif"
                             placeholderTextColor: "#ffffff"
-                            placeholderText: "Ingrese el nombre el nuevo PDF"
+                            placeholderText: "Ingrese el nombre del nuevo PDF"
                             Layout.fillWidth: true
                             Layout.fillHeight: false
                         }
@@ -121,7 +127,6 @@ Item {
                             onClicked: {
                                 pdfsList.clearModel()
                                 //urls = []
-                                urlsLabel.text = ""
                                 mergeInfoLabel.text = ""
                                 mergePdfText.text = ""
                                 mergePdfText.placeholderTextColor = "#ffffff"
@@ -147,7 +152,6 @@ Item {
                                     mergePdfText.placeholderTextColor = "#c3d3e1"
                                     mergeInfoLabel.text = "PDFS UNIDOS SATISFACTORIAMENTE"
                                     mergePdfText.text = ""
-                                    urlsLabel.text = ""
                                     //index = 1
                                     //urls = []
 
@@ -181,7 +185,7 @@ Item {
                     id: rectangle
                     x: 10
                     y: 119
-                    height: 244
+                    height: 107
                     color: "#ffffff"
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -197,176 +201,208 @@ Item {
                         y: 5
                         height: 100
                         anchors.left: parent.left
-                        anchors.right: dropAreaBg.left
+                        anchors.right: dropFiles1.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        anchors.topMargin: 5
-                        anchors.bottomMargin: 150
+                        anchors.topMargin: 8
+                        anchors.bottomMargin: 38
                         anchors.rightMargin: 10
                         anchors.leftMargin: 16
-                    }
 
-                    Label {
-                        id: urlsLabel
-                        x: 10
-                        y: 164
-                        color: "#0797bd"
-                        text: qsTr("")
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: mergeInfoLabel.bottom
-                        anchors.bottom: parent.bottom
-                        anchors.rightMargin: 10
-                        anchors.leftMargin: 10
-                        anchors.bottomMargin: 30
-                        anchors.topMargin: 20
-                        font.pointSize: 15
-                    }
-
-                    Label {
-                        id: mergeInfoLabel
-                        x: 10
-                        y: 115
-                        color: "#000000"
-                        text: qsTr("")
-                        anchors.left: parent.left
-                        anchors.right: dropAreaBg.left
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        anchors.leftMargin: 10
-                        font.pointSize: 9
-                        anchors.topMargin: 115
-                        anchors.bottomMargin: 100
-                        anchors.rightMargin: 10
-                    }
-
-                    Rectangle {
-                        id: dropAreaBg
-                        x: 721
-                        y: 0
-                        width: 177
-                        color: "#c1e4fd"
-                        radius: 10
-                        border.color: "#0797bd"
-                        border.width: 1
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        clip: urlsLabel.font.weight
-                        anchors.rightMargin: 10
-                        anchors.bottomMargin: 100
-                        anchors.topMargin: 0
-
-                        MouseArea {
-                            id: chooseFile
-                            anchors.fill: parent
-                            onClicked: {
-                                mergeInfoLabel.text = ""
-                                openFile.open()
-                            }
-
-                            FileDialog {
-                                id: openFile
-                                title: "Please Choose a file"
-                                selectMultiple: true
-                                nameFilters: ["PDF File (*.pdf)"]
-
-                                onAccepted: {
-
-                                    var fileUrls = openFile.fileUrls
-
-                                    for(var i = 0; i<fileUrls.length; i++){
-                                        var fileUrl = fileUrls[i]
-                                        var fileName = basename(fileUrl)
-                                        urls.push(formatUrls(String(fileUrl)))
-                                        pdfsList.createListObject(fileName, fileUrl);
-
-                                        //addFileToLabel(fileName)
-                                    }
-
-                                }
-                            }
-                        }
-
-                        DropArea {
-                            id: dropArea;
-                            x: -550
-                            y: 0
-                            anchors.fill: parent
-                            Layout.fillHeight: false
-                            Layout.maximumHeight: 75
-                            Layout.maximumWidth: 80
-                            Layout.preferredHeight: 100
-                            Layout.preferredWidth: 200
-                            Layout.fillWidth: true
-                            onEntered: {
-                                drag.accept (Qt.LinkAction);
-                            }
-                            onDropped: {
-                                for(var i = 0; i<drop.urls.length; i++){
-                                    var fileUrl = drop.urls[i]
-                                    var fileName = basename(fileUrl)
-                                    urls.push(formatUrls(fileUrl))
-                                    //addFileToLabel(basename(drop.urls[i]))
-                                    pdfsList.createListObject(fileName, fileUrl);
-                                }
-                                pdfsList.updateUrlsList()
-
-                            }
-                            onExited: {
-                            }
-
-                            ColumnLayout {
-                                id: dragDropRow
-                                anchors.fill: parent
-                                transformOrigin: Item.Center
-                                Image {
-                                    id: image
-                                    x: 25
-                                    y: 5
-                                    width: 100
-                                    source: "../../images/icons/drag_drop_icon.svg"
-                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                    Layout.maximumHeight: 90
-                                    Layout.maximumWidth: 100
-                                    Layout.preferredHeight: 100
-                                    Layout.preferredWidth: 200
-                                    Layout.fillWidth: true
-                                    asynchronous: false
-                                    sourceSize.width: 0
-                                    fillMode: Image.PreserveAspectFit
-                                }
-                                Label {
-                                    id: dargDropDesc
-                                    x: 10
-                                    text: "Choose a file or drag it here"
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                    font.family: "Sans Serif"
-                                    font.pointSize: 10
-                                    font.bold: false
-                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                                    Layout.fillHeight: false
-                                    Layout.fillWidth: true
-                                    Layout.maximumHeight: 20
-                                    Layout.maximumWidth: 200
-                                    Layout.preferredHeight: 50
-                                    Layout.preferredWidth: 1000
-                                }
-                            }
+                        Label {
+                            id: mergeInfoLabel
+                            x: 0
+                            y: 60
+                            width: 756
+                            color: "#000000"
+                            text: qsTr("")
+                            anchors.left: parent.left
+                            anchors.right: dropFiles1.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.leftMargin: 0
+                            font.pointSize: 9
+                            anchors.topMargin: 63
+                            anchors.bottomMargin: -31
+                            anchors.rightMargin: 10
                         }
                     }
-
 
                     DropFilesArea {
                         id : dropFiles1
-                        x: 513; y: 6
-                        width: 176
-                        height: 138
-                        customFunction: (fileUrls,filenames) => pdfPage.addPDFs(fileUrls,filenames)
+                        x: 782
+                        width: 113
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.rightMargin: 13
+                        anchors.bottomMargin: 8
+                        anchors.topMargin: 6
+                        customText: "Escoja un PDF o arrastrelo aqui"
+                        fileExtensions: ["pdf"]
+                        //Sintax
+                        //customFunction: (fileUrls,fileNames) => myFunction(fileUrls,fileNames)
+                        customFunction: (fileUrls,fileNames) => addPDFs(fileUrls,fileNames)
+                    }
+                }
+
+                Label {
+                    id: mergePdfLabel1
+                    x: 19
+                    y: 232
+                    height: 33
+                    color: "#ffffff"
+                    text: qsTr("Modificar PDF")
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 10
+                    font.pointSize: 16
+                    font.family: "Sans Serif"
+                    anchors.rightMargin: 10
+                }
+
+                Rectangle {
+                    id: rectangleTop2
+                    x: 13
+                    y: 31
+                    height: 69
+                    color: "#ffffff"
+                    radius: 12
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.leftMargin: 10
+                    GridLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 10
+                        CustomTextField {
+                            id: modifyPdfText
+                            width: 590
+                            bgColor: "#03a678"
+                            placeholderText: "Ingrese el nombre el nuevo PDF"
+                            Layout.fillWidth: true
+                            font.pointSize: 10
+                            Layout.fillHeight: false
+                            placeholderTextColor: "#ffffff"
+                            font.family: "Sans Serif"
+                        }
+
+                        CustomButton {
+                            id: clearModifyBttn
+                            width: 50
+                            text: "Limpiar"
+                            onClicked: {
+                                //pdfsList.clearModel()
+                                //urls = []
+                                //mergeInfoLabel.text = ""
+                                //mergePdfText1.text = ""
+                                //mergePdfText1.placeholderTextColor = "#ffffff"
+                            }
+                            btnColorMouseOver: "#78ede7"
+                            btnColorDefault: "#009aeb"
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 40
+                            font.pointSize: 10
+                            Layout.maximumWidth: 70
+                            Layout.maximumHeight: 65535
+                            btnColorClicked: "#ec0606"
+                            font.family: "Sans Serif"
+                            Layout.preferredWidth: 250
+                        }
+
+                        CustomButton {
+                            id: modifyPdfBtn
+                            width: 50
+                            visible: true
+                            text: "Modificar"
+                            onClicked: {
+                                console.log(pagesList.urls)
+
+                            }
+                            btnColorMouseOver: "#fb9b50"
+                            btnColorDefault: "#f98125"
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 40
+                            font.pointSize: 10
+                            Layout.maximumWidth: 100
+                            Layout.maximumHeight: 65535
+                            font.family: "Sans Serif"
+                            Layout.preferredWidth: 250
+                        }
+                        columns: 4
+                        anchors.rightMargin: 10
+                        rows: 1
+                    }
+                    anchors.topMargin: 271
+                    anchors.rightMargin: 10
+                }
+
+                Rectangle {
+                    id: rectangle2
+                    x: 10
+                    y: 346
+                    height: 107
+                    color: "#ffffff"
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: rectangleTop.bottom
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.topMargin: 242
+                    radius: 12
+
+                    PdfsList {
+                        id: pagesList
+                        x: -24
+                        y: -373
+                        width: 755
+                        height: 100
+                        anchors.left: parent.left
+                        anchors.right: dropFiles1.left
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.leftMargin: 16
+                        anchors.bottomMargin: 38
+                        anchors.rightMargin: 10
+                        Label {
+                            id: modifyInfoLabel
+                            x: 0
+                            y: 60
+                            width: 756
+                            color: "#000000"
+                            text: qsTr("")
+                            anchors.left: parent.left
+                            anchors.right: dropFiles1.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.leftMargin: 0
+                            font.pointSize: 9
+                            anchors.bottomMargin: -31
+                            anchors.rightMargin: 10
+                            anchors.topMargin: 63
+                        }
+                        anchors.topMargin: 8
                     }
 
-
+                    DropFilesArea {
+                        id : dropFiles2
+                        x: 792
+                        y: -345
+                        width: 113
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.rightMargin: 13
+                        anchors.bottomMargin: 8
+                        anchors.topMargin: 6
+                        customText: "Escoja un PDF o arrastrelo aqui"
+                        fileExtensions: ["pdf"]
+                        //Sintax
+                        //customFunction: (fileUrls,fileNames) => myFunction(fileUrls,fileNames)
+                        customFunction: (fileUrl,fileName) => {addPages(fileUrl)}
+                    }
                 }
             }
         }

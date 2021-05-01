@@ -45,6 +45,10 @@ class MainWindow(QObject):
         file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
         pdfApp.merge_pdfs(file_paths,output_name)
 
+    @Slot(str, result=int)
+    def getPages(self, str):
+        return pdfApp.getPages(str)
+
     # Send text
     @Slot(str)
     def startSearch(self, text):
@@ -89,6 +93,8 @@ class MainWindow(QObject):
             self.setName.emit("Welcome")
         else:
             self.setName.emit(f"Welcome, {name}")
+
+
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
