@@ -4,19 +4,18 @@ import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.3
 import Qt.labs.folderlistmodel 2.12
 import Qt.labs.animation 1.0
+import Qt.labs.platform 1.1
 import "../controls"
 
 
 Item {
     id: pdfPage
     property var urls: pdfsList.urls
+    property var pdfBuildUrl: dropFiles2.filePaths
     property var pages: pagesList.urls
-
-    /*
-    function formatUrls(str) {
-        return str.replace("file:///","")
-    }
-    */
+    property var defaultFolder: String(StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]).replace("file:///","")
+    property var folderLocation: defaultFolder
+    property var folderLocation2: defaultFolder
 
     function addPDFs(fileUrls,fileNames){
         for(var i in fileUrls){
@@ -27,6 +26,9 @@ Item {
     }
 
     function addPages(fileUrl){
+
+        pagesList.clearModel()
+
         var numPages = backend.getPages(fileUrl[0])
         //console.log(numPages)
         for(var i = 0; i<numPages;i++){
@@ -94,6 +96,7 @@ Item {
 
                     GridLayout {
                         anchors.fill: parent
+                        anchors.bottomMargin: 19
                         anchors.rightMargin: 10
                         anchors.leftMargin: 10
                         rows: 1
@@ -107,6 +110,57 @@ Item {
                             placeholderText: "Ingrese el nombre del nuevo PDF"
                             Layout.fillWidth: true
                             Layout.fillHeight: false
+
+                            CustomButton {
+                                id: selectFolderbtn
+                                x: 671
+                                width: 29
+                                height: 35
+                                //text: "📁"
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                btnColorMouseOver: "#00000000"
+                                btnColorClicked: "#00000000"
+                                btnColorDefault: "#00000000"
+
+                                onClicked: {
+                                    selectFolder1.open()
+                                }
+
+                                FolderDialog {
+                                    id: selectFolder1
+                                    onAccepted: {
+                                        folderLocation = String(selectFolder1.folder).replace("file:///","")
+                                        folderLabel.text = "Guardar en: "+ folderLocation
+                                    }
+                                    //selectFolder: true
+                                    title: "Select Folder"
+
+                                }
+                                highlighted: false
+                                Layout.maximumHeight: 65535
+                                Layout.preferredHeight: 40
+                                font.family: "Sans Serif"
+                                Layout.preferredWidth: 250
+                                anchors.topMargin: 3
+                                Layout.fillWidth: true
+                                anchors.bottomMargin: 2
+                                anchors.rightMargin: 8
+                                font.pointSize: 10
+                                Layout.maximumWidth: 70
+
+                                Image {
+                                    id: iconBtn
+                                    source: "../../images/icons/folder.png"
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    height: 23
+                                    width: 29
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: true
+                                }
+                            }
                         }
 
 
@@ -126,6 +180,8 @@ Item {
                             Layout.preferredHeight: 40
                             onClicked: {
                                 pdfsList.clearModel()
+                                folderLocation = defaultFolder
+                                folderLabel.text = "Guardar en: "+defaultFolder
                                 //urls = []
                                 mergeInfoLabel.text = ""
                                 mergePdfText.text = ""
@@ -147,7 +203,7 @@ Item {
                             onClicked: {
                                 if(mergePdfText.text != "" && urls.length >= 2){
 
-                                    backend.mergePdf(urls, mergePdfText.text)
+                                    backend.mergePdf(urls, folderLocation+"/"+mergePdfText.text)
 
                                     mergePdfText.placeholderTextColor = "#c3d3e1"
                                     mergeInfoLabel.text = "PDFS UNIDOS SATISFACTORIAMENTE"
@@ -164,6 +220,8 @@ Item {
 
                                     if(urls.length < 2) {
                                         mergeInfoLabel.text = "Debe agregar como minimo 2 PDF para unirlos"
+                                    }else{
+                                        mergeInfoLabel.text = ""
                                     }
                                 }
 
@@ -176,6 +234,25 @@ Item {
 
 
 
+                    }
+
+                    Label {
+                        id: folderLabel
+                        x: 10
+                        y: 48
+                        width: 708
+                        height: 21
+                        color: "#777777"
+                        text: qsTr("Guardar en: "+folderLocation)
+                        anchors.left: parent.left
+                        anchors.right: dropFiles1.left
+                        anchors.top: parent.to
+                        anchors.bottom: parent.bottom
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 0
+                        font.pointSize: 9
+                        anchors.rightMargin: 10
+                        anchors.topMargin: 48
                     }
 
 
@@ -230,15 +307,15 @@ Item {
 
                     DropFilesArea {
                         id : dropFiles1
-                        x: 782
-                        width: 113
+                        x: 733
+                        width: 162
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.rightMargin: 13
                         anchors.bottomMargin: 8
                         anchors.topMargin: 6
-                        customText: "Escoja un PDF o arrastrelo aqui"
+                        customText: "Escoja PDFS o arrastrelos aqui"
                         fileExtensions: ["pdf"]
                         //Sintax
                         //customFunction: (fileUrls,fileNames) => myFunction(fileUrls,fileNames)
@@ -276,7 +353,9 @@ Item {
                     anchors.leftMargin: 10
                     GridLayout {
                         anchors.fill: parent
+                        anchors.bottomMargin: 19
                         anchors.leftMargin: 10
+
                         CustomTextField {
                             id: modifyPdfText
                             width: 590
@@ -287,6 +366,57 @@ Item {
                             Layout.fillHeight: false
                             placeholderTextColor: "#ffffff"
                             font.family: "Sans Serif"
+
+                            CustomButton {
+                                id: selectFolderbtn2
+                                x: 671
+                                width: 29
+                                height: 35
+                                text: "📁"
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                btnColorClicked: "#00000000"
+                                btnColorMouseOver: "#00000000"
+                                btnColorDefault: "#00000000"
+                                anchors.rightMargin: 8
+                                anchors.bottomMargin: 2
+                                anchors.topMargin: 3
+                                highlighted: false
+                                Layout.maximumWidth: 70
+                                Layout.fillWidth: true
+                                font.pointSize: 10
+                                Layout.maximumHeight: 65535
+                                Layout.preferredWidth: 250
+                                Layout.preferredHeight: 40
+                                font.family: "Sans Serif"
+                                onPressed: {
+                                    selectFolder2.open()
+                                }
+
+                                FolderDialog {
+                                    id: selectFolder2
+                                    title: "Select Folder"
+                                    //folder: shortcuts.home
+                                    //nameFilters: ["Pdf File (*.pdf)"]
+                                    //selectFolder: true
+                                    onAccepted: {
+                                        folderLocation2 = String(selectFolder2.folder).replace("file:///","")
+                                        folderLabel2.text = "Guardar en: "+ folderLocation2
+                                    }
+                                }
+
+                                Image {
+                                    id: iconBtn2
+                                    source: "../../images/icons/folder.png"
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    height: 23
+                                    width: 29
+                                    fillMode: Image.PreserveAspectFit
+                                    visible: true
+                                }
+                            }
                         }
 
                         CustomButton {
@@ -294,11 +424,16 @@ Item {
                             width: 50
                             text: "Limpiar"
                             onClicked: {
-                                //pdfsList.clearModel()
+
+                                pagesList.clearModel()
+                                dropFiles2.filePaths = []
+                                folderLocation2 = defaultFolder
+                                folderLabel2.text = "Guardar en: "+defaultFolder
+
                                 //urls = []
-                                //mergeInfoLabel.text = ""
-                                //mergePdfText1.text = ""
-                                //mergePdfText1.placeholderTextColor = "#ffffff"
+                                modifyInfoLabel.text = ""
+                                modifyPdfText.text = ""
+                                modifyPdfText.placeholderTextColor = "#ffffff"
                             }
                             btnColorMouseOver: "#78ede7"
                             btnColorDefault: "#009aeb"
@@ -318,7 +453,29 @@ Item {
                             visible: true
                             text: "Modificar"
                             onClicked: {
-                                console.log(pagesList.urls)
+                                if(modifyPdfText.text != "" && pages.length>0){
+
+                                    backend.buildPdf(pdfBuildUrl,pagesList.urls ,folderLocation2+"/"+modifyPdfText.text)
+
+                                    modifyPdfText.placeholderTextColor = "#c3d3e1"
+                                    modifyInfoLabel.text = "PDFS MODIFICADO SATISFACTORIAMENTE"
+                                    modifyPdfText.text = ""
+                                    //index = 1
+                                    //urls = []
+
+                                }
+                                else{
+
+                                    if(modifyPdfText.text == "") {
+                                        modifyPdfText.placeholderTextColor = "#FF0000"
+                                    }
+                                    if(pages.length<=0){
+                                        modifyInfoLabel.text = "DEBE AGREGAR POR LO MENOS 1 PAGINA"
+                                    }else{
+                                        modifyInfoLabel.text = ""
+                                    }
+
+                                }
 
                             }
                             btnColorMouseOver: "#fb9b50"
@@ -331,9 +488,28 @@ Item {
                             font.family: "Sans Serif"
                             Layout.preferredWidth: 250
                         }
+
                         columns: 4
                         anchors.rightMargin: 10
                         rows: 1
+                    }
+
+                    Label {
+                        id: folderLabel2
+                        x: 10
+                        y: 63
+                        width: 708
+                        color: "#777777"
+                        text: qsTr("Guardar en: "+folderLocation2)
+                        anchors.left: parent.left
+                        anchors.right: dropFiles1.left
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.bottomMargin: 0
+                        anchors.topMargin: 48
+                        anchors.leftMargin: 10
+                        font.pointSize: 9
+                        anchors.rightMargin: 10
                     }
                     anchors.topMargin: 271
                     anchors.rightMargin: 10
@@ -357,7 +533,7 @@ Item {
                         id: pagesList
                         x: -24
                         y: -373
-                        width: 755
+                        width: 710
                         height: 100
                         anchors.left: parent.left
                         anchors.right: dropFiles1.left
@@ -388,9 +564,9 @@ Item {
 
                     DropFilesArea {
                         id : dropFiles2
-                        x: 792
+                        x: 732
                         y: -345
-                        width: 113
+                        width: 163
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
@@ -399,11 +575,84 @@ Item {
                         anchors.topMargin: 6
                         customText: "Escoja un PDF o arrastrelo aqui"
                         fileExtensions: ["pdf"]
-                        //Sintax
-                        //customFunction: (fileUrls,fileNames) => myFunction(fileUrls,fileNames)
                         customFunction: (fileUrl,fileName) => {addPages(fileUrl)}
+                        multipleFiles: false
                     }
                 }
+
+
+                Rectangle {
+                    id: rectangleTop3
+                    x: 14
+                    y: 29
+                    width: 269
+                    height: 53
+                    color: "#ffffff"
+                    radius: 12
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.leftMargin: 12
+                    anchors.topMargin: 464
+                    GridLayout {
+                        anchors.fill: parent
+                        anchors.leftMargin: 10
+                        rows: 1
+                        anchors.rightMargin: 10
+                        CustomTextField {
+                            id: extractPagesInput
+                            width: 590
+                            Layout.minimumWidth: 65
+                            placeholderTextColor: "#ffffff"
+                            Layout.fillHeight: false
+                            Layout.fillWidth: true
+                            font.family: "Sans Serif"
+                            bgColor: "#03a678"
+                            font.pointSize: 10
+                            placeholderText: "Ingrese las paginas a escojer"
+                        }
+
+                        CustomButton {
+                            id: extractBtn
+                            width: 50
+                            text: "Get"
+                            onClicked: {
+                                pages = extractPagesInput.text.split(' ')
+                                console.log(pages)
+                                for(var p of pages){
+                                    console.log(p)
+                                    if(p.indexOf("-")!==-1){
+                                        pages.splice(pages.indexOf(p),1)
+                                        var splitedP = p.split('-')
+                                        var from = Number(splitedP[0])
+                                        var to = Number(splitedP[1])
+                                        for(var i = from;i<=to;i++){
+                                            pages.push(String(i))
+                                        }
+                                        //pages.splice(pages.indexOf(p),1)
+                                    }
+                                }
+                                console.log(pages)
+                                pagesList.extractPages(pages.map((pag) => String(parseInt(pag)-1))).sort((pag1,pag2) => {return parseInt(pag1)-parseInt(pag2)})
+
+                                //"2 11 5 15-18" -> ["2","11","5","15-18"] -> ["1","10","4","14","15","16","17"] -> ["1","4","10","14","15","16","17"]
+                                //pagesList.extractPages((extractPagesInput.text.split(' ').map((pag) => String(parseInt(pag)-1))).sort((pag1,pag2) => {return parseInt(pag1)-parseInt(pag2)}))
+                            }
+                            Layout.fillWidth: true
+                            font.family: "Sans Serif"
+                            btnColorMouseOver: "#78ede7"
+                            btnColorDefault: "#009aeb"
+                            Layout.maximumHeight: 65535
+                            Layout.preferredHeight: 40
+                            Layout.maximumWidth: 70
+                            Layout.preferredWidth: 250
+                            font.pointSize: 10
+                            btnColorClicked: "#ec0606"
+                        }
+                        columns: 4
+                    }
+                }
+
+
             }
         }
     }
@@ -412,6 +661,8 @@ Item {
 
     }
 }
+
+
 
 
 /*##^##

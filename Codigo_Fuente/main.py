@@ -111,6 +111,16 @@ class MainWindow(QObject):
     # Result
     result = Signal(str)
 
+    # Build PDF
+    @Slot(str,list,str)
+    def buildPdf(self, path, pagesList ,output_name):
+
+        if ".pdf" not in output_name:
+            output_name += ".pdf"
+
+        path = path.replace('file:///','')
+        pdfApp.buildPdf(path,pagesList,output_name)
+
     # Merge pdfs
     @Slot(str,str)
     def mergePdf(self, file_paths, output_name):

@@ -60,8 +60,8 @@ def buildPdf(path,pagesList,output_name):
     pdf_writer = PdfFileWriter()
     pdf_reader = PdfFileReader(path)
 
-    for i in range(pdf_reader.getNumPages()):
-        pdf_writer.addPage(pdf_reader.getPage(pagesList[i]))
+    for i in range(len(pagesList)):
+        pdf_writer.addPage(pdf_reader.getPage(int(pagesList[i])))
 
     with open(output_name, 'wb') as out:
         pdf_writer.write(out)
