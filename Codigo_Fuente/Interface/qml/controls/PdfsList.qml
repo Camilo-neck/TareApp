@@ -31,7 +31,6 @@ Item {
     }
 
     function clearModel(){
-
         urls = []
         timelineModel.clear()
     }
@@ -41,6 +40,25 @@ Item {
         for(var i = 0; i < visualModel.items.count; i++){
             urls.push(visualModel.items.get(i).model.url)
         }
+    }
+
+    function extractPages(pages) {
+
+        var indexs = pages.map((pag) => urls.indexOf(pag)).sort((i1,i2) => {return i1-i2})
+        console.log("indexs: "+indexs)
+
+        var len = timelineModel.count
+        var n = 0
+
+        for(var i = 0; i<len; i++){
+            if(i !== indexs[n]){
+                timelineModel.remove(n,1)
+
+            }else{
+                n++
+            }
+        }
+        updateUrlsList()
     }
 
     Rectangle {
@@ -92,6 +110,7 @@ Item {
                         onReleased: {
                             held = false
                             updateUrlsList()
+                            console.log(urls)
                         }
 
                         Rectangle {
@@ -138,6 +157,7 @@ Item {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 10
                                 onClicked: {
+
                                     timelineModel.remove(index,1)
                                     updateUrlsList()
                                 }
@@ -175,7 +195,11 @@ Item {
                         DropArea {
                             anchors.fill: parent
                             onEntered: {
-                                visualModel.items.move( drag.source.DelegateModel.itemsIndex, dragArea.DelegateModel.itemsIndex);
+                                var from = drag.source.DelegateModel.itemsIndex
+                                var to = dragArea.DelegateModel.itemsIndex
+                                var n = from>to ? from-to : to-from
+                                visualModel.items.move( from, to);
+                                timelineModel.move( from, to, n)
                             }
 
                         }

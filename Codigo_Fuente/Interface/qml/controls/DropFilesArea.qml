@@ -14,6 +14,8 @@ Rectangle {
     property var customFunction: function() {}
     property var fileExtensions: ["ALL"]
     property var customText: "Select a file or drop it here"
+    property var filePaths: ""
+    property var multipleFiles: true
 
     function basename(str){
         var extensionLength = - (getExtension(str).length +1)
@@ -29,6 +31,10 @@ Rectangle {
     }
 
     function getNameFilters(){
+
+        return !(fileExtensions.includes("ALL")) ? "("+fileExtensions.map((ext) => ext = `*.${ext} `).join(',')+")" : "(*)"
+
+        /*
         if (!(fileExtensions.includes("ALL"))){
             var nameFilers = "("
             fileExtensions.forEach(ext => {nameFilers += "*."+ext+" "})
@@ -37,15 +43,10 @@ Rectangle {
         }
 
         return "(*)"
+        */
+
     }
 
-    /*
-    function getNF(){
-        var nf = fileExtensions.reduce((acum, ext) => (acum += '*.'+ext+' '))
-        console.log(nf)
-        return `(${nf})`
-    }
-    */
 
 
     MouseArea {
@@ -58,13 +59,15 @@ Rectangle {
         FileDialog {
             id: openFile
             title: "Please Choose a file"
-            selectMultiple: true
+            selectMultiple: multipleFiles
 
             nameFilters: [getNameFilters()]
 
             onAccepted: {
 
                 var fileUrls = openFile.fileUrls.map((url) => url.replace("file:///",""))
+                filePaths = fileUrls
+
                 customFunction(fileUrls,getFilenames(fileUrls))
 
             }
@@ -82,37 +85,20 @@ Rectangle {
 
             root.color = "#aaecff"
 
-            /*
-            for(var j in drop.urls){
-                fileUrls.push(drop.urls[j])
-            }
-            */
-
             var fileUrls = drop.urls.map((url) => url.replace("file:///",""))
-            /*
 
-            var realfileUrls = []
+            if(fileUrls.length>1 && multipleFiles==false){}
 
-            if (!(fileExtensions.includes("ALL"))){
+            else{
+                filePaths = fileUrls
 
-                for(var i = 0;i<fileUrls.length;i++){
-
-                    var ext = getExtension(fileUrls[i])
-                    if(fileExtensions.includes(ext)){
-                        realfileUrls.push(fileUrls[i])
-                    }
+                if (!(fileExtensions.includes("ALL"))){
+                    fileUrls = fileUrls.filter((url) => fileExtensions.includes(getExtension(url)))
                 }
-            }else{
-                realfileUrls = fileUrls
+
+                customFunction(fileUrls,getFilenames(fileUrls))
             }
 
-            */
-
-            if (!(fileExtensions.includes("ALL"))){
-                fileUrls = fileUrls.filter((url) => fileExtensions.includes(getExtension(url)))
-            }
-
-            customFunction(fileUrls,getFilenames(fileUrls))
 
 
         }
@@ -138,8 +124,8 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.maximumHeight: 90
                 Layout.maximumWidth: 100
-                Layout.preferredHeight: 100
-                Layout.preferredWidth: 200
+                Layout.preferredHeight: 50
+                Layout.preferredWidth: 50
                 Layout.fillWidth: false
                 asynchronous: false
                 sourceSize.width: 0
