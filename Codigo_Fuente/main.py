@@ -3,11 +3,85 @@ import sys
 import os
 import datetime
 
-from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+# Import Circular Progress
+from circular_progress import CircularProgress
+from ui_splash_screen import Ui_SplashScreen
+
+
 import consultant
 import pdfApp
+
+counter = 0
+#Splash Screen
+class SplashScreen(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_SplashScreen()
+        self.ui.setupUi(self)
+
+        # Remove Title bar
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # Import Circular Progress
+        self.progress = CircularProgress()
+        self.progress.width = 270
+        self.progress.height = 270
+        self.progress.value= 80
+        self.progress.progress_color = QColor(85, 233, 245, 96)
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+        self.progress.move(15, 15)
+        self.progress.add_shadow(True)
+        self.progress.font_size = 25
+        self.progress.bg_color = QColor( 210, 239, 245, 160)
+        self.progress.enable_bg = True
+        self.progress.setParent(self.ui.centralwidget)
+        self.progress.show()
+
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0,0,0,120))
+        self.setGraphicsEffect(self.shadow)
+
+        # QTimer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(20)
+
+        self.show()
+
+    def update(self):
+        global counter
+
+        # Set the value to progress bar
+        self.progress.setValue(counter)
+
+        # Close the splash screen and open main app
+        if counter >= 100:
+            # Stop timer
+            self.timer.stop()
+            #Close
+            self.destroy()
+
+            # Open main app
+            engine = QQmlApplicationEngine()
+            engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
+            engine.start()
+
+            if not engine.rootObjects():
+                sys.exit(-1)
+
+
+
+        # Increaase Counter
+        counter += 1
 
 class MainWindow(QObject):
     def __init__(self):
@@ -107,16 +181,10 @@ class MainWindow(QObject):
 
 
 if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
+    app = QApplication(sys.argv)
 
-    # Get Context
-    main = MainWindow()
-    engine.rootContext().setContextProperty("backend", main)
+    window = SplashScreen()
 
-    # Load QML File
-    engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
-
-    if not engine.rootObjects():
-        sys.exit(-1)
     sys.exit(app.exec_())
+
+

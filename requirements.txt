@@ -3,3 +3,5 @@ bs4
 Wikipedia
 google
 pypdf2
+pyside2
+pyside6
