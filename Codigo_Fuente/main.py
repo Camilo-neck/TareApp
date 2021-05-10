@@ -10,10 +10,10 @@ from PySide2.QtWidgets import *
 
 # Import Circular Progress
 from circular_progress import CircularProgress
-from ui_splash_screen import Ui_SplashScreen
+from circular_progress import Ui_SplashScreen
 
 
-import consultant
+from consultant import Consultant
 import pdfApp
 
 counter = 0
@@ -32,7 +32,6 @@ class SplashScreen(QMainWindow):
         self.progress = CircularProgress()
         self.progress.width = 270
         self.progress.height = 270
-        self.progress.value= 80
         self.progress.progress_color = QColor(85, 233, 245, 96)
         self.progress.setFixedSize(self.progress.width, self.progress.height)
         self.progress.move(15, 15)
@@ -72,6 +71,9 @@ class SplashScreen(QMainWindow):
 
             # Open main app
             engine = QQmlApplicationEngine()
+
+            engine.rootContext().setContextProperty("backend", MainWindow())
+
             engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
             engine.start()
 
@@ -124,9 +126,13 @@ class MainWindow(QObject):
         return pdfApp.getPages(str)
 
     # Send text
-    @Slot(str)
-    def startSearch(self, text):
-        texto = consultant.main(text)
+    @Slot(str, bool)
+    def startSearch(self, text, toggled):
+        consultant = Consultant()
+        consultant.set_query(text)
+        consultant.set_engine("W")
+        consultant.openai_response = toggled
+        texto = consultant.consult()
         self.result.emit(str(texto))
 
     # Read Text
@@ -176,5 +182,3 @@ if __name__ == "__main__":
     window = SplashScreen()
 
     sys.exit(app.exec_())
-
-

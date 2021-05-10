@@ -47,7 +47,7 @@ class CircularProgress(QWidget):
         # Set progress parameters
         width = self.width - self.progress_width
         height = self.height - self.progress_width
-        margin = int(self.progress_width / 2)
+        margin = self.progress_width // 2
         value = self.value * 360 / self.max_value
 
         # Painter
@@ -72,12 +72,12 @@ class CircularProgress(QWidget):
         if self.enable_bg:
             pen.setColor(QColor(self.bg_color))
             paint.setPen(pen)
-            paint.drawArc(int(margin), int(margin), int(width), int(height), int(-90*16), int(-360*16))
+            paint.drawArc(margin, margin, width, height, -90*16, -360*16)
 
         pen.setColor(QColor(self.progress_color))
         # Create ARK / Circular Progress
         paint.setPen(pen)
-        paint.drawArc(int(margin), int(margin), int(width), int(height), int(-90*16), int(-value*16))
+        paint.drawArc(margin, margin, width, height, -90*16, -value*16)
 
 
         # Create Text

@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.11
 import QtQml.Models 2.2
 import "../controls"
 
@@ -90,6 +90,26 @@ Item{
                 width: 177
                 height: 128
                 customFunction: (fileUrls,fileNames) => testF(fileUrls,fileNames)
+            }
+
+            StackLayout {
+                id: stackLayout
+                x: 55
+                y: 97
+                width: 216
+                height: 226
+                currentIndex: 0
+
+                Rectangle {
+                    id: rec1
+                    color: '#c00'
+                    anchors.fill: parent
+                }
+                Rectangle {
+                    id: rec2
+                    color: '#0c0'
+                    anchors.fill: parent
+                }
             }
 
     }

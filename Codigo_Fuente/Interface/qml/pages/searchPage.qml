@@ -67,22 +67,18 @@ Item {
 
                     // Change Show/Hide Frame
                     onClicked: {
-                        backend.startSearch(inputText.text)
+                        backend.startSearch(inputText.text, responseType.checked)
                     }
 
                 }
 
                 Switch {
-                    id: switchHome
+                    id: responseType
                     Layout.fillHeight: false
                     Layout.fillWidth: false
-                    checked: true
+                    checked: false
                     Layout.preferredHeight: 40
                     Layout.preferredWidth: 68
-
-                    onToggled: {
-                        backend.showHideRectangle(switchHome.checked)
-                    }
                 }
             }
 
@@ -250,6 +246,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:800}D{i:15}D{i:16}D{i:14;locked:true}
+    D{i:0;autoSize:true;height:613;width:988}D{i:14;locked:true}
 }
 ##^##*/
