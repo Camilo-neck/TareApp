@@ -13,7 +13,7 @@ from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
 
 
-from consultant import Consultant
+from Data import Wiki, Google, Url, MyText
 import pdfApp
 
 counter = 0
@@ -109,7 +109,7 @@ class MainWindow(QObject):
     textField = ""
 
     # Result
-    result = Signal(str)
+    response = Signal(str)
 
     # Build PDF
     @Slot(str,list,str)
@@ -136,14 +136,21 @@ class MainWindow(QObject):
         return pdfApp.getPages(str)
 
     # Send text
-    @Slot(str, bool)
-    def startSearch(self, text, toggled):
-        consultant = Consultant()
+    @Slot(str, bool, str)
+    def startSearch(self, text, openai, engine):
+        if engine == 'W':
+            consultant = Wiki()
+        if engine == 'G':
+            consultant = Google()
+        if engine == 'U':
+            consultant = Url()
+        if engine == 'T':
+            consultant = MyText()
+        
         consultant.set_query(text)
-        consultant.set_engine("W")
-        consultant.openai_response = toggled
+        consultant.set_openai(openai)
         texto = consultant.consult()
-        self.result.emit(str(texto))
+        self.response.emit(str(texto))
 
     # Read Text
     @Slot(str)
