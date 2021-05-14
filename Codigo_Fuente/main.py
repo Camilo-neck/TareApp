@@ -111,29 +111,31 @@ class MainWindow(QObject):
     # Result
     response = Signal(str)
 
-    # Build PDF
-    @Slot(str,list,str)
-    def buildPdf(self, path, pagesList ,output_name):
-
-        if ".pdf" not in output_name:
-            output_name += ".pdf"
-
-        path = path.replace('file:///','')
-        pdfApp.buildPdf(path,pagesList,output_name)
-
     # Merge pdfs
     @Slot(str,str)
-    def mergePdf(self, file_paths, output_name):
+    def mergePdf(self, file_paths, output_path):
 
-        if ".pdf" not in output_name:
-            output_name += ".pdf"
-
+        if ".pdf" not in output_path: output_path += ".pdf"
         file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
-        pdfApp.merge_pdfs(file_paths,output_name)
 
+        p = PdfApp(paths = file_paths,outPath = output_path)
+        p.merge_pdfs()
+
+    # Build PDF
+    @Slot(str,list,str)
+    def buildPdf(self,path, pages_list ,output_path):
+
+        if ".pdf" not in output_path: output_path += ".pdf"
+        path = path.replace('file:///','')
+
+        p = PdfApp(paths = path, outPath = output_path, pagesList = pages_list)
+        p.buildPdf()
+
+    # get Pdf Num pages
     @Slot(str, result=int)
     def getPages(self, str):
-        return pdfApp.getPages(str)
+        p = PdfApp(str)
+        return p.getPages()
 
     # Send text
     @Slot(str, bool, str)

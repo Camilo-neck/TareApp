@@ -1,70 +1,29 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-def merge_pdfs(paths,output_name):
-    pdf_writer = PdfFileWriter()
+class PdfApp():
+    def __init__(self, paths = [] ,outPath = "", pagesList = []):       
+        self.__pdfWriter = PdfFileWriter()
+        self.__paths = paths
+        self.__outPath = outPath
+        self.__pagesList = pagesList
 
-    for path in paths:
-        pdf_reader = PdfFileReader(path)
-        for page in range(pdf_reader.getNumPages()):
-            pdf_writer.addPage(pdf_reader.getPage(page))
+    def getPages(self):
+        return PdfFileReader(self.__paths).getNumPages()
 
-    with open(output_name, 'wb') as out:
-        pdf_writer.write(out)
+    def merge_pdfs(self):
+        for path in self.__paths:
+            self.__pdfReader = PdfFileReader(path)
+            for page in range(self.__pdfReader.getNumPages()):
+                self.__pdfWriter.addPage(self.__pdfReader.getPage(page))
 
-def extract_page(path,page):
-    page -= 1
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(path)
-    pdf_writer.addPage(pdf_reader.getPage(page))
+        with open(self.__outPath, 'wb') as out:
+            self.__pdfWriter.write(out)
 
-    if ".pdf" in path:
-        path = path.replace(".pdf",'')
-    name = path
+    def buildPdf(self):
+        self.__pdfReader = PdfFileReader(self.__paths)
 
-    with open(name+"_pag_"+str(page+1)+'.pdf', 'wb') as out:
-        pdf_writer.write(out)
+        for i in range(len(self.__pagesList)):
+            self.__pdfWriter.addPage(self.__pdfReader.getPage(int(self.__pagesList[i])))
 
-def insert_page(path1,path2,pageNum_Writter,pageNum_Getter,output_name):
-    NewPage = PdfFileReader(path2).getPage(pageNum_Getter-1)
-
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(path1)
-
-    for page in range(pdf_reader.getNumPages()):
-        if page == pageNum_Writter-1:
-            pdf_writer.addPage(NewPage)
-        pdf_writer.addPage(pdf_reader.getPage(page))
-
-    with open(output_name, 'wb') as out:
-        pdf_writer.write(out)
-
-def swap_pages(path,page1,page2,output_name):
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(path)
-    
-    for page in range(pdf_reader.getNumPages()):
-        if page == page1-1:
-            pdf_writer.addPage(pdf_reader.getPage(page2-1))
-            continue
-        
-        if page == page2-1:
-            pdf_writer.addPage(pdf_reader.getPage(page1-1))
-            continue
-
-        pdf_writer.addPage(pdf_reader.getPage(page))
-    
-    with open(output_name, 'wb') as out:
-        pdf_writer.write(out)
-
-def buildPdf(path,pagesList,output_name):
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(path)
-
-    for i in range(len(pagesList)):
-        pdf_writer.addPage(pdf_reader.getPage(int(pagesList[i])))
-
-    with open(output_name, 'wb') as out:
-        pdf_writer.write(out)
-
-def getPages(path):
-    return PdfFileReader(path).getNumPages()
+        with open(self.__outPath, 'wb') as out:
+            self.__pdfWriter.write(out)

@@ -533,15 +533,14 @@ Item {
                         id: pagesList
                         x: -24
                         y: -373
-                        width: 710
                         height: 100
                         anchors.left: parent.left
-                        anchors.right: dropFiles1.left
+                        anchors.right: dropFiles2.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.leftMargin: 16
                         anchors.bottomMargin: 38
-                        anchors.rightMargin: 10
+                        anchors.rightMargin: 6
                         Label {
                             id: modifyInfoLabel
                             x: 0
@@ -667,6 +666,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}
+    D{i:0;autoSize:true;height:613;width:988}D{i:29}
 }
 ##^##*/
