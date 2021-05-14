@@ -16,6 +16,8 @@ from circular_progress import Ui_SplashScreen
 from consultant import Consultant
 from pdfApp import PdfApp
 
+import os
+
 counter = 0
 #Splash Screen
 class SplashScreen(QMainWindow):
@@ -110,6 +112,19 @@ class MainWindow(QObject):
 
     # Result
     result = Signal(str)
+
+
+    @Slot(str,str)
+    def testEtiquetado(self, urls,etiqueta):
+
+        urls = [e.replace('file:///','') for e in urls.split(',')]
+
+        for path in urls:
+            fileName, ext = os.path.splitext(path)
+            try:
+                os.rename(path , fileName+" "+etiqueta+ext)
+            except:
+                print("ERROR")
 
     # Merge pdfs
     @Slot(str,str)
