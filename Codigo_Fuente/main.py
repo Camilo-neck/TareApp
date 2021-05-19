@@ -13,7 +13,7 @@ from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
 
 
-from consultant import Consultant
+from Data import Wiki, Google, Url, MyText
 from pdfApp import PdfApp
 
 import os
@@ -111,16 +111,32 @@ class MainWindow(QObject):
     textField = ""
 
     # Result
-    result = Signal(str)
+    response = Signal(str)
 
+    # Obtener lista de archivos de una carpeta
+    @Slot(str, result = list)
+    def getFilesFromFolder(self, folderUrl):
+        if not os.path.isdir(folderUrl): return ["NULL"]
+        #print(">>>>>>>>>>>>",folderUrl)
+        fileUrls = []
+        #if os.path.isfile(f)
+        files = [f for f in os.listdir(folderUrl)]
+        for file in files:
+            fileUrl = folderUrl+'//'+file
+            if not os.path.isdir(fileUrl):
+                fileUrls.append(fileUrl)
+        #print("++++++++++++++++",fileUrls)
+        return fileUrls
 
+    # Etiquetar archivos
     @Slot(str,str)
-    def testEtiquetado(self, urls,etiqueta):
+    def tagFiles(self, urls,etiqueta):
 
         urls = [e.replace('file:///','') for e in urls.split(',')]
 
         for path in urls:
             fileName, ext = os.path.splitext(path)
+            print("FILE PATH >>>>>>>>",path)
             try:
                 os.rename(path , fileName+" "+etiqueta+ext)
             except:
@@ -153,14 +169,21 @@ class MainWindow(QObject):
         return p.getPages()
 
     # Send text
-    @Slot(str, bool)
-    def startSearch(self, text, toggled):
-        consultant = Consultant()
+    @Slot(str, bool, str)
+    def startSearch(self, text, openai, engine):
+        if engine == 'W':
+            consultant = Wiki()
+        if engine == 'G':
+            consultant = Google()
+        if engine == 'U':
+            consultant = Url()
+        if engine == 'T':
+            consultant = MyText()
+        
         consultant.set_query(text)
-        consultant.set_engine("W")
-        consultant.openai_response = toggled
+        consultant.set_openai(openai)
         texto = consultant.consult()
-        self.result.emit(str(texto))
+        self.response.emit(str(texto))
 
     # Read Text
     @Slot(str)

@@ -18,6 +18,8 @@ Item {
     property var folderLocation2: defaultFolder
 
     function addPDFs(fileUrls,fileNames){
+        console.log("FILEURLS:",fileUrls)
+        console.log("FILENAMES;",fileNames)
         for(var i in fileUrls){
             urls.push(String(fileUrls[i]))
             pdfsList.createListObject(fileNames[i], fileUrls[i]);
@@ -315,6 +317,7 @@ Item {
                         anchors.rightMargin: 13
                         anchors.bottomMargin: 8
                         anchors.topMargin: 6
+                        multipleFiles: true
                         customText: "Escoja PDFS o arrastrelos aqui"
                         fileExtensions: ["pdf"]
                         //Sintax
@@ -372,7 +375,7 @@ Item {
                                 x: 671
                                 width: 29
                                 height: 35
-                                text: "📁"
+                                //text: "📁"
                                 anchors.right: parent.right
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom

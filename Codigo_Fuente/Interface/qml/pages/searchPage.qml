@@ -2,8 +2,22 @@ import QtQuick 2.0
 import QtQuick.Controls 2.15
 import "../controls"
 import QtQuick.Layouts 1.11
+import QtGraphicalEffects 1.15
 
 Item {
+
+    function changeStack(){
+        if (wikiRadio.checked){
+            return 0
+        }else if (googleRadio.checked) {
+            return 1
+        }else if(textRadio.checked) {
+            return 2
+        }else if (urlRadio.checked){
+            return 3
+        }
+    }
+
     Rectangle {
         id: bg
         color: "#89c2db"
@@ -13,231 +27,935 @@ Item {
         anchors.leftMargin: 0
         anchors.topMargin: 0
 
-        Rectangle {
-            id: rectangleTop
-            color: "#03738c"
-            height: 69
+        StackLayout {
+            id: stackLayout
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 50
-            anchors.leftMargin: 50
-            anchors.topMargin: 40
-            radius: 12
-
-            GridLayout {
-                anchors.fill: parent
-                anchors.rightMargin: 10
-                anchors.leftMargin: 10
-                rows: 1
-                columns:  3
-                CustomTextField {
-                    id: inputText
-                    font.pointSize: 10
-                    font.family: "Sans Serif"
-                    fontColor: "#151212"
-                    placeholderTextColor: "#121314"
-                    bgColor: "#ffffff"
-                    Layout.fillWidth: true
-                    Layout.fillHeight: false
-                    Keys.onEnterPressed: {
-                        backend.welcomeText(inputText.text)
-                        inputText.text = ""
-                    }
-                    Keys.onReturnPressed: {
-                        backend.welcomeText(inputText.text)
-                        inputText.text = ""
-                    }
-
-                }
-
-                CustomButton {
-                    id: customBtn
-                    text: "Buscar"
-                    font.pointSize: 10
-                    font.family: "Sans Serif"
-                    btnColorMouseOver: "#fb9850"
-                    btnColorClicked: "#009925"
-                    Layout.maximumHeight: 65535
-                    btnColorDefault: "#f98125"
-                    Layout.maximumWidth: 150
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 250
-
-                    // Change Show/Hide Frame
-                    onClicked: {
-                        backend.startSearch(inputText.text, responseType.checked)
-                    }
-
-                }
-
-                Switch {
-                    id: responseType
-                    Layout.fillHeight: false
-                    Layout.fillWidth: false
-                    checked: false
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 68
-                }
-            }
-
-
-        }
-
-        Rectangle {
-            id: rectangleVisible
-            color: "#ffffff"
-            radius: 12
-            anchors.fill: parent
-            anchors.rightMargin: 50
-            anchors.bottomMargin: 31
-            anchors.leftMargin: 50
-            anchors.topMargin: 137
-
-            Label {
-                id: welcomeLabel
-                y: 5
-                height: 33
-                color: "#12181d"
-                text: qsTr("Welcome")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Sans Serif"
-                anchors.rightMargin: 8
-                anchors.leftMargin: 12
-                font.pointSize: 16
-            }
-
-            Label {
-                id: dateLabel
-                y: 31
-                height: 33
-                color: "#eeb211"
-                text: qsTr("Date")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Sans Serif"
-                font.bold: false
-                anchors.rightMargin: 8
-                anchors.leftMargin: 12
-                font.pointSize: 14
-            }
-
-            // ScrollView {
-            //     id: scrollView
-            //     anchors.left: parent.left
-            //     anchors.right: parent.right
-            //     anchors.top: dateLabel.bottom
-            //     anchors.bottom: parent.bottom
-            //     anchors.topMargin: 10
-            //     anchors.bottomMargin: 17
-            //     anchors.rightMargin: 10
-            //     anchors.leftMargin: 10
-
-            //     Text {
-            //             id: textHome
-            //             color: "#a9b2c8"
-            //             text: ""
-            //             wrapMode: Text.WordWrap
-            //             textFormat: Text.AutoText
-            //             padding: 10
-            //             anchors.fill: parent
-            //             font.pixelSize: 12
-            //         }
-            // }
-            Flickable {
-                id: flickable
-                clip: true
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: dateLabel.bottom
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 5
-                anchors.bottomMargin: 17
-                anchors.rightMargin: 10
-                anchors.leftMargin: 10
-
-                TextArea.flickable: TextArea {
-                    id: textHome
-                    padding: 10
-                    wrapMode: Text.WordWrap
-                    font.family: "Sans Serif"
-                    placeholderTextColor: "#0c1012"
-                    textFormat: Text.AutoText
-                    selectByMouse: true
-                    selectedTextColor: "#ffffff"
-                    selectionColor: "#ff007f"
-                    color: "#000000"
-                    font.pixelSize: 14
-                    text: ""
-
-                    ColumnLayout {
-                        id: columnLayout
-                        x: 227
-                        y: 185
-                        width: 100
-                        height: 100
-                    }
-                }
-
-                ScrollBar.vertical: ScrollBar{}
-            }
-        }
-
-        Column {
-            id: column
-            x: 294
-            width: 200
-            anchors.top: rectangleVisible.bottom
+            anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            anchors.horizontalCenterOffset: 5
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 7
-            anchors.topMargin: 7
+            currentIndex: changeStack()
+            // Change to function
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+            anchors.bottomMargin: 10
+            anchors.topMargin: 3
 
-            Label {
-                id: label
-                color: "#000000"
-                text: qsTr("Powered by ")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                font.family: "Sans Serif"
-                font.pointSize: 11
-                anchors.bottomMargin: 0
-                anchors.topMargin: 0
-                anchors.rightMargin: 130
-                anchors.leftMargin: 0
+            Item {
+                anchors.fill : parent
+
+                Rectangle {
+                    id: rectangle
+                    color: "#97d4f0"
+                    radius:12
+                    anchors.fill: parent
+
+                    Column {
+                        id: columnLayout1
+                        anchors.fill: parent
+                        anchors.rightMargin: 10
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 10
+                        anchors.topMargin: 10
+
+                        Rectangle {
+                            id: rectangleTop
+                            color: "#03738c"
+                            height: 69
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: label1.bottom
+                            anchors.rightMargin: 50
+                            anchors.leftMargin: 50
+                            anchors.topMargin: 7
+                            radius: 12
+
+                            GridLayout {
+                                anchors.fill: parent
+                                anchors.rightMargin: 10
+                                anchors.leftMargin: 10
+                                rows: 1
+                                columns:  3
+                                CustomTextField {
+                                    id: inputText
+                                    font.pointSize: 10
+                                    font.family: "Sans Serif"
+                                    fontColor: "#151212"
+                                    placeholderTextColor: "#121314"
+                                    bgColor: "#ffffff"
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: false
+                                    Keys.onEnterPressed: {
+                                        backend.startSearch(inputText.text, responseType.checked, "W")
+                                        inputText.text = ""
+                                    }
+                                    Keys.onReturnPressed: {
+                                        backend.startSearch(inputText.text, responseType.checked, "W")
+                                        inputText.text = ""
+                                    }
+
+                                }
+
+                                CustomButton {
+                                    id: customBtn
+                                    text: "Buscar"
+                                    font.pointSize: 10
+                                    font.family: "Sans Serif"
+                                    btnColorMouseOver: "#fb9850"
+                                    btnColorClicked: "#009925"
+                                    Layout.maximumHeight: 65535
+                                    btnColorDefault: "#f98125"
+                                    Layout.maximumWidth: 150
+                                    Layout.fillWidth: true
+                                    Layout.preferredHeight: 40
+                                    Layout.preferredWidth: 250
+
+                                    // Change Show/Hide Frame
+                                    onClicked: {
+                                        backend.startSearch(String(inputText.text), responseType.checked, "W")
+                                        inputText.text = ""
+                                    }
+
+                                }
+
+                                Switch {
+                                    id: responseType
+                                    text: "Use Open AI"
+                                    font.capitalization: Font.MixedCase
+                                    Layout.maximumWidth: 200
+                                    Layout.fillHeight: false
+                                    Layout.fillWidth: false
+                                    checked: false
+                                    Layout.preferredHeight: 40
+                                    Layout.preferredWidth: 140
+                                }
+                            }
+
+
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleTop.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.rightMargin: 50
+                            anchors.bottomMargin: 31
+                            anchors.leftMargin: 50
+                            anchors.topMargin: 28
+                            Flickable {
+                                id: flickable
+                                clip: true
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.topMargin: 10
+                                anchors.bottomMargin: 17
+                                anchors.rightMargin: 10
+                                anchors.leftMargin: 10
+
+                                TextArea.flickable: TextArea {
+                                    id: textHome
+                                    padding: 10
+                                    wrapMode: Text.WordWrap
+                                    font.capitalization: Font.MixedCase
+                                    font.family: "Sans Serif"
+                                    placeholderTextColor: "#0c1012"
+                                    textFormat: Text.AutoText
+                                    selectByMouse: true
+                                    selectedTextColor: "#ffffff"
+                                    selectionColor: "#ff007f"
+                                    color: "#000000"
+                                    font.pixelSize: 14
+                                    text: ""
+                                }
+
+                                ScrollBar.vertical: ScrollBar{}
+                            }
+                        }
+
+                        Column {
+                            id: column
+                            width: 200
+                            anchors.top: rectangleVisible.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenterOffset: 5
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottomMargin: 7
+                            anchors.topMargin: 7
+
+                            Label {
+                                id: label
+                                color: "#000000"
+                                text: qsTr("Powered by ")
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                font.family: "Sans Serif"
+                                font.pointSize: 11
+                                anchors.bottomMargin: 0
+                                anchors.topMargin: 0
+                                anchors.rightMargin: 130
+                                anchors.leftMargin: 0
+                            }
+
+                            Image {
+                                id: image
+                                anchors.left: label.right
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                source: "../../images/icons/OpenAI_Logo.svg"
+                                antialiasing: true
+                                anchors.topMargin: 0
+                                anchors.bottomMargin: 0
+                                anchors.rightMargin: 0
+                                anchors.leftMargin: 5
+                                fillMode: Image.PreserveAspectFit
+                            }
+                        }
+
+                        Label {
+                            id: label1
+                            color: "#000000"
+                            text: qsTr("MAKE YOUR SEARCH ON WIKIPEDA")
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            font.pointSize: 15
+                            anchors.leftMargin: 80
+                            anchors.topMargin: 20
+                        }
+
+                        Image {
+                            id: image1
+                            width: 40
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: rectangleTop.top
+                            source: "../../images/icons/wikipedia_icon.png"
+                            anchors.bottomMargin: 5
+                            anchors.leftMargin: 30
+                            anchors.topMargin: 10
+                            fillMode: Image.PreserveAspectFit
+                            antialiasing: false
+                        }
+                    }
+
+                }
             }
+            Item {
+                Rectangle {
+                    id: rectangle3
+                    color: "#97d4f0"
+                    radius: 12
+                    anchors.fill: parent
+
+                    Column {
+                        id: columnLayout2
+                        anchors.fill: parent
+                        Rectangle {
+                            id: rectangleTop1
+                            height: 69
+                            color: "#03738c"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: label3.bottom
+                            GridLayout {
+                                anchors.fill: parent
+                                CustomTextField {
+                                    id: inputText1
+                                    Layout.fillHeight: false
+                                    Keys.onReturnPressed: {
+                                        backend.startSearch(inputText1.text, responseType1.checked, "G")
+                                        inputText1.text = ""
+                                    }
+                                    font.family: "Sans Serif"
+                                    bgColor: "#ffffff"
+                                    fontColor: "#151212"
+                                    font.pointSize: 10
+                                    Keys.onEnterPressed: {
+                                        backend.startSearch(inputText1.text, responseType1.checked, "G")
+                                        inputText1.text = ""
+                                    }
+                                    placeholderTextColor: "#121314"
+                                    Layout.fillWidth: true
+                                }
+
+                                CustomButton {
+                                    id: customBtn1
+                                    text: "Buscar"
+                                    btnColorDefault: "#f98125"
+                                    Layout.preferredHeight: 40
+                                    Layout.maximumHeight: 65535
+                                    font.family: "Sans Serif"
+                                    Layout.preferredWidth: 250
+                                    onClicked: {
+                                        backend.startSearch(inputText1.text, responseType1.checked, "G")
+                                        inputText1.text = ""
+                                    }
+                                    font.pointSize: 10
+                                    Layout.maximumWidth: 150
+                                    btnColorMouseOver: "#fb9850"
+                                    btnColorClicked: "#009925"
+                                    Layout.fillWidth: true
+                                }
+
+                                Switch {
+                                    id: responseType1
+                                    text: "Use Open AI"
+                                    Layout.preferredHeight: 40
+                                    Layout.fillHeight: false
+                                    Layout.preferredWidth: 140
+                                    checked: false
+                                    Layout.maximumWidth: 200
+                                    Layout.fillWidth: false
+                                }
+                                rows: 1
+                                columns: 3
+                                anchors.rightMargin: 10
+                                anchors.leftMargin: 10
+                            }
+                            anchors.rightMargin: 50
+                            anchors.leftMargin: 50
+                            anchors.topMargin: 7
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible1
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleTop1.bottom
+                            anchors.bottom: parent.bottom
+                            Flickable {
+                                id: flickable1
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.rightMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: textHome1
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 14
+                                    wrapMode: Text.WordWrap
+                                    font.family: "Sans Serif"
+                                    textFormat: Text.AutoText
+                                    selectByMouse: true
+                                    selectionColor: "#ff007f"
+                                    placeholderTextColor: "#0c1012"
+                                    selectedTextColor: "#ffffff"
+                                    padding: 10
+                                }
+                                clip: true
+                                anchors.leftMargin: 10
+                                anchors.topMargin: 10
+                                anchors.bottomMargin: 17
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                            }
+                            anchors.rightMargin: 50
+                            anchors.leftMargin: 50
+                            anchors.bottomMargin: 31
+                            anchors.topMargin: 28
+                        }
+
+                        Column {
+                            id: column1
+                            width: 200
+                            anchors.top: rectangleVisible1.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.horizontalCenterOffset: 5
+                            Label {
+                                id: label2
+                                color: "#000000"
+                                text: qsTr("Powered by ")
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                font.family: "Sans Serif"
+                                anchors.rightMargin: 130
+                                font.pointSize: 11
+                                anchors.leftMargin: 0
+                                anchors.bottomMargin: 0
+                                anchors.topMargin: 0
+                            }
+
+                            Image {
+                                id: image2
+                                anchors.left: label2.right
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                source: "../../images/icons/OpenAI_Logo.svg"
+                                antialiasing: true
+                                fillMode: Image.PreserveAspectFit
+                                anchors.rightMargin: 0
+                                anchors.leftMargin: 5
+                                anchors.topMargin: 0
+                                anchors.bottomMargin: 0
+                            }
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottomMargin: 7
+                            anchors.topMargin: 7
+                        }
+
+                        Label {
+                            id: label3
+                            color: "#000000"
+                            text: qsTr("REALIZA TU BÚSQUEDA EN GOOGLE GOOGLE (FEEL LUCKY)")
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.leftMargin: 80
+                            font.pointSize: 15
+                            anchors.topMargin: 20
+                        }
+
+                        Image {
+                            id: image3
+                            width: 40
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: rectangleTop1.top
+                            source: "../../images/icons/google_icon.png"
+                            antialiasing: false
+                            fillMode: Image.PreserveAspectFit
+                            anchors.leftMargin: 30
+                            anchors.topMargin: 10
+                            anchors.bottomMargin: 5
+                        }
+                        anchors.rightMargin: 10
+                        anchors.leftMargin: 10
+                        anchors.topMargin: 10
+                        anchors.bottomMargin: 10
+                    }
+                }
+            }
+
+            Item {
+                Rectangle {
+                    id: rectangle1
+                    color: "#97d4f0"
+                    radius: 12
+                    anchors.fill: parent
+
+                    Column {
+                        id: columnLayout3
+                        anchors.fill: parent
+                        anchors.rightMargin: 10
+                        Rectangle {
+                            id: rectangleTop2
+                            height: 69
+                            color: "#03738c"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.rightMargin: 120
+                            GridLayout {
+                                anchors.fill: parent
+                                columnSpacing: 0
+                                rowSpacing: 3
+                                anchors.rightMargin: 10
+
+                                Label {
+                                    id: label5
+                                    color: "#ffffff"
+                                    text: qsTr("INGRESA Y RESUME TU PROPIO TEXTO")
+                                    font.pointSize: 15
+                                }
+
+                                CustomButton {
+                                    id: customBtn2
+                                    text: "Resumir"
+                                    font.family: "Sans Serif"
+                                    Layout.preferredWidth: 250
+                                    Layout.fillWidth: true
+                                    Layout.maximumHeight: 65535
+                                    onClicked: {
+                                        backend.startSearch(usrText.text, responseType2.checked, "T")
+                                        inputText2.text = ""
+                                    }
+                                    font.pointSize: 10
+                                    btnColorMouseOver: "#fb9850"
+                                    btnColorDefault: "#f98125"
+                                    Layout.preferredHeight: 40
+                                    btnColorClicked: "#009925"
+                                    Layout.maximumWidth: 150
+                                }
+
+                                Switch {
+                                    id: responseType2
+                                    text: "Use Open AI"
+                                    Layout.preferredWidth: 140
+                                    Layout.fillWidth: false
+                                    checked: false
+                                    Layout.preferredHeight: 40
+                                    Layout.fillHeight: false
+                                    Layout.maximumWidth: 200
+                                }
+
+                                anchors.leftMargin: 10
+                                rows: 1
+                                columns: 3
+                            }
+                            anchors.topMargin: 31
+                            anchors.leftMargin: 120
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible2
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleTop2.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.rightMargin: 500
+                            Flickable {
+                                id: flickable2
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.rightMargin: 10
+                                clip: true
+                                anchors.topMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: usrText
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 14
+                                    wrapMode: Text.WordWrap
+                                    font.family: "Sans Serif"
+                                    selectionColor: "#ff007f"
+                                    placeholderTextColor: "#0c1012"
+                                    selectByMouse: true
+                                    padding: 10
+                                    textFormat: Text.AutoText
+                                    selectedTextColor: "#ffffff"
+                                }
+                                anchors.leftMargin: 10
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                                anchors.bottomMargin: 17
+                            }
+                            anchors.topMargin: 28
+                            anchors.leftMargin: 50
+                            anchors.bottomMargin: 31
+                        }
+
+                        Column {
+                            id: column2
+                            width: 200
+                            anchors.top: rectangleVisible2.bottom
+                            anchors.bottom: parent.bottom
+                            Label {
+                                id: label4
+                                color: "#000000"
+                                text: qsTr("Powered by ")
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.rightMargin: 130
+                                font.family: "Sans Serif"
+                                anchors.topMargin: 0
+                                anchors.leftMargin: 0
+                                font.pointSize: 11
+                                anchors.bottomMargin: 0
+                            }
+
+                            Image {
+                                id: image4
+                                anchors.left: label4.right
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                source: "../../images/icons/OpenAI_Logo.svg"
+                                anchors.rightMargin: 0
+                                anchors.topMargin: 0
+                                anchors.leftMargin: 5
+                                fillMode: Image.PreserveAspectFit
+                                anchors.bottomMargin: 0
+                                antialiasing: true
+                            }
+                            anchors.topMargin: 7
+                            anchors.horizontalCenterOffset: 5
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottomMargin: 7
+                        }
+
+                        Image {
+                            id: image5
+                            anchors.left: parent.left
+                            anchors.right: rectangleTop2.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            source: "../../images/icons/text_icon.png"
+                            anchors.bottomMargin: 440
+                            anchors.rightMargin: 20
+                            anchors.topMargin: 40
+                            anchors.leftMargin: 30
+                            fillMode: Image.PreserveAspectFit
+                            antialiasing: false
+                        }
+                        ColorOverlay {
+                            anchors.fill: image5
+                            source: image5
+                            color: "#f6b851"
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.left: parent.left
+                            antialiasing: true
+                            width: iconWidth
+                            height: iconHeight
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible3
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleTop2.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.rightMargin: 50
+                            Flickable {
+                                id: flickable3
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.rightMargin: 10
+                                clip: true
+                                anchors.topMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: usrResult
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 14
+                                    wrapMode: Text.WordWrap
+                                    font.family: "Sans Serif"
+                                    selectionColor: "#ff007f"
+                                    placeholderTextColor: "#0c1012"
+                                    selectByMouse: true
+                                    padding: 10
+                                    selectedTextColor: "#ffffff"
+                                    textFormat: Text.AutoText
+                                }
+                                anchors.leftMargin: 10
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                                anchors.bottomMargin: 17
+                            }
+                            anchors.topMargin: 30
+                            anchors.leftMargin: 500
+                            anchors.bottomMargin: 31
+                        }
+                        anchors.topMargin: 10
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 10
+                    }
+                }
+            }
+
+            Item {
+                Rectangle {
+                    id: rectangle2
+                    color: "#97d4f0"
+                    radius: 12
+                    anchors.fill: parent
+
+                    Column {
+                        id: columnLayout4
+                        anchors.fill: parent
+                        anchors.rightMargin: 10
+                        anchors.topMargin: 10
+                        Rectangle {
+                            id: rectangleTop3
+                            height: 69
+                            color: "#03738c"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: label7.bottom
+                            anchors.rightMargin: 50
+                            anchors.topMargin: 7
+                            GridLayout {
+                                anchors.fill: parent
+                                anchors.rightMargin: 10
+                                columns: 3
+                                CustomTextField {
+                                    id: inputText2
+                                    placeholderText: "Introduce tu URL..."
+                                    font.pointSize: 10
+                                    Keys.onReturnPressed: {
+                                                            backend.startSearch(inputText2.text, responseType3.checked, "U")
+                                                            inputText2.text = ""
+                                                        }
+                                    Keys.onEnterPressed: {
+                                                            backend.startSearch(inputText2.text, responseType3.checked, "U")
+                                                            inputText2.text = ""
+                                                        }
+                                    fontColor: "#151212"
+                                    font.family: "Sans Serif"
+                                    Layout.fillWidth: true
+                                    placeholderTextColor: "#121314"
+                                    bgColor: "#ffffff"
+                                    Layout.fillHeight: false
+                                }
+
+                                CustomButton {
+                                    id: customBtn3
+                                    text: "Buscar"
+                                    font.pointSize: 10
+                                    btnColorDefault: "#f98125"
+                                    Layout.preferredWidth: 250
+                                    onClicked: {
+                                        backend.startSearch(String(inputText2.text), responseType3.checked, "U")
+                                        inputText2.text = ""
+                                    }
+                                    font.family: "Sans Serif"
+                                    Layout.fillWidth: true
+                                    btnColorClicked: "#009925"
+                                    Layout.preferredHeight: 40
+                                    Layout.maximumHeight: 65535
+                                    Layout.maximumWidth: 150
+                                    btnColorMouseOver: "#fb9850"
+                                }
+
+                                Switch {
+                                    id: responseType3
+                                    text: "Use Open AI"
+                                    checked: false
+                                    Layout.preferredWidth: 140
+                                    font.capitalization: Font.MixedCase
+                                    Layout.fillWidth: false
+                                    Layout.preferredHeight: 40
+                                    Layout.maximumWidth: 200
+                                    Layout.fillHeight: false
+                                }
+                                rows: 1
+                                anchors.leftMargin: 10
+                            }
+                            anchors.leftMargin: 50
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible4
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleTop3.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.rightMargin: 50
+                            anchors.topMargin: 28
+                            Flickable {
+                                id: flickable4
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                TextArea.flickable: TextArea {
+                                    id: textHome2
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 14
+                                    wrapMode: Text.WordWrap
+                                    selectedTextColor: "#ffffff"
+                                    font.capitalization: Font.MixedCase
+                                    padding: 10
+                                    font.family: "Sans Serif"
+                                    textFormat: Text.AutoText
+                                    selectByMouse: true
+                                    selectionColor: "#ff007f"
+                                    placeholderTextColor: "#0c1012"
+                                }
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                                anchors.topMargin: 10
+                                anchors.rightMargin: 10
+                                clip: true
+                                anchors.leftMargin: 10
+                                anchors.bottomMargin: 17
+                            }
+                            anchors.leftMargin: 50
+                            anchors.bottomMargin: 31
+                        }
+
+                        Column {
+                            id: column3
+                            width: 200
+                            anchors.top: rectangleVisible4.bottom
+                            anchors.bottom: parent.bottom
+                            anchors.topMargin: 7
+                            anchors.horizontalCenterOffset: 5
+                            Label {
+                                id: label6
+                                color: "#000000"
+                                text: qsTr("Powered by ")
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                font.pointSize: 11
+                                anchors.topMargin: 0
+                                anchors.rightMargin: 130
+                                font.family: "Sans Serif"
+                                anchors.leftMargin: 0
+                                anchors.bottomMargin: 0
+                            }
+
+                            Image {
+                                id: image6
+                                anchors.left: label6.right
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                source: "../../images/icons/OpenAI_Logo.svg"
+                                anchors.topMargin: 0
+                                anchors.rightMargin: 0
+                                antialiasing: true
+                                fillMode: Image.PreserveAspectFit
+                                anchors.leftMargin: 5
+                                anchors.bottomMargin: 0
+                            }
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottomMargin: 7
+                        }
+
+                        Label {
+                            id: label7
+                            color: "#000000"
+                            text: qsTr("Resume una página web")
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            font.pointSize: 15
+                            anchors.topMargin: 20
+                            anchors.leftMargin: 80
+                        }
+
+                        Image {
+                            id: image7
+                            width: 40
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: rectangleTop3.top
+                            source: "../../images/icons/url_icon.svg"
+                            anchors.topMargin: 10
+                            antialiasing: false
+                            fillMode: Image.PreserveAspectFit
+                            anchors.leftMargin: 30
+                            anchors.bottomMargin: 5
+                        }
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 10
+                    }
+                }
+            }
+
+
+        }
+
+        Row {
+            id: row
+            x: 35
+            width: 685
+            height: 42
+            anchors.top: parent.top
+            anchors.topMargin: 5
 
             Image {
-                id: image
-                anchors.left: label.right
-                anchors.right: parent.right
+                id: wikiImage
+                width: 30
+                height: 30
                 anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                source: "../../images/icons/OpenAI_Logo.svg"
-                antialiasing: true
-                anchors.topMargin: 0
-                anchors.bottomMargin: 0
-                anchors.rightMargin: 0
-                anchors.leftMargin: 5
-                fillMode: Image.PreserveAspectFit
+                source: "../../images/icons/wikipedia_icon.png"
+                anchors.topMargin: 5
             }
+
+            RadioButton {
+                id: wikiRadio
+                text: "WikiPedia Search"
+                checked: true
+                display: AbstractButton.TextBesideIcon
+            }
+
+
+            Image {
+                id: googleImage
+                width: 30
+                height: 30
+                anchors.top: parent.top
+                source: "../../images/icons/google_icon.png"
+                anchors.topMargin: 5
+            }
+
+            RadioButton {
+                id: googleRadio
+                text: "Google Search"
+            }
+
+
+            Image {
+                id: textImage
+                width: 30
+                height: 30
+                anchors.top: parent.top
+                source: "../../images/icons/text_icon.png"
+                anchors.topMargin: 5
+            }
+
+            RadioButton {
+                id: textRadio
+                text: "Resumen de Texto"
+            }
+
+
+            Image {
+                id: urlImage
+                width: 30
+                height: 30
+                anchors.top: parent.top
+                source: "../../images/icons/url_icon.svg"
+                anchors.topMargin: 5
+            }
+
+            RadioButton {
+                id: urlRadio
+                text: "Resumen de página Web"
+            }
+
+
+
+
+
+
         }
     }
 
     Connections {
         target: backend
 
-        function onResult(text) {
-            textHome.text = text
+        function onResponse(text) {
+            if (wikiRadio.checked){
+                textHome.text = text
+            }else if (googleRadio.checked) {
+                textHome1.text = text
+            }else if (textRadio.checked) {
+                usrResult.text = text
+            }else if (urlRadio.checked) {
+                textHome2.text = text
+            }
         }
     }
 
@@ -246,6 +964,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:14;locked:true}
+    D{i:0;autoSize:true;height:613;width:988}D{i:60}D{i:78}D{i:80}D{i:82}
 }
 ##^##*/
