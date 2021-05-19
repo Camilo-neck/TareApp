@@ -10,7 +10,9 @@ class Google(Consultant):
 
     def consult(self):
         if self.openai_response == True:
-            return super().consult()  + openaitest.summarized(self.summarize(link = self.google_url(self.query))) + + f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI."
+            return super().consult()  + \
+                openaitest.summarized(self.summarize(link = self.google_url(self.query), sentences=20)) + \
+                f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI."
         else:
             return super().consult()  + self.summarize(link = self.google_url(self.query))+ f"\nObtenido de: {self.__url}\n"
         

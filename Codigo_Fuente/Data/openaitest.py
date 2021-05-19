@@ -12,7 +12,7 @@ def summarized(query):
         engine="curie",
         prompt=f"{query}\ntl;dr:",
         temperature=0.3,
-        max_tokens=800,
+        max_tokens=500,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,

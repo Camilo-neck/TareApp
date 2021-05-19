@@ -14,7 +14,7 @@ from circular_progress import Ui_SplashScreen
 
 
 from Data import Wiki, Google, Url, MyText
-import pdfApp
+from pdfApp import PdfApp
 
 counter = 0
 #Splash Screen

@@ -7,7 +7,9 @@ class Url(Consultant):
 
     def consult(self):
         if self.openai_response == True:
-            return super().consult() + openaitest.summarized(self.summarize(link = self.query)) + "\n\nResumen realizado con la tecnología GPT-3 de Open AI."
+            return super().consult() + \
+                openaitest.summarized(self.summarize(link = self.query, sentences=20)) + \
+                "\n\nResumen realizado con la tecnología GPT-3 de Open AI."
         else:
             return super().consult() + self.summarize(link = self.query)
 

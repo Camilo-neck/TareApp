@@ -470,16 +470,19 @@ Item {
                                     id: label5
                                     color: "#ffffff"
                                     text: qsTr("INGRESA Y RESUME TU PROPIO TEXTO")
+                                    Layout.fillWidth: true
                                     font.pointSize: 15
                                 }
 
                                 CustomButton {
                                     id: customBtn2
                                     text: "Resumir"
+                                    Layout.minimumHeight: 40
+                                    Layout.minimumWidth: 150
                                     font.family: "Sans Serif"
-                                    Layout.preferredWidth: 250
+                                    Layout.preferredWidth: 150
                                     Layout.fillWidth: true
-                                    Layout.maximumHeight: 65535
+                                    Layout.maximumHeight: 200
                                     onClicked: {
                                         backend.startSearch(usrText.text, responseType2.checked, "T")
                                         inputText2.text = ""
@@ -489,14 +492,14 @@ Item {
                                     btnColorDefault: "#f98125"
                                     Layout.preferredHeight: 40
                                     btnColorClicked: "#009925"
-                                    Layout.maximumWidth: 150
+                                    Layout.maximumWidth: 500
                                 }
 
                                 Switch {
                                     id: responseType2
                                     text: "Use Open AI"
                                     Layout.preferredWidth: 140
-                                    Layout.fillWidth: false
+                                    Layout.fillWidth: true
                                     checked: false
                                     Layout.preferredHeight: 40
                                     Layout.fillHeight: false
@@ -511,52 +514,10 @@ Item {
                             anchors.leftMargin: 120
                         }
 
-                        Rectangle {
-                            id: rectangleVisible2
-                            color: "#ffffff"
-                            radius: 12
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: rectangleTop2.bottom
-                            anchors.bottom: parent.bottom
-                            anchors.rightMargin: 500
-                            Flickable {
-                                id: flickable2
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.rightMargin: 10
-                                clip: true
-                                anchors.topMargin: 10
-                                TextArea.flickable: TextArea {
-                                    id: usrText
-                                    color: "#000000"
-                                    text: ""
-                                    font.pixelSize: 14
-                                    wrapMode: Text.WordWrap
-                                    font.family: "Sans Serif"
-                                    selectionColor: "#ff007f"
-                                    placeholderTextColor: "#0c1012"
-                                    selectByMouse: true
-                                    padding: 10
-                                    textFormat: Text.AutoText
-                                    selectedTextColor: "#ffffff"
-                                }
-                                anchors.leftMargin: 10
-                                ScrollBar.vertical: ScrollBar {
-                                }
-                                anchors.bottomMargin: 17
-                            }
-                            anchors.topMargin: 28
-                            anchors.leftMargin: 50
-                            anchors.bottomMargin: 31
-                        }
-
                         Column {
                             id: column2
                             width: 200
-                            anchors.top: rectangleVisible2.bottom
+                            anchors.top: rowLayout.bottom
                             anchors.bottom: parent.bottom
                             Label {
                                 id: label4
@@ -566,7 +527,9 @@ Item {
                                 anchors.right: parent.right
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
-                                anchors.rightMargin: 130
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                anchors.rightMargin: 115
                                 font.family: "Sans Serif"
                                 anchors.topMargin: 0
                                 anchors.leftMargin: 0
@@ -599,9 +562,9 @@ Item {
                             anchors.left: parent.left
                             anchors.right: rectangleTop2.left
                             anchors.top: parent.top
-                            anchors.bottom: parent.bottom
+                            anchors.bottom: rowLayout.top
                             source: "../../images/icons/text_icon.png"
-                            anchors.bottomMargin: 440
+                            anchors.bottomMargin: 17
                             anchors.rightMargin: 20
                             anchors.topMargin: 40
                             anchors.leftMargin: 30
@@ -619,46 +582,104 @@ Item {
                             height: iconHeight
                         }
 
-                        Rectangle {
-                            id: rectangleVisible3
-                            color: "#ffffff"
-                            radius: 12
+                        RowLayout {
+                            id: rowLayout
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: rectangleTop2.bottom
                             anchors.bottom: parent.bottom
-                            anchors.rightMargin: 50
-                            Flickable {
-                                id: flickable3
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.rightMargin: 10
-                                clip: true
-                                anchors.topMargin: 10
-                                TextArea.flickable: TextArea {
-                                    id: usrResult
-                                    color: "#000000"
-                                    text: ""
-                                    font.pixelSize: 14
-                                    wrapMode: Text.WordWrap
-                                    font.family: "Sans Serif"
-                                    selectionColor: "#ff007f"
-                                    placeholderTextColor: "#0c1012"
-                                    selectByMouse: true
-                                    padding: 10
-                                    selectedTextColor: "#ffffff"
-                                    textFormat: Text.AutoText
-                                }
-                                anchors.leftMargin: 10
-                                ScrollBar.vertical: ScrollBar {
-                                }
-                                anchors.bottomMargin: 17
-                            }
-                            anchors.topMargin: 30
-                            anchors.leftMargin: 500
                             anchors.bottomMargin: 31
+                            anchors.rightMargin: 20
+                            anchors.leftMargin: 20
+                            anchors.topMargin: 10
+
+                            Rectangle {
+                                id: rectangleVisible2
+                                width: 398
+                                height: 372
+                                color: "#ffffff"
+                                radius: 12
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                Layout.maximumHeight: 5000
+                                Layout.maximumWidth: 6000
+                                Layout.minimumHeight: 372
+                                Layout.minimumWidth: 398
+                                Layout.preferredHeight: 372
+                                Layout.preferredWidth: 398
+                                Flickable {
+                                    id: flickable2
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.top: parent.top
+                                    anchors.bottom: parent.bottom
+                                    anchors.rightMargin: 10
+                                    clip: true
+                                    anchors.topMargin: 10
+                                    TextArea.flickable: TextArea {
+                                        id: usrText
+                                        color: "#000000"
+                                        text: ""
+                                        font.pixelSize: 14
+                                        wrapMode: Text.WordWrap
+                                        font.family: "Sans Serif"
+                                        selectionColor: "#ff007f"
+                                        placeholderTextColor: "#0c1012"
+                                        selectByMouse: true
+                                        padding: 10
+                                        textFormat: Text.AutoText
+                                        selectedTextColor: "#ffffff"
+                                    }
+                                    anchors.leftMargin: 10
+                                    ScrollBar.vertical: ScrollBar {
+                                    }
+                                    anchors.bottomMargin: 17
+                                }
+                            }
+
+                            Rectangle {
+                                id: rectangleVisible3
+                                width: 398
+                                height: 372
+                                color: "#ffffff"
+                                radius: 12
+                                Layout.fillHeight: true
+                                Layout.maximumHeight: 5000
+                                Layout.maximumWidth: 6000
+                                Layout.minimumHeight: 372
+                                Layout.preferredHeight: 372
+                                Layout.minimumWidth: 398
+                                Layout.preferredWidth: 398
+                                Layout.fillWidth: true
+                                Flickable {
+                                    id: flickable3
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.top: parent.top
+                                    anchors.bottom: parent.bottom
+                                    anchors.rightMargin: 10
+                                    clip: true
+                                    anchors.topMargin: 10
+                                    TextArea.flickable: TextArea {
+                                        id: usrResult
+                                        color: "#000000"
+                                        text: ""
+                                        font.pixelSize: 14
+                                        wrapMode: Text.WordWrap
+                                        font.family: "Sans Serif"
+                                        selectionColor: "#ff007f"
+                                        placeholderTextColor: "#0c1012"
+                                        selectByMouse: true
+                                        padding: 10
+                                        selectedTextColor: "#ffffff"
+                                        textFormat: Text.AutoText
+                                    }
+                                    anchors.leftMargin: 10
+                                    ScrollBar.vertical: ScrollBar {
+                                    }
+                                    anchors.bottomMargin: 17
+                                }
+                            }
                         }
                         anchors.topMargin: 10
                         anchors.leftMargin: 10
@@ -698,13 +719,13 @@ Item {
                                     placeholderText: "Introduce tu URL..."
                                     font.pointSize: 10
                                     Keys.onReturnPressed: {
-                                                            backend.startSearch(inputText2.text, responseType3.checked, "U")
-                                                            inputText2.text = ""
-                                                        }
+                                        backend.startSearch(inputText2.text, responseType3.checked, "U")
+                                        inputText2.text = ""
+                                    }
                                     Keys.onEnterPressed: {
-                                                            backend.startSearch(inputText2.text, responseType3.checked, "U")
-                                                            inputText2.text = ""
-                                                        }
+                                        backend.startSearch(inputText2.text, responseType3.checked, "U")
+                                        inputText2.text = ""
+                                    }
                                     fontColor: "#151212"
                                     font.family: "Sans Serif"
                                     Layout.fillWidth: true
@@ -964,6 +985,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:60}D{i:78}D{i:80}D{i:82}
+    D{i:0;autoSize:true;height:613;width:988}D{i:45}
 }
 ##^##*/
