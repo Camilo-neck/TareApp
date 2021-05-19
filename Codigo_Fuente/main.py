@@ -111,6 +111,35 @@ class MainWindow(QObject):
     # Result
     response = Signal(str)
 
+    # Obtener lista de archivos de una carpeta
+    @Slot(str, result = list)
+    def getFilesFromFolder(self, folderUrl):
+        if not os.path.isdir(folderUrl): return ["NULL"]
+        #print(">>>>>>>>>>>>",folderUrl)
+        fileUrls = []
+        #if os.path.isfile(f)
+        files = [f for f in os.listdir(folderUrl)]
+        for file in files:
+            fileUrl = folderUrl+'//'+file
+            if not os.path.isdir(fileUrl):
+                fileUrls.append(fileUrl)
+        #print("++++++++++++++++",fileUrls)
+        return fileUrls
+
+    # Etiquetar archivos
+    @Slot(str,str)
+    def tagFiles(self, urls,etiqueta):
+
+        urls = [e.replace('file:///','') for e in urls.split(',')]
+
+        for path in urls:
+            fileName, ext = os.path.splitext(path)
+            print("FILE PATH >>>>>>>>",path)
+            try:
+                os.rename(path , fileName+" "+etiqueta+ext)
+            except:
+                print("ERROR")
+
     # Merge pdfs
     @Slot(str,str)
     def mergePdf(self, file_paths, output_path):

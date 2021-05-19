@@ -15,7 +15,8 @@ Rectangle {
     property var fileExtensions: ["ALL"]
     property var customText: "Select a file or drop it here"
     property var filePaths: ""
-    property var multipleFiles: true
+    property var multipleFiles: false
+    property var isFolder: false
 
     function basename(str){
         var extensionLength = - (getExtension(str).length +1)
@@ -60,15 +61,20 @@ Rectangle {
             id: openFile
             title: "Please Choose a file"
             selectMultiple: multipleFiles
+            selectFolder: isFolder
 
             nameFilters: [getNameFilters()]
 
             onAccepted: {
+                if(!isFolder){
+                    var fileUrls = openFile.fileUrls.map((url) => url.replace("file:///",""))
+                    filePaths = fileUrls
+                    customFunction(fileUrls,getFilenames(fileUrls))
+                }else{
+                    var folderUrl = String(openFile.folder).replace("file:///","")
+                    customFunction(folderUrl)
+                }
 
-                var fileUrls = openFile.fileUrls.map((url) => url.replace("file:///",""))
-                filePaths = fileUrls
-
-                customFunction(fileUrls,getFilenames(fileUrls))
 
             }
         }
@@ -85,23 +91,32 @@ Rectangle {
 
             root.color = "#aaecff"
 
-            var fileUrls = drop.urls.map((url) => url.replace("file:///",""))
+            if(!isFolder){
 
-            if(fileUrls.length>1 && multipleFiles==false){}
+                var fileUrls = drop.urls.map((url) => url.replace("file:///",""))
 
-            else{
-                filePaths = fileUrls
+                if(fileUrls.length>1 && multipleFiles==false){}
 
-                if (!(fileExtensions.includes("ALL"))){
-                    fileUrls = fileUrls.filter((url) => fileExtensions.includes(getExtension(url)))
+                else{
+                    filePaths = fileUrls
+
+                    if (!(fileExtensions.includes("ALL"))){
+                        fileUrls = fileUrls.filter((url) => fileExtensions.includes(getExtension(url)))
+                    }
+
+                    customFunction(fileUrls,getFilenames(fileUrls))
+                }
+            }else{
+                var folderUrl = drop.urls
+                if(folderUrl.length>1 && multipleFiles==false){}
+                else{
+                    folderUrl = folderUrl[0].replace("file:///","")
+                    customFunction(folderUrl)
                 }
 
-                customFunction(fileUrls,getFilenames(fileUrls))
             }
-
-
-
         }
+
         onExited: {
             root.color = "#aaecff";
         }

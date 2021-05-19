@@ -296,6 +296,7 @@ Window {
                                     btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = false
                                     location.text = qsTr("| Home")
                                     labelTopInfo.text = qsTr("Bienvenidos")
                                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
@@ -315,6 +316,7 @@ Window {
                                     btnEdit.isActiveMenu = true
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -367,6 +369,7 @@ Window {
                                     btnEdit.isActiveMenu = true
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -386,6 +389,7 @@ Window {
                                     btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = false
                                     location.text = qsTr("| Search")
                                     labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
@@ -405,11 +409,33 @@ Window {
                                     btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
+                                    btnSorter.isActiveMenu = false
                                     location.text = qsTr("| PDF Editor")
-                                    labelTopInfo.text = qsTr("Edita tus PDFs como nunca antes.")
+                                    labelTopInfo.text = qsTr("Organiza tus pdfs como nunca antes")
                                     stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
                                 }
                             }
+
+                            LeftMenuBtn {
+                                id: btnSorter
+                                width: leftMenu.width
+                                text: qsTr("PDFs Editor")
+                                btnIconSource: "../images/icons/sortIcon.png"
+                                btnColorDefault: "#012e40"
+                                isActiveMenu: false
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = true
+                                    location.text = qsTr("| File organizer")
+                                    labelTopInfo.text = qsTr("Organiza tus archivos facilmente.")
+                                    stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
+                                }
+                            }
+
                         }
                     }
 
@@ -616,6 +642,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:720;width:1080}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}D{i:30}
 }
 ##^##*/

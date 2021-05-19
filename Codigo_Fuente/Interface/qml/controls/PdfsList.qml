@@ -95,7 +95,6 @@ Item {
                 Component {
                     id: timelineDelegate
 
-
                     MouseArea {
                         id: dragArea
 
@@ -204,6 +203,7 @@ Item {
 
                         }
                     }
+
                 }
 
                 ListModel {
