@@ -436,6 +436,25 @@ Window {
                                     stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
                                 }
                             }
+                            LeftMenuBtn {
+                                id: btnPdfgen
+                                width: leftMenu.width
+                                text: qsTr("Documentos con formato")
+                                isActiveMenu: false
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/docx_icon.png"
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = true
+                                    location.text = qsTr("| Generador de documentos")
+                                    labelTopInfo.text = qsTr("Genera tus documentos con el formato que desees.")
+                                    stackView.push(Qt.resolvedUrl("pages/docGeneratorPage.qml"))
+                                }
+                            }
 
                         }
                     }

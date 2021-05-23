@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.14.2, 2021-05-22T14:10:49. -->
+<!-- Written by QtCreator 4.14.2, 2021-05-23T01:24:09. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{34390e82-76b8-4b90-8c2b-48b91bb2e5ea}</value>
+  <value type="QByteArray">{aa45c9a8-2c54-457c-992a-0f22d96d2663}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -76,7 +76,7 @@
     <value type="bool" key="ClangTools.AnalyzeOpenFiles">true</value>
     <value type="bool" key="ClangTools.BuildBeforeAnalysis">true</value>
     <value type="QString" key="ClangTools.DiagnosticConfig">Builtin.DefaultTidyAndClazy</value>
-    <value type="int" key="ClangTools.ParallelJobs">6</value>
+    <value type="int" key="ClangTools.ParallelJobs">4</value>
     <valuelist type="QVariantList" key="ClangTools.SelectedDirs"/>
     <valuelist type="QVariantList" key="ClangTools.SelectedFiles"/>
     <valuelist type="QVariantList" key="ClangTools.SuppressedDiagnostics"/>
@@ -169,16 +169,16 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/Janus/OneDrive - Universidad Nacional de Colombia/UNIVERSIDAD/Semestre II/OOP/Proyecto/Actual/TareApp/Codigo_Fuente/main.py</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Janus/OneDrive - Universidad Nacional de Colombia/UNIVERSIDAD/Semestre II/OOP/Proyecto/Actual/TareApp/Codigo_Fuente/main.py</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{9fe23690-8ca7-493f-98a0-57745c8b82a9}</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\Janus\OneDrive - Universidad Nacional de Colombia\UNIVERSIDAD\Semestre II\OOP\Proyecto\Actual\TareApp\Codigo_Fuente\main.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/Vile/Desktop/Tareapp version Camilo/tareapp/Codigo_Fuente/main.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Vile/Desktop/Tareapp version Camilo/tareapp/Codigo_Fuente/main.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{2b5eb1f0-c39a-4533-a409-518f755b0f0d}</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\Vile\Desktop\Tareapp version Camilo\tareapp\Codigo_Fuente\main.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Janus/OneDrive - Universidad Nacional de Colombia/UNIVERSIDAD/Semestre II/OOP/Proyecto/Actual/TareApp/Codigo_Fuente</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Vile/Desktop/Tareapp version Camilo/tareapp/Codigo_Fuente</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
