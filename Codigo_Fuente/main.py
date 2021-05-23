@@ -16,6 +16,7 @@ from circular_progress import Ui_SplashScreen
 
 from Data import Wiki, Google, Url, MyText
 from pdfApp import PdfApp
+import GenerarPDFClases
 
 # Verify Connection
 def is_connected():
@@ -124,6 +125,20 @@ class MainWindow(QObject):
     response = Signal(str)
     # Keys
     keys = Signal(str)
+
+    #Open Excel profile
+    @Slot(str)
+    def openProfile(self,profilePath):
+        GenerarPDFClases.openProfile(profilePath)
+
+    #Generate formatted documents
+    @Slot(str,str)
+    def generateDocuments(self,profilePath, dirPath):
+        GenerarPDFClases.generateDocuments(profilePath, dirPath)
+    #Create profile
+    @Slot(str,str,str,str)
+    def createProfile(self,templatePath,templateName,dirPath, profileName):
+        GenerarPDFClases.writeProfile(templatePath,templateName,dirPath, profileName)
 
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
