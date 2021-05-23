@@ -33,7 +33,7 @@ Item {
             anchors.right: parent.right
             anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            currentIndex: changeStack()
+            currentIndex: 1
             // Change to function
             anchors.rightMargin: 10
             anchors.leftMargin: 10
@@ -964,6 +964,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:60}D{i:78}D{i:80}D{i:82}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/

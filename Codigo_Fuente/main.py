@@ -15,6 +15,7 @@ from circular_progress import Ui_SplashScreen
 
 from Data import Wiki, Google, Url, MyText
 from pdfApp import PdfApp
+import folderSorter
 
 import os
 
@@ -113,6 +114,23 @@ class MainWindow(QObject):
     # Result
     response = Signal(str)
 
+    @Slot(int,str,list,list,list,bool)
+    def sortFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
+        folders = []
+        for name,e in zip(names,extTags):
+            if sortMethod == 0:
+                folder = {
+                    'name':name,
+                    'extensions': [f'.{ext}' for ext in e.split(' ')]
+                }
+            else:
+                folder = {
+                    'name':name,
+                    'keywords': [keyword for keyword in e.split(' ')]
+                }
+            folders.append(folder)
+        folderSorter.sortAllFiles(sortMethod,path,folders,ignored_ext,moveToDefault)
+
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
     def getFilesFromFolder(self, folderUrl):
@@ -169,8 +187,9 @@ class MainWindow(QObject):
         return p.getPages()
 
     # Send text
-    @Slot(str, bool, str)
+    @Slot(str, bool, str, result=str)
     def startSearch(self, text, openai, engine):
+        #QApplication.processEvents()
         if engine == 'W':
             consultant = Wiki()
         if engine == 'G':
@@ -179,11 +198,14 @@ class MainWindow(QObject):
             consultant = Url()
         if engine == 'T':
             consultant = MyText()
-        
+
         consultant.set_query(text)
         consultant.set_openai(openai)
         texto = consultant.consult()
         self.response.emit(str(texto))
+
+
+        return str(texto)
 
     # Read Text
     @Slot(str)
