@@ -297,6 +297,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Home")
                                     labelTopInfo.text = qsTr("Bienvenidos")
                                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
@@ -317,6 +318,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -370,6 +372,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -390,6 +393,7 @@ Window {
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Search")
                                     labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
@@ -410,6 +414,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| PDF Editor")
                                     labelTopInfo.text = qsTr("Organiza tus pdfs como nunca antes")
                                     stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
@@ -431,6 +436,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = true
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| File organizer")
                                     labelTopInfo.text = qsTr("Organiza tus archivos facilmente.")
                                     stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
