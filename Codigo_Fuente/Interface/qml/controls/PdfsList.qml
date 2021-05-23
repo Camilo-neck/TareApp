@@ -60,6 +60,13 @@ Item {
         }
         updateUrlsList()
     }
+    function getNames(){
+                var nameList = []
+                for(var i = 0; i < visualModel.items.count; i++){
+                    nameList.push(visualModel.items.get(i).model.urlText)
+                }
+                return nameList
+            }
 
     Rectangle {
         id: bg

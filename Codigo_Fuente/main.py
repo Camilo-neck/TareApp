@@ -2,6 +2,7 @@
 import sys
 import os
 import datetime
+from socket import *
 
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import *
@@ -18,6 +19,18 @@ from pdfApp import PdfApp
 import folderSorter
 
 import os
+import GenerarPDFClases
+
+# Verify Connection
+def is_connected():
+    s = socket(AF_INET, SOCK_STREAM)
+    s.settimeout(2)
+    try:
+        s.connect(('socket.io',80))
+        s.close()
+        return True
+    except:
+        return False
 
 counter = 0
 #Splash Screen
@@ -113,6 +126,22 @@ class MainWindow(QObject):
 
     # Result
     response = Signal(str)
+    # Keys
+    keys = Signal(str)
+
+    #Open Excel profile
+    @Slot(str)
+    def openProfile(self,profilePath):
+        GenerarPDFClases.openProfile(profilePath)
+
+    #Generate formatted documents
+    @Slot(str,str)
+    def generateDocuments(self,profilePath, dirPath):
+        GenerarPDFClases.generateDocuments(profilePath, dirPath)
+    #Create profile
+    @Slot(str,str,str,str)
+    def createProfile(self,templatePath,templateName,dirPath, profileName):
+        GenerarPDFClases.writeProfile(templatePath,templateName,dirPath, profileName)
 
     @Slot(int,str,list,list,list,bool)
     def sortFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
@@ -189,20 +218,25 @@ class MainWindow(QObject):
     # Send text
     @Slot(str, bool, str, result=str)
     def startSearch(self, text, openai, engine):
-        #QApplication.processEvents()
-        if engine == 'W':
-            consultant = Wiki()
-        if engine == 'G':
-            consultant = Google()
-        if engine == 'U':
-            consultant = Url()
-        if engine == 'T':
-            consultant = MyText()
-
-        consultant.set_query(text)
-        consultant.set_openai(openai)
-        texto = consultant.consult()
+        if is_connected():
+            if engine == 'W':
+                consultant = Wiki()
+            if engine == 'G':
+                consultant = Google()
+            if engine == 'U':
+                consultant = Url()
+            if engine == 'T':
+                consultant = MyText()
+            
+            consultant.set_query(text)
+            consultant.set_openai(openai)
+            texto, claves = consultant.consult()
+        else:
+            texto = "Por favor revise su conexión a internet."
+            claves = "Por favor revise su conexión a internet."
+        
         self.response.emit(str(texto))
+        self.keys.emit(str(claves))
 
 
         return str(texto)

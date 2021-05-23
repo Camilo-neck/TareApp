@@ -1,3 +1,4 @@
+from struct import error
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
 class PdfApp():
@@ -11,13 +12,16 @@ class PdfApp():
         return PdfFileReader(self.__paths).getNumPages()
 
     def merge_pdfs(self):
-        for path in self.__paths:
-            self.__pdfReader = PdfFileReader(path)
-            for page in range(self.__pdfReader.getNumPages()):
-                self.__pdfWriter.addPage(self.__pdfReader.getPage(page))
+        try:
+            for path in self.__paths:
+                self.__pdfReader = PdfFileReader(path, strict=False)
+                for page in range(self.__pdfReader.getNumPages()):
+                    self.__pdfWriter.addPage(self.__pdfReader.getPage(page))
 
-        with open(self.__outPath, 'wb') as out:
-            self.__pdfWriter.write(out)
+            with open(self.__outPath, 'wb') as out:
+                self.__pdfWriter.write(out)
+        except error as e:
+            print('error' + e)
 
     def buildPdf(self):
         self.__pdfReader = PdfFileReader(self.__paths)

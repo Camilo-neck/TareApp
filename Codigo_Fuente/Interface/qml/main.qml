@@ -297,6 +297,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Home")
                                     labelTopInfo.text = qsTr("Bienvenidos")
                                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
@@ -317,6 +318,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -370,6 +372,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -379,7 +382,7 @@ Window {
                             LeftMenuBtn {
                                 id: btnSearch
                                 width: leftMenu.width
-                                text: qsTr("Search")
+                                text: qsTr("Consultor")
                                 btnColorDefault: "#012e40"
                                 btnIconSource: "../images/icons/search_icon.svg"
                                 isActiveMenu: false
@@ -390,6 +393,7 @@ Window {
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| Search")
                                     labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
@@ -410,6 +414,7 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
                                     btnSorter.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| PDF Editor")
                                     labelTopInfo.text = qsTr("Organiza tus pdfs como nunca antes")
                                     stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
@@ -419,7 +424,8 @@ Window {
                             LeftMenuBtn {
                                 id: btnSorter
                                 width: leftMenu.width
-                                text: qsTr("PDFs Editor")
+                                text: qsTr("Folders Sorter")
+                                checked: true
                                 btnIconSource: "../images/icons/sortIcon.png"
                                 btnColorDefault: "#012e40"
                                 isActiveMenu: false
@@ -430,9 +436,29 @@ Window {
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = true
+                                    btnPdfgen.isActiveMenu = false
                                     location.text = qsTr("| File organizer")
                                     labelTopInfo.text = qsTr("Organiza tus archivos facilmente.")
                                     stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
+                                }
+                            }
+                            LeftMenuBtn {
+                                id: btnPdfgen
+                                width: leftMenu.width
+                                text: qsTr("Documentos con formato")
+                                isActiveMenu: false
+                                btnColorDefault: "#012e40"
+                                btnIconSource: "../images/icons/docx_icon.png"
+                                onClicked: {
+                                    btnHome.isActiveMenu = false
+                                    btnSettings.isActiveMenu = false
+                                    btnEdit.isActiveMenu = false
+                                    btnSearch.isActiveMenu = false
+                                    btnPdf.isActiveMenu = false
+                                    btnPdfgen.isActiveMenu = true
+                                    location.text = qsTr("| Generador de documentos")
+                                    labelTopInfo.text = qsTr("Genera tus documentos con el formato que desees.")
+                                    stackView.push(Qt.resolvedUrl("pages/docGeneratorPage.qml"))
                                 }
                             }
 
@@ -642,6 +668,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:720;width:1080}D{i:30}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}
 }
 ##^##*/

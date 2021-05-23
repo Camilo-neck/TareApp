@@ -150,7 +150,7 @@ Item {
                     minimumPointSize: 14
                     minimumPixelSize: 14
                     font.family: "Sans Serif"
-                        textFormat: Text.RichText
+                    textFormat: Text.RichText
                     }
             }
         }

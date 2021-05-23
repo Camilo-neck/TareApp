@@ -1,4 +1,4 @@
-from os import system
+from os import link, system
 import requests
 from bs4 import BeautifulSoup
 
@@ -9,28 +9,60 @@ class Consultant():
         self.query = "Open AI"
         self.openai_response = False
         self.__APIURL = 'https://tioconejo.alwaysdata.net/resumidor/pc.php?'
+        self.__APIURL1 = 'https://api.meaningcloud.com/summarization-1.0'
 
     def consult(self):
         return "Su resultado es:\n"
         
     # Get info from API
-    def summarize(self, texto = None, link = None):
-        if link is None: args = {'texto': texto}  
-        else : args = {'url': link}
-        res = requests.post(self.__APIURL, data=args)
+    # def summarize(self, texto = None, link = None, sentences):
+    #      if link is None: payload = {'texto': texto}
+    #      else : payload = {'url': link}
+    #      res = requests.post(self.__APIURL, data=payload)
+    #      text = ""
+    #      if res.ok:
+    #          soup = BeautifulSoup(res.text, 'html.parser')
+    #          container = soup.find('div', id="ideas_principales")
+    #          table = container.find('table', class_='table')
+    #          texto = table.find_all('td')
+    #          clean_text = [v.text.strip() for v in texto]
+
+    #          for paragraph in clean_text:
+    #              text += paragraph + '. \n'
+                
+    #          return text
+    #      return "Error"
+
+    def summarize(self, texto = None, link = None, sentences = 5):
+       if texto == None: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
+               'url': link,
+               'sentences' : sentences}
+       else: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
+               'txt': texto,
+               'sentences' : sentences}
+       res = requests.post(self.__APIURL1, data=payload)
+    
+       if res.ok:
+           return res.json()['summary']
+       else:
+           return "Unexpected Error."
+
+    def words(self, texto = None, link = None):
+        if link is None: payload = {'texto': texto}
+        else : payload = {'url': link}
+        res = requests.post(self.__APIURL, data=payload)
         text = ""
         if res.ok:
             soup = BeautifulSoup(res.text, 'html.parser')
-            container = soup.find('div', id="ideas_principales")
-            table = container.find('table', class_='table')
-            texto = table.find_all('td')
-            clean_text = [v.text.strip() for v in texto]
-
-            for paragraph in clean_text:
-                text += paragraph + '. \n'
-                
-            return text
-        return "Error"
+            container = soup.find('div', id="palabras_clave")
+            btns = container.find_all('button')
+            btns_text = [btn.text for btn in btns]
+            text += f'-{btns_text[0]}'
+            for key in btns_text[1:]:
+                text += f'\t-{key:^10}'
+        else:
+            text = 'Unexpected Error.'
+        return text
 
     # Format the obtained text
     def formatter(self, text):

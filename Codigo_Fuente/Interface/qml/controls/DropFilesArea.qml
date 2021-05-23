@@ -33,7 +33,8 @@ Rectangle {
 
     function getNameFilters(){
 
-        return !(fileExtensions.includes("ALL")) ? "("+fileExtensions.map((ext) => ext = `*.${ext} `).join(',')+")" : "(*)"
+        //return !(fileExtensions.includes("ALL")) ? "("+fileExtensions.map((ext) => ext = `*.${ext} `).join(',')+")" : "(*)"
+        return !(fileExtensions.includes("ALL")) ? fileExtensions.map((ext) => ext = `*.${ext}`).join(' ') : "(*)"
 
         /*
         if (!(fileExtensions.includes("ALL"))){

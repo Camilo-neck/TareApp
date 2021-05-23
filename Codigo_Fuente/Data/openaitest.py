@@ -12,11 +12,27 @@ def summarized(query):
         engine="curie",
         prompt=f"{query}\ntl;dr:",
         temperature=0.3,
-        max_tokens=800,
+        max_tokens=200,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0,
         stop=["\n"]
     )
-    #print(response["choices"][0]['text'])
     return (response["choices"][0]['text'])
+
+def keywords(query):
+    response = openai.Completion.create(
+               engine="davinci",
+               prompt=f"Text: {query}\n\nKeywords:",
+               temperature=0.3,
+               max_tokens=200,
+               top_p=1,
+               frequency_penalty=0.8,
+               presence_penalty=0,
+               stop=["\n"]
+               )
+    response_list = response["choices"][0]['text'].split(',')
+    clean_response = f'-{response_list[0]}'
+    for key in response_list[1:]:
+        clean_response += f'\t-{key:^10}'
+    return clean_response
