@@ -455,6 +455,7 @@ Window {
                                     btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
+                                    btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = true
                                     location.text = qsTr("| Generador de documentos")
                                     labelTopInfo.text = qsTr("Genera tus documentos con el formato que desees.")

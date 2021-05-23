@@ -57,7 +57,7 @@ class Consultant():
             container = soup.find('div', id="palabras_clave")
             btns = container.find_all('button')
             btns_text = [btn.text for btn in btns]
-            text += f'-{btns_text[0]}'
+            text = f'-{btns_text[0]}'
             for key in btns_text[1:]:
                 text += f'\t-{key:^10}'
         else:

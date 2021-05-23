@@ -14,8 +14,7 @@ from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
 
 
-from Data import Wiki, Google, Url, MyText
-from pdfApp import PdfApp
+from Data import Wiki, Google, Url, MyText, PdfApp
 import folderSorter
 
 import os
@@ -143,6 +142,7 @@ class MainWindow(QObject):
     def createProfile(self,templatePath,templateName,dirPath, profileName):
         GenerarPDFClases.writeProfile(templatePath,templateName,dirPath, profileName)
 
+    # Ordenar Carpetas
     @Slot(int,str,list,list,list,bool)
     def sortFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
         folders = []
