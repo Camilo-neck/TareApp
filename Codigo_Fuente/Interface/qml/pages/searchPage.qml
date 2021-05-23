@@ -37,7 +37,7 @@ Item {
             anchors.right: parent.right
             anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            currentIndex: changeStack()
+            currentIndex: 1
             // Change to function
             anchors.rightMargin: 10
             anchors.leftMargin: 10

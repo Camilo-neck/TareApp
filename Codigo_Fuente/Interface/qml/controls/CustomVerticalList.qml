@@ -134,7 +134,8 @@ Item {
                         id: content
                         //anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
-                        width: 447
+                        //width: 650
+                        width: timeline.width-5
                         height: 29
                         //opacity: dragArea.held ? 0.8 : 1.0
                         border.color: "#0797bd"
@@ -161,13 +162,15 @@ Item {
                         CheckBox {
                             id: checkBox
                             width: 19
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            anchors.leftMargin: 420
                             font.pointSize: 4
                             checkable: true
                             checkState: Qt.Unchecked
+
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.rightMargin: 8
+
                             anchors.bottomMargin: 6
                             anchors.topMargin: 6
                             indicator.width: 20

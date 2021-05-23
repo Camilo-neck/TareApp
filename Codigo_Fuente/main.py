@@ -16,6 +16,9 @@ from circular_progress import Ui_SplashScreen
 
 from Data import Wiki, Google, Url, MyText
 from pdfApp import PdfApp
+import folderSorter
+
+import os
 import GenerarPDFClases
 
 # Verify Connection
@@ -140,6 +143,23 @@ class MainWindow(QObject):
     def createProfile(self,templatePath,templateName,dirPath, profileName):
         GenerarPDFClases.writeProfile(templatePath,templateName,dirPath, profileName)
 
+    @Slot(int,str,list,list,list,bool)
+    def sortFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
+        folders = []
+        for name,e in zip(names,extTags):
+            if sortMethod == 0:
+                folder = {
+                    'name':name,
+                    'extensions': [f'.{ext}' for ext in e.split(' ')]
+                }
+            else:
+                folder = {
+                    'name':name,
+                    'keywords': [keyword for keyword in e.split(' ')]
+                }
+            folders.append(folder)
+        folderSorter.sortAllFiles(sortMethod,path,folders,ignored_ext,moveToDefault)
+
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
     def getFilesFromFolder(self, folderUrl):
@@ -196,7 +216,7 @@ class MainWindow(QObject):
         return p.getPages()
 
     # Send text
-    @Slot(str, bool, str)
+    @Slot(str, bool, str, result=str)
     def startSearch(self, text, openai, engine):
         if is_connected():
             if engine == 'W':
@@ -217,6 +237,9 @@ class MainWindow(QObject):
         
         self.response.emit(str(texto))
         self.keys.emit(str(claves))
+
+
+        return str(texto)
 
     # Read Text
     @Slot(str)
