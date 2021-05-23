@@ -2,6 +2,7 @@
 import sys
 import os
 import datetime
+from socket import *
 
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import *
@@ -15,6 +16,17 @@ from circular_progress import Ui_SplashScreen
 
 from Data import Wiki, Google, Url, MyText
 from pdfApp import PdfApp
+
+# Verify Connection
+def is_connected():
+    s = socket(AF_INET, SOCK_STREAM)
+    s.settimeout(2)
+    try:
+        s.connect(('socket.io',80))
+        s.close()
+        return True
+    except:
+        return False
 
 counter = 0
 #Splash Screen
@@ -110,6 +122,8 @@ class MainWindow(QObject):
 
     # Result
     response = Signal(str)
+    # Keys
+    keys = Signal(str)
 
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
@@ -169,19 +183,25 @@ class MainWindow(QObject):
     # Send text
     @Slot(str, bool, str)
     def startSearch(self, text, openai, engine):
-        if engine == 'W':
-            consultant = Wiki()
-        if engine == 'G':
-            consultant = Google()
-        if engine == 'U':
-            consultant = Url()
-        if engine == 'T':
-            consultant = MyText()
+        if is_connected():
+            if engine == 'W':
+                consultant = Wiki()
+            if engine == 'G':
+                consultant = Google()
+            if engine == 'U':
+                consultant = Url()
+            if engine == 'T':
+                consultant = MyText()
+            
+            consultant.set_query(text)
+            consultant.set_openai(openai)
+            texto, claves = consultant.consult()
+        else:
+            texto = "Por favor revise su conexión a internet."
+            claves = "Por favor revise su conexión a internet."
         
-        consultant.set_query(text)
-        consultant.set_openai(openai)
-        texto = consultant.consult()
         self.response.emit(str(texto))
+        self.keys.emit(str(claves))
 
     # Read Text
     @Slot(str)

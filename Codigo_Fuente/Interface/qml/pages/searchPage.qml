@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.11
 import QtGraphicalEffects 1.15
 
 Item {
+    id: win
+    property bool run : false
 
     function changeStack(){
         if (wikiRadio.checked){
@@ -26,6 +28,8 @@ Item {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
+
+
 
         StackLayout {
             id: stackLayout
@@ -109,9 +113,11 @@ Item {
                                     Layout.preferredHeight: 40
                                     Layout.preferredWidth: 250
 
-                                    // Change Show/Hide Frame
                                     onClicked: {
-                                        backend.startSearch(String(inputText.text), responseType.checked, "W")
+                                        win.run = true
+                                        thread.sendMessage({run : true,
+                                                               func : backend.startSearch(String(inputText.text), responseType.checked, "W")});
+                                        print(busy.running)
                                         inputText.text = ""
                                     }
 
@@ -142,7 +148,7 @@ Item {
                             anchors.top: rectangleTop.bottom
                             anchors.bottom: parent.bottom
                             anchors.rightMargin: 50
-                            anchors.bottomMargin: 31
+                            anchors.bottomMargin: 150
                             anchors.leftMargin: 50
                             anchors.topMargin: 28
                             Flickable {
@@ -158,7 +164,7 @@ Item {
                                 anchors.leftMargin: 10
 
                                 TextArea.flickable: TextArea {
-                                    id: textHome
+                                    id: textWiki
                                     padding: 10
                                     wrapMode: Text.WordWrap
                                     font.capitalization: Font.MixedCase
@@ -180,7 +186,7 @@ Item {
                         Column {
                             id: column
                             width: 200
-                            anchors.top: rectangleVisible.bottom
+                            anchors.top: rectangleVisible5.bottom
                             anchors.bottom: parent.bottom
                             anchors.horizontalCenterOffset: 5
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -222,9 +228,11 @@ Item {
                         Label {
                             id: label1
                             color: "#000000"
-                            text: qsTr("MAKE YOUR SEARCH ON WIKIPEDA")
+                            text: qsTr("BUSCA UNA DEFINICIÓN EN WIKIPEDA")
                             anchors.left: parent.left
                             anchors.top: parent.top
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                             font.pointSize: 15
                             anchors.leftMargin: 80
                             anchors.topMargin: 20
@@ -242,6 +250,50 @@ Item {
                             anchors.topMargin: 10
                             fillMode: Image.PreserveAspectFit
                             antialiasing: false
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible5
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleVisible.bottom
+                            anchors.bottom: parent.bottom
+                            Flickable {
+                                id: flickable5
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 17
+                                clip: true
+                                anchors.topMargin: 10
+                                anchors.leftMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: wordsWiki
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 20
+                                    wrapMode: Text.WordWrap
+                                    font.bold: true
+                                    selectByMouse: true
+                                    placeholderTextColor: "#0c1012"
+                                    textFormat: Text.AutoText
+                                    selectedTextColor: "#ffffff"
+                                    selectionColor: "#ff007f"
+                                    padding: 10
+                                    font.capitalization: Font.MixedCase
+                                    font.family: "Sans Serif"
+                                }
+                                anchors.rightMargin: 10
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                            }
+                            anchors.bottomMargin: 31
+                            anchors.topMargin: 5
+                            anchors.leftMargin: 60
+                            anchors.rightMargin: 60
                         }
                     }
 
@@ -341,7 +393,7 @@ Item {
                                 anchors.bottom: parent.bottom
                                 anchors.rightMargin: 10
                                 TextArea.flickable: TextArea {
-                                    id: textHome1
+                                    id: textGoogle
                                     color: "#000000"
                                     text: ""
                                     font.pixelSize: 14
@@ -363,14 +415,14 @@ Item {
                             }
                             anchors.rightMargin: 50
                             anchors.leftMargin: 50
-                            anchors.bottomMargin: 31
+                            anchors.bottomMargin: 150
                             anchors.topMargin: 28
                         }
 
                         Column {
                             id: column1
                             width: 200
-                            anchors.top: rectangleVisible1.bottom
+                            anchors.top: rectangleVisible6.bottom
                             anchors.bottom: parent.bottom
                             anchors.horizontalCenterOffset: 5
                             Label {
@@ -431,6 +483,49 @@ Item {
                             anchors.leftMargin: 30
                             anchors.topMargin: 10
                             anchors.bottomMargin: 5
+                        }
+
+                        Rectangle {
+                            id: rectangleVisible6
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleVisible1.bottom
+                            anchors.bottom: parent.bottom
+                            Flickable {
+                                id: flickable6
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 17
+                                clip: true
+                                anchors.topMargin: 10
+                                anchors.leftMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: wordsGoogle
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 20
+                                    wrapMode: Text.WordWrap
+                                    font.bold: true
+                                    selectByMouse: true
+                                    placeholderTextColor: "#0c1012"
+                                    textFormat: Text.AutoText
+                                    selectedTextColor: "#ffffff"
+                                    selectionColor: "#ff007f"
+                                    padding: 10
+                                    font.family: "Sans Serif"
+                                }
+                                anchors.rightMargin: 10
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                            }
+                            anchors.bottomMargin: 31
+                            anchors.topMargin: 5
+                            anchors.leftMargin: 60
+                            anchors.rightMargin: 60
                         }
                         anchors.rightMargin: 10
                         anchors.leftMargin: 10
@@ -622,62 +717,133 @@ Item {
                                         text: ""
                                         font.pixelSize: 14
                                         wrapMode: Text.WordWrap
+                                        placeholderText: "TU TEXTO AQUÍ..."
                                         font.family: "Sans Serif"
                                         selectionColor: "#ff007f"
-                                        placeholderTextColor: "#0c1012"
+                                        placeholderTextColor: "#61002a39"
                                         selectByMouse: true
                                         padding: 10
                                         textFormat: Text.AutoText
                                         selectedTextColor: "#ffffff"
                                     }
                                     anchors.leftMargin: 10
-                                    ScrollBar.vertical: ScrollBar {
-                                    }
+                                    ScrollBar.vertical: ScrollBar {}
                                     anchors.bottomMargin: 17
                                 }
                             }
 
-                            Rectangle {
-                                id: rectangleVisible3
-                                width: 398
-                                height: 372
-                                color: "#ffffff"
-                                radius: 12
-                                Layout.fillHeight: true
+                            Column {
+                                id: column4
+                                width: 200
+                                height: 400
                                 Layout.maximumHeight: 5000
                                 Layout.maximumWidth: 6000
                                 Layout.minimumHeight: 372
-                                Layout.preferredHeight: 372
                                 Layout.minimumWidth: 398
+                                Layout.preferredHeight: 372
                                 Layout.preferredWidth: 398
+                                Layout.fillHeight: true
                                 Layout.fillWidth: true
-                                Flickable {
-                                    id: flickable3
+
+                                Rectangle {
+                                    id: rectangleVisible3
+                                    color: "#ffffff"
+                                    radius: 12
                                     anchors.left: parent.left
                                     anchors.right: parent.right
                                     anchors.top: parent.top
                                     anchors.bottom: parent.bottom
-                                    anchors.rightMargin: 10
-                                    clip: true
-                                    anchors.topMargin: 10
-                                    TextArea.flickable: TextArea {
-                                        id: usrResult
-                                        color: "#000000"
-                                        text: ""
-                                        font.pixelSize: 14
-                                        wrapMode: Text.WordWrap
-                                        font.family: "Sans Serif"
-                                        selectionColor: "#ff007f"
-                                        placeholderTextColor: "#0c1012"
-                                        selectByMouse: true
-                                        padding: 10
-                                        selectedTextColor: "#ffffff"
-                                        textFormat: Text.AutoText
+                                    anchors.bottomMargin: 150
+                                    anchors.rightMargin: 0
+                                    anchors.leftMargin: 0
+                                    anchors.topMargin: 0
+                                    Layout.fillHeight: true
+                                    Layout.maximumHeight: 5000
+                                    Layout.maximumWidth: 6000
+                                    Layout.minimumHeight: 372
+                                    Layout.preferredHeight: 372
+                                    Layout.minimumWidth: 398
+                                    Layout.preferredWidth: 398
+                                    Layout.fillWidth: true
+                                    Flickable {
+                                        id: flickable3
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.top: parent.top
+                                        anchors.bottom: parent.bottom
+                                        anchors.rightMargin: 10
+                                        clip: true
+                                        anchors.topMargin: 10
+                                        TextArea.flickable: TextArea {
+                                            id: usrResult
+                                            color: "#000000"
+                                            text: ""
+                                            font.pixelSize: 14
+                                            wrapMode: Text.WordWrap
+                                            font.family: "Sans Serif"
+                                            selectionColor: "#ff007f"
+                                            placeholderTextColor: "#0c1012"
+                                            selectByMouse: true
+                                            padding: 10
+                                            selectedTextColor: "#ffffff"
+                                            textFormat: Text.AutoText
+                                        }
+                                        anchors.leftMargin: 10
+                                        ScrollBar.vertical: ScrollBar {
+                                        }
+                                        anchors.bottomMargin: 17
                                     }
-                                    anchors.leftMargin: 10
-                                    ScrollBar.vertical: ScrollBar {
+                                }
+
+                                Rectangle {
+                                    id: rectangleVisible8
+                                    color: "#ffffff"
+                                    radius: 12
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.top: rectangleVisible3.bottom
+                                    anchors.bottom: parent.bottom
+                                    Flickable {
+                                        id: flickable8
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.top: parent.top
+                                        anchors.bottom: parent.bottom
+                                        anchors.bottomMargin: 17
+                                        clip: true
+                                        anchors.topMargin: 10
+                                        anchors.leftMargin: 10
+                                        TextArea.flickable: TextArea {
+                                            id: usrWords
+                                            color: "#000000"
+                                            text: ""
+                                            font.pixelSize: 20
+                                            wrapMode: Text.WordWrap
+                                            font.bold: true
+                                            selectByMouse: true
+                                            placeholderTextColor: "#0c1012"
+                                            textFormat: Text.AutoText
+                                            selectedTextColor: "#ffffff"
+                                            selectionColor: "#ff007f"
+                                            padding: 10
+                                            font.family: "Sans Serif"
+                                        }
+                                        anchors.rightMargin: 10
+                                        ScrollBar.vertical: ScrollBar {
+                                        }
                                     }
-                                    anchors.bottomMargin: 17
+                                    Layout.minimumWidth: 398
+                                    Layout.fillHeight: true
+                                    Layout.fillWidth: true
+                                    anchors.bottomMargin: 0
+                                    Layout.preferredHeight: 372
+                                    anchors.leftMargin: 5
+                                    anchors.rightMargin: 5
+                                    Layout.maximumWidth: 6000
+                                    anchors.topMargin: 5
+                                    Layout.minimumHeight: 372
+                                    Layout.preferredWidth: 398
+                                    Layout.maximumHeight: 5000
                                 }
                             }
                         }
@@ -787,7 +953,7 @@ Item {
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 TextArea.flickable: TextArea {
-                                    id: textHome2
+                                    id: textUrl
                                     color: "#000000"
                                     text: ""
                                     font.pixelSize: 14
@@ -810,13 +976,13 @@ Item {
                                 anchors.bottomMargin: 17
                             }
                             anchors.leftMargin: 50
-                            anchors.bottomMargin: 31
+                            anchors.bottomMargin: 150
                         }
 
                         Column {
                             id: column3
                             width: 200
-                            anchors.top: rectangleVisible4.bottom
+                            anchors.top: rectangleVisible7.bottom
                             anchors.bottom: parent.bottom
                             anchors.topMargin: 7
                             anchors.horizontalCenterOffset: 5
@@ -878,6 +1044,50 @@ Item {
                             anchors.leftMargin: 30
                             anchors.bottomMargin: 5
                         }
+
+                        Rectangle {
+                            id: rectangleVisible7
+                            color: "#ffffff"
+                            radius: 12
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: rectangleVisible4.bottom
+                            anchors.bottom: parent.bottom
+                            Flickable {
+                                id: flickable7
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 17
+                                clip: true
+                                anchors.topMargin: 10
+                                anchors.leftMargin: 10
+                                TextArea.flickable: TextArea {
+                                    id: wordsUrl
+                                    color: "#000000"
+                                    text: ""
+                                    font.pixelSize: 20
+                                    wrapMode: Text.WordWrap
+                                    font.bold: true
+                                    selectByMouse: true
+                                    placeholderTextColor: "#0c1012"
+                                    textFormat: Text.AutoText
+                                    selectedTextColor: "#ffffff"
+                                    selectionColor: "#ff007f"
+                                    padding: 10
+                                    font.capitalization: Font.MixedCase
+                                    font.family: "Sans Serif"
+                                }
+                                anchors.rightMargin: 10
+                                ScrollBar.vertical: ScrollBar {
+                                }
+                            }
+                            anchors.bottomMargin: 31
+                            anchors.topMargin: 5
+                            anchors.leftMargin: 60
+                            anchors.rightMargin: 60
+                        }
                         anchors.leftMargin: 10
                         anchors.bottomMargin: 10
                     }
@@ -885,6 +1095,13 @@ Item {
             }
 
 
+        }
+
+        BusyIndicator {
+            id: busy
+            visible: true
+            running: win.run
+            anchors.centerIn: parent
         }
 
         Row {
@@ -956,11 +1173,14 @@ Item {
                 text: "Resumen de página Web"
             }
 
-
-
-
-
-
+            WorkerScript {
+                id: thread
+                source: "handler.js"
+                onMessage: {
+                    win.run = messageObject.run;
+                    print(busy.running)
+                }
+            }
         }
     }
 
@@ -969,13 +1189,24 @@ Item {
 
         function onResponse(text) {
             if (wikiRadio.checked){
-                textHome.text = text
+                textWiki.text = text
             }else if (googleRadio.checked) {
-                textHome1.text = text
+                textGoogle.text = text
             }else if (textRadio.checked) {
                 usrResult.text = text
             }else if (urlRadio.checked) {
-                textHome2.text = text
+                textUrl.text = text
+            }
+        }
+        function onKeys(text) {
+            if (wikiRadio.checked){
+                wordsWiki.text = text
+            }else if (googleRadio.checked) {
+                wordsGoogle.text = text
+            }else if (textRadio.checked) {
+                usrWords.text = text
+            }else if (urlRadio.checked) {
+                wordsUrl.text = text
             }
         }
     }
@@ -985,6 +1216,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:45}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/

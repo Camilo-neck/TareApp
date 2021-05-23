@@ -10,9 +10,9 @@ class Wiki(Consultant):
         if self.openai_response == True:
             return super().consult() + \
                 openaitest.summarized(self.summarize(texto = self.search_wiki_def(self.query), sentences=20)) + \
-                "\n\nResumen realizado con la tecnología GPT-3 de Open AI."
+                "\n\nResumen realizado con la tecnología GPT-3 de Open AI.", openaitest.keywords(self.search_wiki_def(self.query))
         else:
-            return super().consult() + self.summarize(texto = self.search_wiki_def(self.query))
+            return super().consult() + self.summarize(texto = self.search_wiki_def(self.query)), self.words(texto = self.search_wiki_def(self.query))
         
     # Make the query on wikipedia
     def search_wiki_def(self, text):

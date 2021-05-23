@@ -379,7 +379,7 @@ Window {
                             LeftMenuBtn {
                                 id: btnSearch
                                 width: leftMenu.width
-                                text: qsTr("Search")
+                                text: qsTr("Consultor")
                                 btnColorDefault: "#012e40"
                                 btnIconSource: "../images/icons/search_icon.svg"
                                 isActiveMenu: false
@@ -419,7 +419,8 @@ Window {
                             LeftMenuBtn {
                                 id: btnSorter
                                 width: leftMenu.width
-                                text: qsTr("PDFs Editor")
+                                text: qsTr("Folders Sorter")
+                                checked: true
                                 btnIconSource: "../images/icons/sortIcon.png"
                                 btnColorDefault: "#012e40"
                                 isActiveMenu: false
@@ -642,6 +643,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:720;width:1080}D{i:30}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}
 }
 ##^##*/

@@ -161,6 +161,14 @@ Item{
             anchors.topMargin: 99
             anchors.rightMargin: 292
             anchors.bottomMargin: 100
+
+            TextArea {
+                id: textArea
+                anchors.fill: parent
+                placeholderText: qsTr("Text Area")
+                wrapMode: Text.WordWrap
+                ScrollBar.vertical: ScrollBar {}
+            }
         }
     }
 
@@ -173,6 +181,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:480;width:840}
+    D{i:0;formeditorZoom:0.9;height:480;width:840}D{i:10}
 }
 ##^##*/

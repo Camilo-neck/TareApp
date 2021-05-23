@@ -12,15 +12,15 @@ class Google(Consultant):
         if self.openai_response == True:
             return super().consult()  + \
                 openaitest.summarized(self.summarize(link = self.google_url(self.query), sentences=20)) + \
-                f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI."
+                f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI.", openaitest.keywords(self.summarize(link = self.google_url(self.query), sentences=20))
         else:
-            return super().consult()  + self.summarize(link = self.google_url(self.query))+ f"\nObtenido de: {self.__url}\n"
+            return super().consult()  + self.summarize(link = self.google_url(self.query))+ f"\nObtenido de: {self.__url}\n", self.words(link = self.google_url(self.query))
         
     # Obtain url from google search
     def google_url(self, query):
         google_query = query
         verify = True
-        url_list = list(search(google_query, start=0, lang='es', num=20))
+        url_list = list(search(google_query, start=0, lang='es', num=20, stop=20))
         exceptions = ["www.youtube.com", "mercadolibre", "linio", "olx", "amazon", "alibaba",]
         while True:
             index = randint(0,19)
