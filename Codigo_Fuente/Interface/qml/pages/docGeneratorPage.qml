@@ -16,7 +16,7 @@ StackLayout {
     y: 0
     width: 988
     height: 613
-    currentIndex: 1
+    currentIndex: 0
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
