@@ -9,6 +9,9 @@ pkg_resources.require("xlrd==1.2.0")
 import xlrd
 import xlsxwriter
 
+from datetime import datetime as dt
+import locale
+
 class FormattedDocument:
     #Defining constructor for class
     def __init__(self, path, ExcDoc=None):
@@ -19,6 +22,10 @@ class FormattedDocument:
         self.formatDictionary = {}
         self.docxDoc = docx.Document(self.path)
         self.ExcDoc = ExcDoc
+        #Stablish region for the language used in date formating
+        locale.setlocale(locale.LC_TIME, '')
+        #Create actualDate object
+        self.actualDate = dt.now()
 
     #Defining methods to get or modify class attributes
     def getPath(self):
@@ -96,9 +103,12 @@ class FormattedDocument:
                 if isinstance(row[x], float):
                     row[x] = str(int(row[x]))
         for row in rowsList:
-            dictionary['\\' +row[0][:-1] + '\\]'] = row[1:]
+            #set dict keys and values (if date format is presented in value it will be changued via mapping)   
+            dictionary['\\' +row[0][:-1] + '\\]'] = list(map(lambda v: self.actualDate.strftime(v),row[1:]))
+
         #Returning dict
         self.formatDictionary = dictionary
+        
     
     def lgthNamePdfTemp(self,pathToExc):
         # Creating document
@@ -118,7 +128,7 @@ class FormattedDocument:
         for x in range(3,7):
             rowsList.append(sheet.row_values(x))
         for row in rowsList:
-            NameAndPdf[row[0]] = row[1:]
+            NameAndPdf[row[0]] = list(map(lambda v: self.actualDate.strftime(v),row[1:]))
         
         #Returning data
         return len(rowsList[0]), NameAndPdf
