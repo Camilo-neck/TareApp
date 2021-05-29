@@ -16,7 +16,7 @@ StackLayout {
     y: 0
     width: 988
     height: 613
-    currentIndex: 1
+    currentIndex: 0
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
@@ -295,9 +295,13 @@ StackLayout {
 
 
                         if(urls0.length>0){
-                            backend.generateDocuments(urls0[0],folderLocation0+"/")
-                            outputLabel.text = qsTr("Documentos generados correctamente")
-                            outputLabel.color = "#fff"
+                            outputLabel.text = "Generando documentos..."
+
+                            busy1.timerFunction = () => {backend.generateDocuments(urls0[0],folderLocation0+"/")
+                                outputLabel.text = qsTr("Documentos generados correctamente")
+                                outputLabel.color = "#fff"}
+
+                            busy1.start()
 
                         }else{
                             outputLabel.text = "Debe introducir un perfil"
@@ -309,6 +313,20 @@ StackLayout {
 
 
                     }
+                }
+
+                CustomBusyIndicator {
+                    id: busy1
+                    width: 104
+                    height: 96
+                    anchors.verticalCenterOffset: 187
+                    anchors.horizontalCenterOffset: 340
+                    implicitHeight: 96
+                    secondaryColor: "#33E2F2"
+                    mainColor: "#38A1DB"
+                    anchors.centerIn: parent
+                    running: false
+                    implicitWidth: 96
                 }
             }
         }
@@ -708,6 +726,6 @@ StackLayout {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}
+    D{i:0;formeditorZoom:0.5}D{i:17}
 }
 ##^##*/

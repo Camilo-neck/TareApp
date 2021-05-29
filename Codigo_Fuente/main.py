@@ -13,12 +13,15 @@ from PySide2.QtWidgets import *
 from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
 
-
-from Data import Wiki, Google, Url, MyText, PdfApp
-import folderSorter
+from Data import Wiki, Google, Url, MyText, PdfApp, FileOrganizer
 
 import os
 import GenerarPDFClases
+
+import traceback
+from time import sleep
+
+from PySide2 import QtCore, QtWidgets, QtQml
 
 # Verify Connection
 def is_connected():
@@ -88,14 +91,11 @@ class SplashScreen(QMainWindow):
             engine = QQmlApplicationEngine()
 
             engine.rootContext().setContextProperty("backend", MainWindow())
-
             engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
             engine.start()
 
             if not engine.rootObjects():
                 sys.exit(-1)
-
-
 
         # Increaase Counter
         counter += 1
@@ -128,6 +128,16 @@ class MainWindow(QObject):
     # Keys
     keys = Signal(str)
 
+    @Slot()
+    def longF(self):
+        for i in range(5):
+            print(i)
+            sleep(1)
+
+    @Slot()
+    def testF(self):
+        print('clicked')
+
     #Open Excel profile
     @Slot(str)
     def openProfile(self,profilePath):
@@ -144,7 +154,7 @@ class MainWindow(QObject):
 
     # Ordenar Carpetas
     @Slot(int,str,list,list,list,bool)
-    def sortFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
+    def organizeFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
         folders = []
         for name,e in zip(names,extTags):
             if sortMethod == 0:
@@ -158,7 +168,10 @@ class MainWindow(QObject):
                     'keywords': [keyword for keyword in e.split(' ')]
                 }
             folders.append(folder)
-        folderSorter.sortAllFiles(sortMethod,path,folders,ignored_ext,moveToDefault)
+
+        organizer = FileOrganizer(sortMethod,path,folders,ignored_ext,moveToDefault)
+        organizer.organizeAllFiles()
+
 
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)

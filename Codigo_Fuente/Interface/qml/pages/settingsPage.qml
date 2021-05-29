@@ -237,9 +237,9 @@ Item{
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.rightMargin: 8
+            anchors.rightMargin: 19
             anchors.topMargin: 119
-            anchors.bottomMargin: 72
+            anchors.bottomMargin: 264
             anchors.leftMargin: 25
 
             CustomButton {
@@ -280,7 +280,6 @@ Item{
         function onResponse(text) {
             textHome.text = text
         }
-
     }
 
     CustomButton {
@@ -304,24 +303,31 @@ Item{
         Layout.fillWidth: true
         Layout.preferredHeight: 10
         onClicked: {
-            busy1.running = true
-            text = backend.startSearch("Estudiante", false, "W")
-            busy1.running = false
-
+            console.log("Espere por favor ...")
+            busyIndicator.timerFunction = () => {backend.longF()
+                                                console.log("Proceso terminado")}
+            busyIndicator.start()
 
         }
     }
 
-    BusyIndicator {
-        id: busy1
-        anchors.verticalCenterOffset: -202
-        anchors.horizontalCenterOffset: 301
-        running: false
+
+    CustomBusyIndicator{
+        id: busyIndicator
         anchors.centerIn: parent
+        implicitWidth: 96
+        implicitHeight: 96
+        running: false
+        mainColor: '#38A1DB'
+        secondaryColor: '#33E2F2'
     }
+
+
+
+
+
+
     /*
-
-
 
 
     ApplicationWindow {
@@ -387,13 +393,11 @@ Item{
         */
 
 
-
-
 }
 
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75;height:480;width:840}D{i:16}D{i:15}
+    D{i:0;formeditorZoom:0.75;height:480;width:840}
 }
 ##^##*/

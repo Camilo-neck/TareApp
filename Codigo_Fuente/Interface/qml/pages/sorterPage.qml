@@ -15,6 +15,8 @@ Item{
     property var fNames : ["Imagenes","Videos","Musica y Audios","Archivos de texto","Carpetas comprimidas","Archivos de Office"]
     property var fExtensions : ["jpg png jpeg","mp4 avi mov mkv gif","mp3 wab aac ogg","txt pdf","rar zip","docx doc pptx xlsx"]
 
+    property var folderUrl2: ""
+
 
     function changeStack(){
         if (sortRadio.checked){
@@ -83,7 +85,7 @@ Item{
             anchors.right: parent.right
             anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            currentIndex: changeStack()
+            currentIndex: 1
             anchors.bottomMargin: 10
             anchors.leftMargin: 10
             Item {
@@ -160,13 +162,43 @@ Item{
                         onClicked: {
                             var names = list2.getNames()
                             var extensions = list2.getExtensions()
-                            var method = getMethod()
-                            var moveToDefault = switchDefaultFolder.checked
-                            //var foldersInfo = list2.getFoldersInfo()
-                            var path = folderLocation
-                            var ignoredExt = [".py"]
-                            //sortMethod,path,names,extensions,ignored_ext,moveToDefault
-                            backend.sortFiles(method,path,names,extensions,ignoredExt,moveToDefault)
+
+                            var validFolders = true
+
+                            for(var i in names){
+                                if(names[i].length<=0 || extensions[i].length<=0){
+                                    validFolders = false
+                                    break
+                                }
+                            }
+
+
+                            if(folderLocation!=="" && validFolders && list2.getLength()>0){
+                                folderLabel.color = "#000000"
+                                var method = getMethod()
+                                var moveToDefault = switchDefaultFolder.checked
+                                var path = folderLocation
+                                var ignoredExt = [".py"]
+                                backend.organizeFiles(method,path,names,extensions,ignoredExt,moveToDefault)
+                                infoLabel.text = 'Carpeta Ordenada Satisfactoriamente'
+
+                            }else{
+                                if(folderLocation===""){
+                                    folderLabel.color = "#F50000"
+                                    rectangleTop.border.color = "#F50000"
+                                }
+                                if(!validFolders){
+                                    infoLabel.text = 'Por favor no deje ningun campo vacio'
+                                }
+                                else if(list2.getLength()<=0){
+                                    infoLabel.text = 'Debe añadir al menos una carpeta para organizar sus archivos'
+                                }else{
+                                    infoLabel.text = ""
+                                }
+
+                            }
+
+
                         }
                         font.pointSize: 10
                         Layout.fillWidth: true
@@ -251,6 +283,8 @@ Item{
                                 onAccepted: {
                                     folderLocation = String(selectFolder1.folder).replace("file:///","")
                                     folderLabel.text = "Carpeta seleccionada: "+ folderLocation
+                                    folderLabel.color = '#000000'
+                                    rectangleTop.border.color = "#FFFFFF"
                                 }
                             }
 
@@ -362,6 +396,22 @@ Item{
                         anchors.right: parent.right
                         anchors.rightMargin: 17
                     }
+
+                    Label {
+                        id: infoLabel
+                        y: 524
+                        width: 390
+                        height: 21
+                        color: "#000000"
+                        anchors.left: parent.left
+                        anchors.top: parent.to
+                        anchors.bottom: parent.bottom
+                        anchors.rightMargin: 10
+                        anchors.bottomMargin: 8
+                        font.pointSize: 11
+                        anchors.leftMargin: 29
+                        anchors.topMargin: 48
+                    }
                 }
 
                 Label {
@@ -404,6 +454,7 @@ Item{
                     radius: 12
                     anchors.fill: parent
 
+
                     DropFilesArea {
 
                         function testF(fileUrls,fileNames){
@@ -421,7 +472,10 @@ Item{
                                             urls = []
                                             names = []
                                             list1.clearModel()
-                                            addFilesFromFolder(folderUrl)
+                                            folderUrl2 = folderUrl
+                                            busy1.timerFunction = () => addFilesFromFolder(folderUrl2)
+                                            busy1.start()
+
                                         }
                         //backend.testEtiquetado(fileUrls,etiquetaLabel.text)
                     }
@@ -452,6 +506,20 @@ Item{
                         anchors.bottomMargin: 8
                         anchors.topMargin: 13
                         etiqueta: etiquetaLabel.text
+
+                        CustomBusyIndicator{
+                            id: busy1
+                            x: 293
+                            y: 210
+                            anchors.verticalCenterOffset: 0
+                            anchors.horizontalCenterOffset: 0
+                            anchors.centerIn: parent
+                            implicitWidth: 96
+                            implicitHeight: 96
+                            running: false
+                            mainColor: '#38A1DB'
+                            secondaryColor: '#33E2F2'
+                        }
                     }
 
                     /*
