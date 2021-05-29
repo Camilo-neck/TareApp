@@ -5,6 +5,8 @@ import datetime
 from socket import *
 import xlsxwriter
 import xlrd
+import platform
+import subprocess
 
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import *
@@ -115,6 +117,7 @@ class MainWindow(QObject):
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.setTime())
         self.timer.start(1000)
+        self.currentOs = platform.system()
 
     # Signal Set name
     setName = Signal(str)
@@ -163,11 +166,18 @@ class MainWindow(QObject):
     @Slot(str)
     def openProfile(self,profilePath):
         #Opening the profile in 'profilePath'
-        os.startfile(profilePath)
+        if self.currentOs == 'Windows':
+            os.startfile(profilePath)
+        else:
+            subprocess.call(["xdg-open", '/'+profilePath])
+
 
     #Generate formatted documents
     @Slot(str,str)
     def generateDocuments(self,profilePath, dirPath):
+        if self.currentOs != 'Windows':
+            profilePath = '/'+profilePath
+            dirPath = '/' + dirPath
         try:
             #Creating main dictionary
             docDict = self.getTemplateDict(profilePath)
@@ -185,6 +195,9 @@ class MainWindow(QObject):
     #Create profile
     @Slot(str,str,str,str)
     def createProfile(self,templatePath,templateName,dirPath, profileName):
+        if self.currentOs != 'Windows':
+            templatePath = '/' + templatePath
+            dirPath = '/' + dirPath
         #Create document
         document = FormattedDocument(templatePath)
         formatList = list(document.getFormatSet())
@@ -223,6 +236,8 @@ class MainWindow(QObject):
     # Ordenar Carpetas
     @Slot(int,str,list,list,list,bool)
     def organizeFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
+        if self.currentOs != 'Windows':
+            path = '/' + path
         folders = []
         for name,e in zip(names,extTags):
             if sortMethod == 0:
@@ -244,6 +259,9 @@ class MainWindow(QObject):
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
     def getFilesFromFolder(self, folderUrl):
+        if self.currentOs != 'windows':
+            folderUrl = '/' + folderUrl
+
         if not os.path.isdir(folderUrl): return ["NULL"]
         #print(">>>>>>>>>>>>",folderUrl)
         fileUrls = []
@@ -260,7 +278,8 @@ class MainWindow(QObject):
     @Slot(str,str)
     def tagFiles(self, urls,etiqueta):
 
-        urls = [e.replace('file:///','') for e in urls.split(',')]
+        if self.currentOs != 'windows': urls = ['/'+e.replace('file:///','') for e in urls.split(',')]
+        else: urls = [e.replace('file:///','') for e in urls.split(',')]
 
         for path in urls:
             fileName, ext = os.path.splitext(path)
@@ -275,9 +294,11 @@ class MainWindow(QObject):
     def mergePdf(self, file_paths, output_path):
 
         if ".pdf" not in output_path: output_path += ".pdf"
-        file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
+        if self.currentOs != 'windows': 
+            file_paths = ['/'+e.replace('file:///','') for e in file_paths.split(',')]
+        else: file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
 
-        p = PdfApp(paths = file_paths,outPath = output_path)
+        p = PdfApp(paths = file_paths,outPath = '/'+output_path)
         p.merge_pdfs()
 
     # Build PDF
@@ -285,9 +306,9 @@ class MainWindow(QObject):
     def buildPdf(self,path, pages_list ,output_path):
 
         if ".pdf" not in output_path: output_path += ".pdf"
-        path = path.replace('file:///','')
+        path = '/' + output_path.replace('file:///','')
 
-        p = PdfApp(paths = path, outPath = output_path, pagesList = pages_list)
+        p = PdfApp(paths = path, outPath = '/'+output_path, pagesList = pages_list)
         p.buildPdf()
 
     # get Pdf Num pages

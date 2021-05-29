@@ -115,22 +115,21 @@ Item {
                                     Layout.preferredWidth: 250
 
                                     onClicked: {
-                                        textWiki.text = ""
-                                        wordsWiki.text = ""
-                                        wikiBusy.timerFunction = () => backend.startSearch(String(inputText.text), responseType.checked, "W")
-                                        wikiBusy.start()
+                                        if (inputText.text === ""){
+                                            inputText.placeholderText = "Ingrese un texto válido"
+                                            inputText.placeholderTextColor = "#f00"
+                                            inputText.borderColor = "#f00"
+                                        }else {
+                                            textWiki.text = ""
+                                            wordsWiki.text = ""
+                                            wikiBusy.timerFunction = () => backend.startSearch(String(inputText.text), responseType.checked, "W")
+                                            wikiBusy.start()
+                                            inputText.placeholderText = "Ingrese un texto válido"
+                                            inputText.placeholderTextColor = "#121314"
+                                            inputText.borderColor = "#00000000"
+                                        }
+                                        
                                     }
-
-                                    /*
-
-                                    onClicked: {
-                                        win.run = true
-                                        thread.sendMessage({run : true,
-                                                               func : backend.startSearch(String(inputText.text), responseType.checked, "W")});
-                                        print(busy.running)
-                                        inputText.text = ""
-                                    }
-                                    */
 
                                 }
 
@@ -368,8 +367,19 @@ Item {
                                     font.family: "Sans Serif"
                                     Layout.preferredWidth: 250
                                     onClicked: {
-                                        backend.startSearch(inputText1.text, responseType1.checked, "G")
-                                        inputText1.text = ""
+                                        if (inputText1.text === ""){
+                                            inputText1.placeholderText = "Ingrese un texto válido"
+                                            inputText1.placeholderTextColor = "#f00"
+                                            inputText1.borderColor = "#f00"
+                                        }else {
+                                            textGoogle.text = ""
+                                            wordsGoogle.text = ""
+                                            googleBusy.timerFunction = () => backend.startSearch(inputText1.text, responseType1.checked, "G")
+                                            googleBusy.start()
+                                            inputText1.placeholderText = "Ingrese un texto válido"
+                                            inputText1.placeholderTextColor = "#121314"
+                                            inputText1.borderColor = "#00000000"
+                                        }
                                     }
                                     font.pointSize: 10
                                     Layout.maximumWidth: 150
@@ -438,6 +448,16 @@ Item {
                             anchors.leftMargin: 50
                             anchors.bottomMargin: 150
                             anchors.topMargin: 28
+
+                            CustomBusyIndicator{
+                                id: googleBusy
+                                anchors.centerIn: parent
+                                implicitWidth: 96
+                                implicitHeight: 96
+                                running: false
+                                mainColor: '#38A1DB'
+                                secondaryColor: '#33E2F2'
+                            }
                         }
 
                         Column {
@@ -600,8 +620,16 @@ Item {
                                     Layout.fillWidth: true
                                     Layout.maximumHeight: 200
                                     onClicked: {
-                                        backend.startSearch(usrText.text, responseType2.checked, "T")
-                                        inputText2.text = ""
+                                        if (usrText.text === ""){
+                                            usrText.placeholderText = "Ingrese un texto válido"
+                                        }else {
+                                            usrResult.text = ""
+                                            usrWords.text = ""
+                                            textBusy.timerFunction = () => backend.startSearch(usrText.text, responseType2.checked, "T")
+                                            textBusy.start()
+                                            usrText.placeholderText = "Tu texto aquí..."
+                                            usrText.borderColor = "#00000000"
+                                        }
                                     }
                                     font.pointSize: 10
                                     btnColorMouseOver: "#fb9850"
@@ -814,6 +842,18 @@ Item {
                                         }
                                         anchors.bottomMargin: 17
                                     }
+
+                                    CustomBusyIndicator{
+                                        id: textBusy
+                                        x: -279
+                                        y: 148
+                                        anchors.centerIn: parent
+                                        implicitWidth: 96
+                                        implicitHeight: 96
+                                        running: false
+                                        mainColor: '#38A1DB'
+                                        secondaryColor: '#33E2F2'
+                                    }
                                 }
 
                                 Rectangle {
@@ -928,8 +968,19 @@ Item {
                                     btnColorDefault: "#f98125"
                                     Layout.preferredWidth: 250
                                     onClicked: {
-                                        backend.startSearch(String(inputText2.text), responseType3.checked, "U")
-                                        inputText2.text = ""
+                                        if (inputText2.text === ""){
+                                            inputText2.placeholderText = "Ingrese un texto válido"
+                                            inputText2.placeholderTextColor = "#f00"
+                                            inputText2.borderColor = "#f00"
+                                        }else {
+                                            textUrl.text = ""
+                                            wordsUrl.text = ""
+                                            urlBusy.timerFunction = () => backend.startSearch(String(inputText2.text), responseType3.checked, "U")
+                                            urlBusy.start()
+                                            inputText2.placeholderText = "Ingrese un texto válido"
+                                            inputText2.placeholderTextColor = "#121314"
+                                            inputText2.borderColor = "#00000000"
+                                        }
                                     }
                                     font.family: "Sans Serif"
                                     Layout.fillWidth: true
@@ -995,6 +1046,15 @@ Item {
                                 clip: true
                                 anchors.leftMargin: 10
                                 anchors.bottomMargin: 17
+                            }
+                            CustomBusyIndicator{
+                                id: urlBusy
+                                anchors.centerIn: parent
+                                implicitWidth: 96
+                                implicitHeight: 96
+                                running: false
+                                mainColor: '#38A1DB'
+                                secondaryColor: '#33E2F2'
                             }
                             anchors.leftMargin: 50
                             anchors.bottomMargin: 150

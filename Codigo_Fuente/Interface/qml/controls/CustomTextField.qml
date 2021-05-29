@@ -6,6 +6,7 @@ TextField {
 
     property color bgColor: "#03a678"
     property color fontColor: "#ffffff"
+    property var borderColor: "#00000000"
 
     placeholderText: qsTr("Type Something Here")
     color: fontColor
@@ -13,6 +14,7 @@ TextField {
     implicitHeight: 40
     background: Rectangle {
         color: bgColor
+        border.color: borderColor
         anchors.fill: parent
         radius: 10
     }
