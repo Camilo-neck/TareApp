@@ -27,6 +27,7 @@ Item {
         }
         return extensionList
     }
+    /*
 
     function getFoldersInfo(){
         var folders = []
@@ -38,6 +39,11 @@ Item {
             folders.push(folder)
         }
         return folders
+    }
+    */
+
+    function getLength(){
+        return visualModel.items.count
     }
 
     function createListObject(fName, fExtensions) {

@@ -4,6 +4,7 @@ import "../controls"
 import QtQuick.Layouts 1.11
 import QtGraphicalEffects 1.15
 
+
 Item {
     id: win
     property bool run : false
@@ -29,15 +30,13 @@ Item {
         anchors.leftMargin: 0
         anchors.topMargin: 0
 
-
-
         StackLayout {
             id: stackLayout
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            currentIndex: changeStack() 
+            currentIndex: changeStack()
             // Change to function
             anchors.rightMargin: 10
             anchors.leftMargin: 10
@@ -73,6 +72,7 @@ Item {
                             anchors.topMargin: 7
                             radius: 12
 
+
                             GridLayout {
                                 anchors.fill: parent
                                 anchors.rightMargin: 10
@@ -99,6 +99,7 @@ Item {
 
                                 }
 
+
                                 CustomButton {
                                     id: customBtn
                                     text: "Buscar"
@@ -114,12 +115,22 @@ Item {
                                     Layout.preferredWidth: 250
 
                                     onClicked: {
+                                        textWiki.text = ""
+                                        wordsWiki.text = ""
+                                        wikiBusy.timerFunction = () => backend.startSearch(String(inputText.text), responseType.checked, "W")
+                                        wikiBusy.start()
+                                    }
+
+                                    /*
+
+                                    onClicked: {
                                         win.run = true
                                         thread.sendMessage({run : true,
                                                                func : backend.startSearch(String(inputText.text), responseType.checked, "W")});
                                         print(busy.running)
                                         inputText.text = ""
                                     }
+                                    */
 
                                 }
 
@@ -180,6 +191,16 @@ Item {
                                 }
 
                                 ScrollBar.vertical: ScrollBar{}
+                            }
+
+                            CustomBusyIndicator{
+                                id: wikiBusy
+                                anchors.centerIn: parent
+                                implicitWidth: 96
+                                implicitHeight: 96
+                                running: false
+                                mainColor: '#38A1DB'
+                                secondaryColor: '#33E2F2'
                             }
                         }
 
@@ -1097,11 +1118,15 @@ Item {
 
         }
 
-        BusyIndicator {
+
+        CustomBusyIndicator{
             id: busy
-            visible: true
-            running: win.run
             anchors.centerIn: parent
+            implicitWidth: 96
+            implicitHeight: 96
+            running: false
+            mainColor: '#38A1DB'
+            secondaryColor: '#33E2F2'
         }
 
         Row {
