@@ -6,3 +6,4 @@ from . my_text import MyText
 from . pdfApp import PdfApp
 from . openaitest import *
 from . folderSorter import FileOrganizer
+from . GenerarPDFClases import User, FormattedDocument

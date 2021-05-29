@@ -85,7 +85,7 @@ Item{
             anchors.right: parent.right
             anchors.top: row.bottom
             anchors.bottom: parent.bottom
-            currentIndex: 1
+            currentIndex: changeStack()
             anchors.bottomMargin: 10
             anchors.leftMargin: 10
             Item {
