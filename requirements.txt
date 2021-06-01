@@ -2,6 +2,13 @@ requests
 bs4
 Wikipedia
 google
+openai
+python-dotenv
 pypdf2
 pyside2
 pyside6
+python-docxs
+xlrd == 1.2.0
+xlsxwriter
+pkg_resources
+comtypes
