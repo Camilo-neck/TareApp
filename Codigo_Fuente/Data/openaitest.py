@@ -8,10 +8,11 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def summarized(query):
+    query = query.replace("\n", '')
     try:
         response = openai.Completion.create(
             engine="curie",
-            prompt=f"{query}\ntl;dr:",
+            prompt=f"{query}\nResumen:",
             temperature=0.3,
             max_tokens=200,
             top_p=1,

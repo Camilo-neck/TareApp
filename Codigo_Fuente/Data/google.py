@@ -23,16 +23,19 @@ class Google(Consultant):
         url_list = list(search(google_query, start=0, lang='es', num=20, stop=20))
         exceptions = ["www.youtube.com", "mercadolibre", "linio", "olx", "amazon", "alibaba",]
         while True:
-            index = randint(0,19)
-            url =url_list[index]
-            for exception in exceptions:
-                if exception in url:
-                    verify = False
+            try:
+                index = randint(0,19)
+                url =url_list[index]
+                for exception in exceptions:
+                    if exception in url:
+                        verify = False
+                        break
+                if verify:
                     break
-            if verify:
-                break
+            except IndexError:
+                return ""
         self.__url = url
-        return url
+        return self.__url
 
     def __str__(self) -> str:
         return super().__str__() + "Google."

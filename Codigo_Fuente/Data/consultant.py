@@ -1,6 +1,7 @@
 from os import link, system
 import requests
 from bs4 import BeautifulSoup
+import traceback
 
 saludo = "What do you want to do?"
 
@@ -34,18 +35,20 @@ class Consultant():
     #      return "Error"
 
     def summarize(self, texto = None, link = None, sentences = 5):
-       if texto == None: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
-               'url': link,
-               'sentences' : sentences}
-       else: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
-               'txt': texto,
-               'sentences' : sentences}
-       res = requests.post(self.__APIURL1, data=payload)
-    
-       if res.ok:
-           return res.json()['summary']
-       else:
-           return "Unexpected Error."
+        if texto == None: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
+                'url': link,
+                'sentences' : sentences}
+        else: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
+                'txt': texto,
+                'sentences' : sentences}
+        res = requests.post(self.__APIURL1, data=payload)
+        if res.ok:
+            try:
+                return res.json()['summary']
+            except KeyError:
+                return "Ingrese una consulta válida."
+        else:
+            return "Unexpected Error."
 
     def words(self, texto = None, link = None):
         if link is None: payload = {'texto': texto}
@@ -53,13 +56,16 @@ class Consultant():
         res = requests.post(self.__APIURL, data=payload)
         text = ""
         if res.ok:
-            soup = BeautifulSoup(res.text, 'html.parser')
-            container = soup.find('div', id="palabras_clave")
-            btns = container.find_all('button')
-            btns_text = [btn.text for btn in btns]
-            text = f'-{btns_text[0]}'
-            for key in btns_text[1:]:
-                text += f'\t-{key:^10}'
+            try:
+                soup = BeautifulSoup(res.text, 'html.parser')
+                container = soup.find('div', id="palabras_clave")
+                btns = container.find_all('button')
+                btns_text = [btn.text for btn in btns]
+                text = f'-{btns_text[0]}'
+                for key in btns_text[1:]:
+                    text += f'\t-{key:^10}'
+            except AttributeError:
+                return "Ingrese una consulta válida."
         else:
             text = 'Unexpected Error.'
         return text

@@ -268,6 +268,73 @@ Item{
                 Layout.fillWidth: true
             }
         }
+
+
+        Rectangle {
+            id: rectangle3
+            color: "#ffffff"
+            anchors.fill: parent
+            anchors.bottomMargin: 16
+            anchors.leftMargin: 25
+            anchors.rightMargin: 19
+            anchors.topMargin: 227
+
+            Rectangle {
+                id: content4
+                x: -30
+                y: 8
+                height: 57
+                color: "#c1e4fd"
+                radius: 5
+                border.color: "#0797bd"
+                border.width: 2
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: 8
+                anchors.leftMargin: 8
+                GridLayout {
+                    anchors.fill: parent
+                    anchors.topMargin: 8
+                    rows: 1
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 8
+                    anchors.bottomMargin: 8
+                    columns: 4
+
+                    Rectangle {
+                        id: rectangle
+                        width: 200
+                        height: 200
+                        color: "#5dc9ef"
+                        radius: 5
+                        Layout.preferredWidth: 80
+                        Layout.fillHeight: true
+                        Layout.fillWidth: false
+                    }
+
+                    Rectangle {
+                        id: rectangle1
+                        width: 200
+                        height: 200
+                        color: "#5dc9ef"
+                        radius: 5
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                    }
+
+                    Rectangle {
+                        id: rectangle2
+                        width: 200
+                        height: 200
+                        color: "#5dc9ef"
+                        radius: 5
+                        Layout.preferredWidth: 110
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+        }
     }
 
 
@@ -284,16 +351,13 @@ Item{
 
     CustomButton {
         id: bttn2
+        y: 26
         customRadius : 5
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
         font.pointSize: 25
-        anchors.rightMargin: 13
-        anchors.bottomMargin: 430
-        anchors.leftMargin: 757
-        anchors.topMargin: 17
+        anchors.rightMargin: 15
+        anchors.leftMargin: 755
         Layout.preferredWidth: 10
         Layout.maximumWidth: 10
         btnColorMouseOver: "#78ede7"
@@ -305,7 +369,7 @@ Item{
         onClicked: {
             console.log("Espere por favor ...")
             busyIndicator.timerFunction = () => {backend.longF()
-                                                console.log("Proceso terminado")}
+                console.log("Proceso terminado")}
             busyIndicator.start()
 
         }
@@ -399,6 +463,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75;height:480;width:840}
+    D{i:0;formeditorZoom:1.1;height:480;width:840}D{i:21}D{i:22}D{i:18}D{i:17}
 }
 ##^##*/

@@ -20,7 +20,10 @@ class Wiki(Consultant):
         try:
             query = text
             wikipedia.set_lang('es')
-            texto = wikipedia.summary(query, 10)
+            try:
+                texto = wikipedia.summary(query, 10)
+            except wikipedia.exceptions.PageError:
+                return "Ingrese una consulta válida."
             return self.formatter(texto)
         except wikipedia.exceptions.DisambiguationError as err:
             return f'Error. Ambiguous word, it is not possible to find a single definition. \n{err}.'
