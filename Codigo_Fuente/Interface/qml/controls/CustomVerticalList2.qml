@@ -108,6 +108,7 @@ Item {
                 spacing: 2
                 model: visualModel
                 delegate: timelineDelegate
+                clip: true
 
 
                 moveDisplaced: Transition {

@@ -251,7 +251,8 @@ class MainWindow(QObject):
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
     def getFilesFromFolder(self, folderUrl):
-        if self.currentOs != 'windows':
+        print(self.currentOs)
+        if self.currentOs != 'Windows':
             folderUrl = '/' + folderUrl
 
         if not os.path.isdir(folderUrl): return ["NULL"]
@@ -270,7 +271,7 @@ class MainWindow(QObject):
     @Slot(str,str)
     def tagFiles(self, urls,etiqueta):
 
-        if self.currentOs != 'windows': urls = ['/'+e.replace('file:///','') for e in urls.split(',')]
+        if self.currentOs != 'Windows': urls = ['/'+e.replace('file:///','') for e in urls.split(',')]
         else: urls = [e.replace('file:///','') for e in urls.split(',')]
 
         for path in urls:
@@ -286,7 +287,7 @@ class MainWindow(QObject):
     def mergePdf(self, file_paths, output_path):
 
         if ".pdf" not in output_path: output_path += ".pdf"
-        if self.currentOs != 'windows': 
+        if self.currentOs != 'Windows': 
             file_paths = ['/'+e.replace('file:///','') for e in file_paths.split(',')]
         else: file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
 

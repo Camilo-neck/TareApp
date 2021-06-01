@@ -298,6 +298,8 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| Home")
                                     labelTopInfo.text = qsTr("Bienvenidos")
                                     stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
@@ -319,6 +321,8 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -373,6 +377,8 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| Text Editor")
                                     labelTopInfo.text = qsTr("Edita tus archivos de texto.")
                                     stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
@@ -394,6 +400,8 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| Search")
                                     labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
@@ -415,6 +423,8 @@ Window {
                                     btnPdf.isActiveMenu = true
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| PDF Editor")
                                     labelTopInfo.text = qsTr("Organiza tus pdfs como nunca antes")
                                     stackView.push(Qt.resolvedUrl("pages/pdfPage.qml"))
@@ -437,9 +447,12 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = true
                                     btnPdfgen.isActiveMenu = false
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| File organizer")
                                     labelTopInfo.text = qsTr("Organiza tus archivos facilmente.")
                                     stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
+
                                 }
                             }
                             LeftMenuBtn {
@@ -457,6 +470,8 @@ Window {
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
                                     btnPdfgen.isActiveMenu = true
+                                    btnHelp.isActiveMenu = false
+
                                     location.text = qsTr("| Generador de documentos")
                                     labelTopInfo.text = qsTr("Genera tus documentos con el formato que desees.")
                                     stackView.push(Qt.resolvedUrl("pages/docGeneratorPage.qml"))
@@ -467,15 +482,42 @@ Window {
                     }
 
                     LeftMenuBtn {
-                        id: btnSettings
+                        id: btnHelp
                         x: 0
                         y: 227
+                        width: leftMenu.width
+                        text: qsTr("Help")
+                        anchors.bottom: parent.bottom
+                        btnColorDefault: "#012e40"
+                        btnIconSource: "../images/icons/help_icon.png"
+                        anchors.bottomMargin: 25
+                        onClicked: {
+                            btnHome.isActiveMenu = false
+                            btnSettings.isActiveMenu = false
+                            btnEdit.isActiveMenu = false
+                            btnSearch.isActiveMenu = false
+                            btnPdf.isActiveMenu = false
+                            btnSorter.isActiveMenu = false
+                            btnPdfgen.isActiveMenu = false
+                            btnHelp.isActiveMenu = true
+
+                            stackView.push(Qt.resolvedUrl("pages/helpPage.qml"))
+
+                            location.text = qsTr("| Ayuda")
+                            labelTopInfo.text = qsTr("Obten ayuda sobre el uso de nuestras aplicaciones.")
+                        }
+                    }
+
+                    LeftMenuBtn {
+                        id: btnSettings
+                        x: 0
+                        y: 488
                         width: leftMenu.width
                         text: qsTr("Settings")
                         anchors.bottom: parent.bottom
                         btnColorDefault: "#012e40"
                         btnIconSource: "../images/icons/settings_icon.svg"
-                        anchors.bottomMargin: 25
+                        anchors.bottomMargin: 90
                         onClicked: {
                             btnHome.isActiveMenu = false
                             btnSettings.isActiveMenu = true
