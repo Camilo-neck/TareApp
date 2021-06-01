@@ -320,6 +320,7 @@ Item{
         running: false
         mainColor: '#38A1DB'
         secondaryColor: '#33E2F2'
+
     }
 
 
