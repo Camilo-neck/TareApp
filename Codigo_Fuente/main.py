@@ -13,11 +13,6 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
-# try:
-#   print(int('hola'))
-# except error as e:
-#   print('e')
-
 # Import Circular Progress
 from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
@@ -26,12 +21,9 @@ from circular_progress import Ui_SplashScreen
 from Data import Wiki, Google, Url, MyText, PdfApp, User, FormattedDocument, FileOrganizer
 
 import os
-#import GenerarPDFClases
 
-import traceback
+# import traceback
 from time import sleep
-
-from PySide2 import QtCore, QtWidgets, QtQml
 
 # Verify Connection
 def is_connected():
@@ -41,7 +33,7 @@ def is_connected():
         s.connect(('socket.io',80))
         s.close()
         return True
-    except:
+    except gaierror:
         return False
 
 counter = 0
@@ -107,7 +99,7 @@ class SplashScreen(QMainWindow):
             if not engine.rootObjects():
                 sys.exit(-1)
 
-        # Increaase Counter
+        # Increase Counter
         counter += 1
 
 class MainWindow(QObject):
