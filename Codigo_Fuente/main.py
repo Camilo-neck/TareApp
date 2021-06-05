@@ -297,9 +297,10 @@ class MainWindow(QObject):
         if ".pdf" not in output_path: output_path += ".pdf"
         if self.currentOs != 'Windows': 
             file_paths = ['/'+e.replace('file:///','') for e in file_paths.split(',')]
+            output_path = '/'+output_path
         else: file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
 
-        p = PdfApp(paths = file_paths,outPath = '/'+output_path)
+        p = PdfApp(paths = file_paths,outPath = output_path)
         p.merge_pdfs()
 
     # Build PDF
@@ -307,9 +308,12 @@ class MainWindow(QObject):
     def buildPdf(self,path, pages_list ,output_path):
 
         if ".pdf" not in output_path: output_path += ".pdf"
-        path = '/' + output_path.replace('file:///','')
+        path = output_path.replace('file:///','')
+        if self.currentOs != 'Windows':
+            path = '/' + path
+            output_path = '/' + output_path
 
-        p = PdfApp(paths = path, outPath = '/'+output_path, pagesList = pages_list)
+        p = PdfApp(paths = path, outPath = output_path, pagesList = pages_list)
         p.buildPdf()
 
     # get Pdf Num pages

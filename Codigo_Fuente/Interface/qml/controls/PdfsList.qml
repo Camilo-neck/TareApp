@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
 import QtQml.Models 2.2
@@ -106,7 +106,8 @@ Item {
                     MouseArea {
                         id: dragArea
 
-                        width: 100; height: 40
+                        width: content.width //100
+                        height: 40
 
                         property bool held: false
 
@@ -120,12 +121,14 @@ Item {
                             console.log(urls)
                         }
 
+
                         Rectangle {
                             id: content
 
                             anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
 
-                            width: 100
+                            width: contentText.width>100 ? contentText.width+10 : 100
+                            //width: 100
                             height: 40
                             opacity: dragArea.held ? 0.8 : 1.0
                             border.color: "#0797bd"
@@ -135,19 +138,21 @@ Item {
                             color: colore
 
                             Text{
+                                id : contentText
 
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 text : urlText
                                 font.pixelSize: 20
+                                //wrapMode: Text.WordWrap
                             }
 
                             CustomButton {
                                 id: delBttn
                                 customRadius : 5
                                 anchors.left: parent.left
-                                anchors.right: parent.right
+                                //anchors.right: parent.right
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 font.pointSize: 25
