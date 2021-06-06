@@ -18,11 +18,11 @@ Item{
         StackLayout {
             id: stackLayout
             anchors.fill: parent
-            currentIndex: 0
             anchors.rightMargin: 10
             anchors.leftMargin: 10
             anchors.bottomMargin: 10
             anchors.topMargin: 10
+            currentIndex: 1
 
             Item {
                 DataFormatTable{
@@ -38,6 +38,7 @@ Item{
             }
 
             Item {
+
             }
         }
 
@@ -51,6 +52,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:2}
+    D{i:0;autoSize:true;formeditorZoom:0.66;height:613;width:988}
 }
 ##^##*/

@@ -126,6 +126,7 @@ class MainWindow(QObject):
     # text String
     textField = ""
 
+
     # Result
     response = Signal(str)
     # Keys
