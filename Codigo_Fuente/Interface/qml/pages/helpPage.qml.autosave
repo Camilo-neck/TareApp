@@ -180,11 +180,6 @@ Item{
 
                         ColumnLayout {
                             id: columnLayout
-                            //anchors.fill: parent
-                            //anchors.rightMargin: -224
-                            //anchors.bottomMargin: 0
-                            //anchors.leftMargin: 0
-                            //anchors.topMargin: 0
                             width: scrollView.width
 
 
