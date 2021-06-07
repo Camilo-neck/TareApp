@@ -145,6 +145,205 @@ Item{
             }
 
             Item {
+                id: consultorHelp
+
+                Rectangle {
+                    id: consultorContainer
+                    color: "#97d4f0"
+                    radius: 12
+                    anchors.fill: parent
+                    anchors.bottomMargin: 5
+                    clip: true
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 5
+                    anchors.rightMargin: 5
+                    ScrollView {
+                        id: consScrollView
+                        x: 0
+                        y: 0
+                        anchors.fill: parent
+                        anchors.bottomMargin: 0
+                        anchors.leftMargin: 0
+                        anchors.topMargin: 0
+                        ColumnLayout {
+                            id: contentLayout
+                            anchors.fill: parent
+                            anchors.bottomMargin: 10
+                            anchors.leftMargin: 10
+                            anchors.topMargin: 10
+                            spacing: 6
+                            anchors.rightMargin: 10
+                            Label {
+                                id: ques1
+                                text: qsTr("¿CÓMO SELECCIONAR EL MOTOR DE BÚSQUEDA?")
+                                horizontalAlignment: Text.AlignLeft
+                                verticalAlignment: Text.AlignTop
+                                Layout.fillHeight: false
+                                font.pointSize: 16
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                            }
+
+                            AnimatedImage {
+                                id: options
+                                width: 100
+                                height: 100
+                                source: "../../images/helpPage/searchOptions.gif"
+                                Layout.fillHeight: true
+                                autoTransform: false
+                                asynchronous: false
+                                Layout.fillWidth: true
+                                cache: true
+                                speed: 2
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            Label {
+                                id: ans1
+                                text: qsTr("En la zona superior puede seleccionar el motor de búsqueda mediante el cual desea realizar la consulta y recibir el resúmen.")
+                                wrapMode: Label.WordWrap
+                                Layout.fillHeight: false
+                                font.pointSize: 14
+                                Layout.fillWidth: true
+                            }
+
+                            ToolSeparator {
+                                id: toolSeparator
+                                wheelEnabled: true
+                                orientation: Qt.Horizontal
+                                Layout.fillWidth: true
+                                spacing: 1
+                                contentItem: Rectangle {
+                                    color: "#fa801e"
+                                    implicitHeight: parent.vertical ? 24 : 2
+                                    implicitWidth: parent.vertical ? 2 : 24
+                                }
+                            }
+
+                            Label {
+                                id: ques2
+                                text: qsTr("¿CÓMO CONSULTAR?")
+                                font.pointSize: 16
+                                Layout.fillWidth: true
+                            }
+
+                            AnimatedImage {
+                                id: consult
+                                width: 100
+                                height: 100
+                                source: "../../images/helpPage/searchHelp.gif"
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            ToolSeparator {
+                                id: toolSeparator1
+                                wheelEnabled: true
+                                orientation: Qt.Horizontal
+                                spacing: 1
+                                Layout.fillWidth: true
+                                contentItem: Rectangle {
+                                    color: "#fa801e"
+                                    implicitHeight: parent.vertical ? 24 : 2
+                                    implicitWidth: parent.vertical ? 2 : 24
+                                }
+                            }
+
+                            Label {
+                                id: ques3
+                                text: qsTr("No recibo la respuesta esperada en la búsqueda por Google")
+                                font.capitalization: Font.AllUppercase
+                                font.pointSize: 16
+                                Layout.fillWidth: true
+                            }
+
+                            Label {
+                                id: ans3
+                                text: qsTr('Debe recordar que como está especificado en la aplicación, este motor busca en modo "me siento con suerte", por lo tanto al buscar una página aleatoria, puede obtener una sin información sustancial o resumible.')
+                                wrapMode: Label.WordWrap
+                                Layout.fillHeight: false
+                                font.pointSize: 14
+                                Layout.fillWidth: true
+                            }
+
+                            ToolSeparator {
+                                id: toolSeparator2
+                                wheelEnabled: true
+                                orientation: Qt.Horizontal
+                                spacing: 1
+                                Layout.fillWidth: true
+                                contentItem: Rectangle {
+                                    color: "#fa801e"
+                                    implicitHeight: parent.vertical ? 24 : 2
+                                    implicitWidth: parent.vertical ? 2 : 24
+                                }
+                            }
+
+                            Label {
+                                id: ques4
+                                text: qsTr("¿Cómo hago uso del GPT-3 de Open AI?")
+                                font.capitalization: Font.AllUppercase
+                                font.pointSize: 16
+                                Layout.fillWidth: true
+                            }
+
+                            AnimatedImage {
+                                id: openAI
+                                width: 100
+                                height: 100
+                                source: "../../images/helpPage/Open AI.gif"
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            Label {
+                                id: ans4
+                                text: "Es tan simple como activar la opción de usar Open AI y tanto el resumen como las palabras clave serán obtenidor mediante la tecnológia GPT-3 de Open AI."
+                                wrapMode: Label.WordWrap
+                                Layout.fillHeight: false
+                                font.pointSize: 14
+                                Layout.fillWidth: true
+                            }
+
+                            ToolSeparator {
+                                id: toolSeparator3
+                                wheelEnabled: true
+                                orientation: Qt.Horizontal
+                                spacing: 1
+                                Layout.fillWidth: true
+                                contentItem: Rectangle {
+                                    color: "#fa801e"
+                                    implicitHeight: parent.vertical ? 24 : 2
+                                    implicitWidth: parent.vertical ? 2 : 24
+                                }
+                            }
+
+                            Label {
+                                id: ques5
+                                text: qsTr("¿Por qué recibo una respuesta incorrecta o extraña cuando uso Open AI?")
+                                font.capitalization: Font.AllUppercase
+                                font.pointSize: 16
+                                Layout.fillWidth: true
+                            }
+
+                            Label {
+                                id: ans5
+                                text: "Cabe resaltar que esta tecnología de inteligencia artificial está en fase Beta, por lo que aún comete ciertos errores, sin embargo puede volver a intentar y la misma tratará de darle una mejor respuesta. Además la misma trabaja con comprensión de textos por lo que a veces realiza análisis erróneos."
+                                wrapMode: Label.WordWrap
+                                Layout.fillHeight: false
+                                font.pointSize: 14
+                                Layout.fillWidth: true
+                            }
+                        }
+                        anchors.rightMargin: 0
+                        contentWidth: parent.width - 10
+                    }
+                }
             }
 
             Item {
