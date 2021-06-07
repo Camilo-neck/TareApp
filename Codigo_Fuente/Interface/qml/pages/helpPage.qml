@@ -180,21 +180,16 @@ Item{
 
                         ColumnLayout {
                             id: columnLayout
-                            //anchors.fill: parent
-                            //anchors.rightMargin: -224
-                            //anchors.bottomMargin: 0
-                            //anchors.leftMargin: 0
-                            //anchors.topMargin: 0
                             width: scrollView.width
+
 
 
                             Rectangle {
                                 id: rectangle11
-                                width: 707
+                                width: 850
                                 height: 63
                                 color: "#06384f"
                                 radius: 5
-                                anchors.bottom: content4.top
                                 Text {
                                     color: "#ffffff"
                                     text: "PDF APP"
@@ -214,13 +209,13 @@ Item{
                                 Layout.fillHeight: false
                             }
 
+
                             Rectangle {
                                 id: rectangle4
-                                width: 707
+                                width: 850
                                 height: 63
                                 color: "#06384f"
                                 radius: 5
-                                anchors.bottom: content4.top
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 Layout.fillHeight: false
                                 Layout.fillWidth: false
@@ -237,7 +232,6 @@ Item{
                                 }
                                 anchors.bottomMargin: 6
                             }
-
 
                             Rectangle {
                                 id: rectangle5
@@ -263,11 +257,10 @@ Item{
 
                             Rectangle {
                                 id: rectangle7
-                                width: 707
+                                width: 850
                                 height: 63
                                 color: "#06384f"
                                 radius: 5
-                                anchors.bottom: content4.top
                                 Text {
                                     color: "#ffffff"
                                     text: "Las paginas o PDFs pueden ser ordenados al mantener presionado uno de ellos y arrastarlo a la posicion deseada, y tambien pueden ser eliminados dandole click al boton en la esquina superior izquierda de cada recuadro"
@@ -308,11 +301,10 @@ Item{
 
                             Rectangle {
                                 id: rectangle9
-                                width: 707
+                                width: 850
                                 height: 78
                                 color: "#06384f"
                                 radius: 5
-                                anchors.bottom: content4.top
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 Text {
                                     color: "#ffffff"
@@ -350,6 +342,7 @@ Item{
                                 Layout.fillHeight: false
                             }
 
+
                         }
                     }
                 }
@@ -368,6 +361,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:19}D{i:18}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/
