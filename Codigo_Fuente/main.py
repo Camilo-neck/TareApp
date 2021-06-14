@@ -18,11 +18,13 @@ from circular_progress import CircularProgress
 from circular_progress import Ui_SplashScreen
 
 
-from Data import Wiki, Google, Url, MyText, PdfApp, User, FormattedDocument, FileOrganizer
+from Data import Wiki, Google, Url, MyText, PdfApp, User, FormattedDocument, FileOrganizer, SaveFile
 
 import os
+from win32api import GetFileAttributes
+from win32con import FILE_ATTRIBUTE_HIDDEN,FILE_ATTRIBUTE_SYSTEM  #pywin32
 
-# import traceback
+import traceback
 from time import sleep
 
 # Verify Connection
@@ -35,6 +37,11 @@ def is_connected():
         return True
     except gaierror:
         return False
+
+#verify is a file or a folder is hidden
+def is_hidden(p):
+    attribute = GetFileAttributes(p)
+    return attribute & (FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM)
 
 counter = 0
 #Splash Screen
@@ -226,51 +233,52 @@ class MainWindow(QObject):
         #Closing...
         workbook.close()
 
+    # Guardar info carpetas
+    @Slot(str,str,list,list,int,bool)
+    def saveFoldersInfo(self,savingPath,path,names,extTags,method,moveToDefault):
+        s = SaveFile()
+        s.setAttributes(path,names,extTags,method,moveToDefault)
+        s.save(savingPath)
+
+    # Cargar info carpetas
+    @Slot(str,result=list)
+    def loadFoldersInfo(self, path):
+        l = SaveFile()
+        l.load(path)
+        if l.ok:
+            folderNames = []
+            extTags = []
+
+            if l.organizeMethod == 0: value = 'extensions'
+            else: value = 'keywords'
+
+            for folder in l.folders:
+                folderNames.append(folder['name'])
+                extTags.append(folder[value])
+
+            return [l.folderPath,l.organizeMethod,l.moveToDefault,folderNames,extTags]
+        return [l.log]
+
     # Ordenar Carpetas
-    @Slot(int,str,list,list,list,bool)
+    @Slot(int,str,list,list,list,bool,result=str)
     def organizeFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
         if self.currentOs != 'Windows':
             path = '/' + path
-        folders = []
-        for name,e in zip(names,extTags):
-            if sortMethod == 0:
-                folder = {
-                    'name':name,
-                    'extensions': [f'.{ext}' for ext in e.split(' ')]
-                }
-            else:
-                folder = {
-                    'name':name,
-                    'keywords': [keyword for keyword in e.split(' ')]
-                }
-            folders.append(folder)
 
-        organizer = FileOrganizer(sortMethod,path,folders,ignored_ext,moveToDefault)
+        organizer = FileOrganizer(path,names,extTags,sortMethod,ignored_ext,moveToDefault)
         organizer.organizeAllFiles()
-
+        return organizer.log
 
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
     def getFilesFromFolder(self, folderUrl):
-        print(self.currentOs)
-        if self.currentOs != 'Windows':
-            folderUrl = '/' + folderUrl
-
         if not os.path.isdir(folderUrl): return ["NULL"]
-        #print(">>>>>>>>>>>>",folderUrl)
-        fileUrls = []
-        #if os.path.isfile(f)
-        files = [f for f in os.listdir(folderUrl)]
-        for file in files:
-            fileUrl = folderUrl+'//'+file
-            if not os.path.isdir(fileUrl):
-                fileUrls.append(fileUrl)
-        #print("++++++++++++++++",fileUrls)
-        return fileUrls
+        fullList = map(lambda f: os.path.join(folderUrl,f) ,os.listdir(folderUrl))
+        return list(filter(lambda f: (os.path.isfile(f) and not is_hidden(f)), fullList))
 
-    # Etiquetar archivos
-    @Slot(str,str)
-    def tagFiles(self, urls,etiqueta):
+    # Etiquetar archivos, borrar etiquetas
+    @Slot(str,str,int)
+    def tagFiles(self, urls,etiqueta,action):
 
         if self.currentOs != 'Windows': urls = ['/'+e.replace('file:///','') for e in urls.split(',')]
         else: urls = [e.replace('file:///','') for e in urls.split(',')]
@@ -279,7 +287,8 @@ class MainWindow(QObject):
             fileName, ext = os.path.splitext(path)
             print("FILE PATH >>>>>>>>",path)
             try:
-                os.rename(path , fileName+" "+etiqueta+ext)
+                if action==0: os.rename(path , fileName+etiqueta+ext)
+                elif action==1: os.rename(path , fileName.replace(etiqueta,'')+ext)
             except:
                 print("ERROR")
 

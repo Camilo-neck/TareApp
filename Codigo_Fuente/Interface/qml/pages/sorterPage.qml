@@ -17,15 +17,6 @@ Item{
 
     property var folderUrl2: ""
 
-
-    function changeStack(){
-        if (sortRadio.checked){
-            return 0
-        }else if (tagRadio.checked) {
-            return 1
-        }
-    }
-
     function getMethod(){
         if (extRadio.checked){
             return 0
@@ -36,7 +27,7 @@ Item{
 
     function basename(str){
         var extensionLength = - (getExtension(str).length +1)
-        return (String(str).slice(String(str).lastIndexOf("/")+1)).slice(0, extensionLength)
+        return (String(str).slice(String(str).lastIndexOf("\\")+1)).slice(0, extensionLength)
     }
 
     function getExtension(str){
@@ -50,20 +41,30 @@ Item{
     function addFilesFromFolder(folderUrl){
 
         var fileUrls = backend.getFilesFromFolder(folderUrl)
-        console.log("Files>>>>>"+fileUrls)
+        //console.log("Files>>>>>"+fileUrls)
         if(fileUrls[0] !== "NULL"){
             var fileNames = getFilenames(fileUrls)
-            console.log("FILEURLS:",fileUrls)
-            console.log("FILENAMES;",fileNames)
+            //console.log("FILEURLS:",fileUrls)
+            //console.log("FILENAMES;",fileNames)
 
             for(var i in fileUrls){
+                //console.log('FILENAME>>> '+fileNames[i]+' | URL>>> '+ fileUrls[i].replace('\\','/'))
                 urls.push(String(fileUrls[i]))
-                list1.createListObject(fileNames[i], fileUrls[i]);
+                list1.createListObject(fileNames[i], fileUrls[i].replace('\\','/'));
+
             }
             list1.updateUrlsList()
         }
 
 
+    }
+
+    function lAction(){
+        if (applyRadio.checked){
+            return 0
+        }else if (removeRadio.checked) {
+            return 1
+        }
     }
 
     Rectangle {
@@ -79,14 +80,14 @@ Item{
         StackLayout {
             id: stackLayout
             x: 10
-            y: 44
-            height: 426
+            y: 39
+            height: 564
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: row.bottom
-            anchors.bottom: parent.bottom
-            currentIndex: changeStack()
-            anchors.bottomMargin: 10
+            anchors.bottom: bar.top
+            currentIndex: bar.currentIndex
+            anchors.bottomMargin: -603
             anchors.leftMargin: 10
             Item {
                 id: item1
@@ -137,6 +138,7 @@ Item{
                             switchDefault.checked = false
                             list2.colorIndex = 0
                             list2.clearModel()
+                            logLabel.text = ""
                         }
                         font.pointSize: 10
                         Layout.fillWidth: true
@@ -174,13 +176,15 @@ Item{
 
 
                             if(folderLocation!=="" && validFolders && list2.getLength()>0){
+                                logLabel.text = ""
                                 folderLabel.color = "#000000"
                                 var method = getMethod()
                                 var moveToDefault = switchDefaultFolder.checked
                                 var path = folderLocation
                                 var ignoredExt = [".py"]
-                                backend.organizeFiles(method,path,names,extensions,ignoredExt,moveToDefault)
-                                infoLabel.text = 'Carpeta Ordenada Satisfactoriamente'
+                                var log = backend.organizeFiles(method,path,names,extensions,ignoredExt,moveToDefault)
+                                if(log===''){infoLabel.text = 'Carpeta Ordenada Satisfactoriamente'}
+                                else{logLabel.text = log}
 
                             }else{
                                 if(folderLocation===""){
@@ -404,14 +408,201 @@ Item{
                         height: 21
                         color: "#000000"
                         anchors.left: parent.left
-                        anchors.top: parent.to
+                        anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.rightMargin: 10
                         anchors.bottomMargin: 8
                         font.pointSize: 11
                         anchors.leftMargin: 29
-                        anchors.topMargin: 48
+                        anchors.topMargin: 520
                     }
+
+                    Rectangle {
+                        id: logRect
+                        x: 498
+                        y: 447
+                        width: 314
+                        height: 109
+                        color: "#b3a7e3f6"
+                        radius: 10
+
+                        Label {
+                            id: logLabel
+                            x: -278
+                            y: 0
+                            width: 200
+                            height: 200
+                            color: "#000000"
+                            anchors.fill: parent
+                            font.pointSize: 11
+                            anchors.leftMargin: 0
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    CustomButton {
+                        id: btnSave
+                        x: 822
+                        y: 341
+                        width: 138
+                        height: 42
+                        text: "Guardar"
+                        anchors.right: parent.right
+                        Layout.preferredHeight: 40
+                        Layout.maximumHeight: 65535
+                        font.pointSize: 10
+                        Layout.fillWidth: true
+                        anchors.rightMargin: 10
+                        Layout.preferredWidth: 250
+                        btnColorMouseOver: "#78ede7"
+                        btnColorClicked: "#ec0606"
+                        btnColorDefault: "#086291"
+                        font.family: "Sans Serif"
+                        Layout.maximumWidth: 70
+                        onClicked: {
+                            var names = list2.getNames()
+                            var extensions = list2.getExtensions()
+                            var validFolders = true
+
+                            for(var i in names){
+                                if(names[i].length<=0 || extensions[i].length<=0){
+                                    validFolders = false
+                                    break
+                                }
+                            }
+
+                            if(folderLocation!=="" && validFolders && list2.getLength()>0){
+                                logLabel.text = ""
+                                folderLabel.color = "#000000"
+                                var method = getMethod()
+                                var moveToDefault = switchDefaultFolder.checked
+                                var path = folderLocation
+                                var ignoredExt = [".py"]
+                                saveDialog.info = [path,names,extensions,method,moveToDefault]
+                                saveDialog.open()
+
+                            }else{
+                                if(folderLocation===""){
+                                    folderLabel.color = "#F50000"
+                                    rectangleTop.border.color = "#F50000"
+                                }
+                                if(!validFolders){
+                                    infoLabel.text = 'Por favor no deje ningun campo vacio'
+                                }
+                                else if(list2.getLength()<=0){
+                                    infoLabel.text = 'Debe añadir al menos una carpeta para Guardar'
+                                }else{
+                                    infoLabel.text = ""
+                                }
+
+                            }
+
+                        }
+
+                        FileDialog {
+                            id: saveDialog
+                            title: "Guardar info"
+                            acceptLabel: 'Guardar'
+                            rejectLabel: 'Cancelar'
+                            fileMode: FileDialog.SaveFile
+                            nameFilters: ['Excel Files (*.xlsx)']
+                            property var info: []
+
+                            onAccepted: {
+                                var savingPath = String(currentFile).replace('file:///','')
+                                backend.saveFoldersInfo(savingPath,info[0],info[1],info[2],info[3],info[4])
+                                infoLabel.text = 'Informacion Guardada correctamente'
+                            }
+
+                        }
+
+                    }
+
+                    CustomButton {
+                        id: btnLoad
+                        x: 822
+                        y: 389
+                        width: 140
+                        height: 42
+                        text: "Cargar"
+                        anchors.leftMargin: 0
+                        Layout.preferredHeight: 40
+                        Layout.fillWidth: true
+                        Layout.maximumWidth: 70
+                        font.family: "Sans Serif"
+                        Layout.preferredWidth: 250
+                        anchors.bottomMargin: 0
+                        anchors.rightMargin: 0
+                        Layout.maximumHeight: 65535
+                        btnColorClicked: "#ec0606"
+                        btnColorDefault: "#086291"
+                        font.pointSize: 10
+                        btnColorMouseOver: "#78ede7"
+
+                        DropFilesArea {
+                            id : dropSaveFile
+                            x: 0
+                            y: 0
+                            width: 84
+                            height: 42
+                            anchors.fill : parent
+
+                            isFolder: false
+                            customText: ""
+                            fileExtensions: ["xlsx"]
+                            visibleImage: false
+                            opacity: 0
+                            radius: 12
+
+                            customFunction: (url,name) => {
+                                                btnLoad.btnColorDefault = "#086291"
+                                                //console.log(url)
+                                                var loadList = backend.loadFoldersInfo(url)
+
+                                                if (loadList.length <= 1){
+                                                    logLabel.text = loadList[0]
+                                                }
+
+                                                else{
+                                                    logLabel.text = ''
+
+                                                    var folderUrl = loadList[0]
+                                                    var method = loadList[1]
+                                                    var moveToOthers = loadList[2]
+                                                    var folderNames = loadList[3]
+                                                    var extTags = loadList[4]
+
+                                                    list2.colorIndex = 0
+                                                    list2.clearModel()
+                                                    for(var i in folderNames){
+                                                        list2.createListObject(folderNames[i],extTags[i])
+                                                    }
+
+                                                    folderLocation = folderUrl
+                                                    folderLabel.text = "Carpeta seleccionada: "+ folderLocation
+                                                    folderLabel.color = '#000000'
+                                                    rectangleTop.border.color = "#FFFFFF"
+
+                                                    if (method===0){ extRadio.checked=true; labelRadio.checked=false}
+                                                    else if (method===1){ extRadio.checked=false; labelRadio.checked=true}
+
+
+                                                    switchDefaultFolder.checked = moveToOthers
+
+                                                    switchDefault.checked = false
+
+                                                    //console.log(loadList)
+                                                }
+
+
+                                            }
+
+                            onFileEntered: () => {btnLoad.btnColorDefault = '#78ede7'}
+                            onFileExited: () => {btnLoad.btnColorDefault = "#086291"}
+
+                        }
+                    }
+
                 }
 
                 Label {
@@ -456,14 +647,9 @@ Item{
 
 
                     DropFilesArea {
-
-                        function testF(fileUrls,fileNames){
-                            console.log("Ventana Settings\nURLS: "+fileUrls+"\nNAMES: "+fileNames)
-                        }
-                        //multipleFiles: true
-
                         id : dropFiles2
-                        x: 28; y: 59
+                        x: 28
+                        y: 59
                         width: 177
                         height: 128
                         isFolder: true
@@ -473,11 +659,11 @@ Item{
                                             names = []
                                             list1.clearModel()
                                             folderUrl2 = folderUrl
+                                            folderLabel1.text = "Carpeta seleccionada: "+ folderUrl2
                                             busy1.timerFunction = () => addFilesFromFolder(folderUrl2)
                                             busy1.start()
 
                                         }
-                        //backend.testEtiquetado(fileUrls,etiquetaLabel.text)
                     }
 
                     CustomTextField {
@@ -488,7 +674,7 @@ Item{
                         height: 40
                         placeholderTextColor: "#ffffff"
                         font.family: "Sans Serif"
-                        placeholderText: "Etiqueta"
+                        placeholderText: "Etiqueta o Palabra"
                         bgColor: "#03a678"
                         font.pointSize: 10
                         Layout.fillHeight: false
@@ -501,11 +687,12 @@ Item{
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        anchors.rightMargin: 92
+                        anchors.rightMargin: 120
                         anchors.leftMargin: 226
                         anchors.bottomMargin: 8
-                        anchors.topMargin: 13
+                        anchors.topMargin: 61
                         etiqueta: etiquetaLabel.text
+                        labelAction: lAction()
 
                         CustomBusyIndicator{
                             id: busy1
@@ -553,11 +740,11 @@ Item{
 
                     CustomButton {
                         id: bttclear
-                        x: 884
-                        y: 13
-                        width: 71
+                        x: 856
+                        y: 61
+                        width: 99
                         height: 42
-                        text: "Clear"
+                        text: "Vaciar"
                         anchors.right: parent.right
                         anchors.rightMargin: 15
                         Layout.maximumHeight: 65535
@@ -574,16 +761,30 @@ Item{
                             j = 1
                             list1.clearModel()
                             urls = []
+                            folderLabel1.text = "Carpeta seleccionada: "
+                            selectAllChk.checked = false
+                            list1.selectAll = false
                         }
                     }
 
                     CustomButton {
+
+                        function updateList(){
+                            names = []
+                            urls = []
+                            selectAllChk.checked = false
+                            list1.selectAll = false
+                            list1.clearModel()
+                            busy1.timerFunction = () => addFilesFromFolder(folderUrl2)
+                            busy1.start()
+                        }
+
                         id: bttAply
                         x: 28
-                        y: 193
+                        y: 300
                         width: 177
                         height: 42
-                        text: "Aplicar etiqueta"
+                        text: "Realizar cambios"
                         btnColorDefault: "#009aeb"
                         Layout.maximumHeight: 65535
                         Layout.fillWidth: true
@@ -595,8 +796,99 @@ Item{
                         btnColorMouseOver: "#78ede7"
                         font.pointSize: 10
                         onClicked: {
-                            backend.tagFiles(list1.getCheckedUrls(),etiquetaLabel.text)
-                            list1.clearModel()
+                            backend.tagFiles(list1.getCheckedUrls(),etiquetaLabel.text,lAction())
+                            updateList()
+                        }
+                    }
+
+                    RadioButton {
+                        id: applyRadio
+                        x: 28
+                        y: 221
+                        text: "Aplicar Etiqueta"
+                        display: AbstractButton.TextBesideIcon
+                        checked: true
+                    }
+
+                    RadioButton {
+                        id: removeRadio
+                        x: 28
+                        y: 257
+                        width: 135
+                        height: 37
+                        text: "Retirar Etiqueta"
+                    }
+
+                    CheckBox {
+                        id: selectAllChk
+                        x: 856
+                        y: 109
+                        width: 106
+                        height: 40
+                        text: qsTr("Selccionar todos")
+                        anchors.right: parent.right
+                        anchors.rightMargin: 8
+                        font.pointSize: 6
+                        onClicked: { list1.selectAll = this.checked}
+                    }
+
+                    Rectangle {
+                        id: rectangleTop1
+                        x: 10
+                        y: 40
+                        height: 40
+                        color: "#ffffff"
+                        radius: 12
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.topMargin: 13
+                        anchors.leftMargin: 221
+                        clip: true
+                        Label {
+                            id: folderLabel1
+                            y: 11
+                            width: 708
+                            height: 21
+                            color: "#777777"
+                            text: qsTr("Carpeta Escogida: "+folderLocation)
+                            anchors.left: parent.left
+                            anchors.top: parent.to
+                            anchors.bottom: parent.bottom
+                            anchors.topMargin: 48
+                            anchors.bottomMargin: 8
+                            anchors.leftMargin: 13
+                            font.pointSize: 9
+                            anchors.rightMargin: 10
+                        }
+                        anchors.rightMargin: 15
+                    }
+
+                    Rectangle {
+                        id: rectC
+                        x: 28
+                        y: 31
+                        width: 177
+                        height: 22
+                        color: "#ffffff"
+                        radius: 12
+                        anchors.top: parent.top
+                        anchors.topMargin: 193
+                        Label {
+                            id: countLabel
+                            y: 1
+                            width: 156
+                            height: 21
+                            color: "#777777"
+                            text: qsTr("cantidad de archivos: "+list1.count())
+                            anchors.left: parent.left
+                            anchors.top: parent.to
+                            anchors.bottom: parent.bottom
+                            anchors.topMargin: 48
+                            anchors.bottomMargin: 0
+                            anchors.leftMargin: 13
+                            font.pointSize: 9
+                            anchors.rightMargin: 10
                         }
                     }
                 }
@@ -609,25 +901,18 @@ Item{
             anchors.topMargin: 3
         }
 
-        Row {
-            id: row
-            x: 35
-            width: 685
-            height: 42
-            anchors.top: parent.top
-
-            RadioButton {
-                id: sortRadio
-                text: "Organizar Archivos"
-                display: AbstractButton.TextBesideIcon
-                checked: true
-            }
-
-            RadioButton {
-                id: tagRadio
-                text: "Etiquetar Archivos"
-            }
-            anchors.topMargin: 5
+        CustomTopBar {
+            id: bar
+            x: 18
+            y: 0
+            width: parent.width/2>375 ? parent.width/2 : 375
+            height: 40
+            repeaterModel: [{text:"Ordenar carpeta",imgSource:"../../images/icons/carpeta.png"},
+                {text:"Etiquetar Archivos",imgSource:"../../images/icons/etiqueta.png"}]
+            barStyle: 0
+            spacing: 0
+            currentIndex: 0
+            itemColor: rectangle3.color
         }
     }
 

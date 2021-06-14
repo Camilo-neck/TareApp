@@ -11,12 +11,16 @@ Rectangle {
     border.color: "#0797bd"
     border.width: 2
 
-    property var customFunction: function() {}
     property var fileExtensions: ["ALL"]
     property var customText: "Select a file or drop it here"
     property var filePaths: ""
     property var multipleFiles: false
     property var isFolder: false
+    property var visibleImage: true
+
+    property var customFunction: function() {}
+    property var onFileEntered: function() {}
+    property var onFileExited: function() {}
 
     function basename(str){
         var extensionLength = - (getExtension(str).length +1)
@@ -82,14 +86,14 @@ Rectangle {
     }
 
     DropArea {
-        id: dropArea;
+        id: dropArea
         anchors.fill: parent
         onEntered: {
             root.color = "#7dd3ec";
             drag.accept (Qt.LinkAction);
+            onFileEntered()
         }
         onDropped: {
-
             root.color = "#aaecff"
 
             if(!isFolder){
@@ -119,7 +123,8 @@ Rectangle {
         }
 
         onExited: {
-            root.color = "#aaecff";
+            root.color = "#aaecff"
+            onFileExited()
         }
 
         ColumnLayout {
@@ -133,6 +138,7 @@ Rectangle {
                 y: 5
                 width: 100
                 height: 50
+                visible: visibleImage
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
                 source: "../../images/icons/drag-and-drop.png"
