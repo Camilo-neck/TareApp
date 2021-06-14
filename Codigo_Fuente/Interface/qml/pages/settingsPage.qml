@@ -111,6 +111,72 @@ Item{
 
                 }
 
+                Rectangle {
+                    id: root
+                    x: 536
+                    y: 145
+                    width: 145
+                    height: 95
+                    color: "#aaecff"
+                    radius: 5
+                    border.color: "#0797bd"
+                    border.width: 2
+
+                    DropFilesArea{
+                        id: filesArea
+                        anchors.fill: parent
+                        onFileDropped: (url,name) => {
+                                           root.color = '#aaecff'
+                                           console.log(url)}
+                        onFileEntered: () => root.color = '#66c3dd'
+                        onFileExited: () => root.color = '#aaecff'
+                    }
+
+                    ColumnLayout {
+                        id: dragDropRow
+                        anchors.fill: parent
+                        transformOrigin: Item.Center
+                        Image {
+                            id: image
+                            x: 30
+                            y: 5
+                            width: 100
+                            height: 50
+                            visible: visibleImage
+                            horizontalAlignment: Image.AlignHCenter
+                            verticalAlignment: Image.AlignVCenter
+                            source: "../../images/icons/drag-and-drop.png"
+                            Layout.fillHeight: false
+                            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                            Layout.maximumHeight: 90
+                            Layout.maximumWidth: 100
+                            Layout.preferredHeight: 50
+                            Layout.preferredWidth: 50
+                            Layout.fillWidth: false
+                            asynchronous: false
+                            sourceSize.width: 0
+                            fillMode: Image.PreserveAspectFit
+                        }
+                        Label {
+                            id: dargDropDesc
+                            x: 10
+                            text: "Texto"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.family: "Sans Serif"
+                            font.pointSize: 8
+                            font.bold: false
+                            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                            Layout.fillHeight: false
+                            Layout.fillWidth: true
+                            Layout.maximumHeight: 20
+                            Layout.maximumWidth: 200
+                            Layout.preferredHeight: 50
+                            Layout.preferredWidth: 1000
+                        }
+                    }
+                }
+
 
 
 

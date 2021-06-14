@@ -54,8 +54,9 @@ Item{
 
             }
             list1.updateUrlsList()
+            return true
         }
-
+        return false
 
     }
 
@@ -541,20 +542,10 @@ Item{
 
                         DropFilesArea {
                             id : dropSaveFile
-                            x: 0
-                            y: 0
-                            width: 84
-                            height: 42
                             anchors.fill : parent
-
                             isFolder: false
-                            customText: ""
                             fileExtensions: ["xlsx"]
-                            visibleImage: false
-                            opacity: 0
-                            radius: 12
-
-                            customFunction: (url,name) => {
+                            onFileDropped: (url,name) => {
                                                 btnLoad.btnColorDefault = "#086291"
                                                 //console.log(url)
                                                 var loadList = backend.loadFoldersInfo(url)
@@ -645,25 +636,83 @@ Item{
                     radius: 12
                     anchors.fill: parent
 
-
-                    DropFilesArea {
-                        id : dropFiles2
+                    Rectangle {
+                        id: dropFiles2
                         x: 28
                         y: 59
                         width: 177
                         height: 128
-                        isFolder: true
-                        customText: "Escoja o arrastre una carpeta"
-                        customFunction: (folderUrl) => {
-                                            urls = []
-                                            names = []
-                                            list1.clearModel()
-                                            folderUrl2 = folderUrl
-                                            folderLabel1.text = "Carpeta seleccionada: "+ folderUrl2
-                                            busy1.timerFunction = () => addFilesFromFolder(folderUrl2)
-                                            busy1.start()
 
-                                        }
+                        color: "#aaecff"
+                        radius: 5
+                        border.color: "#0797bd"
+                        border.width: 2
+
+                        DropFilesArea{
+                            id: filesArea
+                            anchors.fill: parent
+                            isFolder: true
+                            onFileDropped: (folderUrl) => {
+                                               dropFiles2.color = '#aaecff'
+                                               urls = []
+                                               names = []
+                                               list1.clearModel()
+                                               console.log(folderUrl)
+
+
+                                               busy1.timerFunction = () => {var isAFolder = addFilesFromFolder(folderUrl)
+                                               if(isAFolder){folderLabel1.text = "Carpeta seleccionada: "+ folderUrl}
+                                               }
+                                               busy1.start()
+
+                                           }
+                            onFileDroppedFailed: () => dropFiles2.color = '#aaecff'
+                            onFileEntered: () => dropFiles2.color = '#66c3dd'
+                            onFileExited: () => dropFiles2.color = '#aaecff'
+                        }
+
+                        ColumnLayout {
+                            id: dragDropRow
+                            anchors.fill: parent
+                            transformOrigin: Item.Center
+                            Image {
+                                id: image
+                                x: 30
+                                y: 5
+                                width: 100
+                                height: 50
+                                horizontalAlignment: Image.AlignHCenter
+                                verticalAlignment: Image.AlignVCenter
+                                source: "../../images/icons/carpeta.png"
+                                Layout.fillHeight: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.maximumHeight: 90
+                                Layout.maximumWidth: 100
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 50
+                                Layout.fillWidth: false
+                                asynchronous: false
+                                sourceSize.width: 0
+                                fillMode: Image.PreserveAspectFit
+                            }
+                            Label {
+                                id: dargDropDesc
+                                x: 10
+                                text: "Escoja o arrastre una carpeta"
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.family: "Sans Serif"
+                                font.pointSize: 8
+                                font.bold: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                                Layout.fillHeight: false
+                                Layout.fillWidth: true
+                                Layout.maximumHeight: 20
+                                Layout.maximumWidth: 200
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 1000
+                            }
+                        }
                     }
 
                     CustomTextField {

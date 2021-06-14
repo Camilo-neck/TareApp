@@ -307,8 +307,8 @@ Item {
                         }
                     }
 
-                    DropFilesArea {
-                        id : dropFiles1
+                    Rectangle {
+                        id: dropFiles1
                         x: 733
                         width: 162
                         anchors.right: parent.right
@@ -317,12 +317,69 @@ Item {
                         anchors.rightMargin: 13
                         anchors.bottomMargin: 8
                         anchors.topMargin: 6
-                        multipleFiles: true
-                        customText: "Escoja PDFS o arrastrelos aqui"
-                        fileExtensions: ["pdf"]
-                        //Sintax
-                        //customFunction: (fileUrls,fileNames) => myFunction(fileUrls,fileNames)
-                        customFunction: (fileUrls,fileNames) => addPDFs(fileUrls,fileNames)
+
+                        color: "#aaecff"
+                        radius: 5
+                        border.color: "#0797bd"
+                        border.width: 2
+
+                        DropFilesArea{
+                            id: filesArea
+                            anchors.fill: parent
+
+                            multipleFiles: true
+                            fileExtensions: ["pdf"]
+
+                            onFileDropped: (fileUrls,fileNames) => {
+                                               dropFiles1.color = '#aaecff'
+                                               addPDFs(fileUrls,fileNames)}
+                            onFileDroppedFailed: () => dropFiles1.color = '#aaecff'
+                            onFileEntered: () => dropFiles1.color = '#66c3dd'
+                            onFileExited: () => dropFiles1.color = '#aaecff'
+                        }
+
+                        ColumnLayout {
+                            id: dragDropRow
+                            anchors.fill: parent
+                            transformOrigin: Item.Center
+                            Image {
+                                id: image
+                                x: 30
+                                y: 5
+                                width: 100
+                                height: 50
+                                horizontalAlignment: Image.AlignHCenter
+                                verticalAlignment: Image.AlignVCenter
+                                source: "../../images/icons/drag-and-drop.png"
+                                Layout.fillHeight: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.maximumHeight: 90
+                                Layout.maximumWidth: 100
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 50
+                                Layout.fillWidth: false
+                                asynchronous: false
+                                sourceSize.width: 0
+                                fillMode: Image.PreserveAspectFit
+                            }
+                            Label {
+                                id: dargDropDesc
+                                x: 10
+                                text: "Escoja PDFS o arrastrelos aqui"
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.family: "Sans Serif"
+                                font.pointSize: 8
+                                font.bold: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                                Layout.fillHeight: false
+                                Layout.fillWidth: true
+                                Layout.maximumHeight: 20
+                                Layout.maximumWidth: 200
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 1000
+                            }
+                        }
                     }
                 }
 
@@ -564,8 +621,8 @@ Item {
                         anchors.topMargin: 8
                     }
 
-                    DropFilesArea {
-                        id : dropFiles2
+                    Rectangle {
+                        id: dropFiles2
                         x: 732
                         y: -345
                         width: 163
@@ -575,10 +632,69 @@ Item {
                         anchors.rightMargin: 13
                         anchors.bottomMargin: 8
                         anchors.topMargin: 6
-                        customText: "Escoja un PDF o arrastrelo aqui"
-                        fileExtensions: ["pdf"]
-                        customFunction: (fileUrl,fileName) => {addPages(fileUrl)}
-                        multipleFiles: false
+
+                        color: "#aaecff"
+                        radius: 5
+                        border.color: "#0797bd"
+                        border.width: 2
+
+                        DropFilesArea{
+                            id: filesArea2
+                            anchors.fill: parent
+
+                            fileExtensions: ["pdf"]
+                            multipleFiles: false
+
+                            onFileDropped: (fileUrl,fileName) => {
+                                               dropFiles2.color = '#aaecff'
+                                               addPages(fileUrl)}
+                            onFileDroppedFailed: () => dropFiles2.color = '#aaecff'
+                            onFileEntered: () => dropFiles2.color = '#66c3dd'
+                            onFileExited: () => dropFiles2.color = '#aaecff'
+                        }
+
+                        ColumnLayout {
+                            id: dragDropRow2
+                            anchors.fill: parent
+                            transformOrigin: Item.Center
+                            Image {
+                                id: image2
+                                x: 30
+                                y: 5
+                                width: 100
+                                height: 50
+                                horizontalAlignment: Image.AlignHCenter
+                                verticalAlignment: Image.AlignVCenter
+                                source: "../../images/icons/drag-and-drop.png"
+                                Layout.fillHeight: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.maximumHeight: 90
+                                Layout.maximumWidth: 100
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 50
+                                Layout.fillWidth: false
+                                asynchronous: false
+                                sourceSize.width: 0
+                                fillMode: Image.PreserveAspectFit
+                            }
+                            Label {
+                                id: dargDropDesc2
+                                x: 10
+                                text: "Escoja un PDF o arrastrelo aqui"
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.family: "Sans Serif"
+                                font.pointSize: 8
+                                font.bold: false
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                                Layout.fillHeight: false
+                                Layout.fillWidth: true
+                                Layout.maximumHeight: 20
+                                Layout.maximumWidth: 200
+                                Layout.preferredHeight: 50
+                                Layout.preferredWidth: 1000
+                            }
+                        }
                     }
                 }
 
@@ -667,8 +783,10 @@ Item {
 
 
 
+
+
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:613;width:988}D{i:29}
+    D{i:0;autoSize:true;height:613;width:988}
 }
 ##^##*/
