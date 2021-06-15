@@ -19,7 +19,7 @@ Item{
         StackLayout {
             id: stackLayout
             anchors.fill: parent
-            currentIndex: 2
+            currentIndex: 1
             anchors.rightMargin: 10
             anchors.leftMargin: 10
             anchors.bottomMargin: 10
@@ -193,10 +193,20 @@ Item{
                                 autoTransform: false
                                 asynchronous: false
                                 Layout.fillWidth: true
+                                playing: false
                                 cache: true
                                 speed: 2
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 fillMode: Image.PreserveAspectFit
+
+                                MouseArea {
+                                    id: mouseArea
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onHoveredChanged: {
+                                        options.playing = !options.playing
+                                    }
+                                }
                             }
 
                             Label {
@@ -235,8 +245,17 @@ Item{
                                 source: "../../images/helpPage/searchHelp.gif"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
+                                playing: false
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 fillMode: Image.PreserveAspectFit
+                                MouseArea {
+                                    id: mouseArea1
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onHoveredChanged: {
+                                        consult.playing = !consult.playing
+                                    }
+                                }
                             }
 
                             ToolSeparator {
@@ -297,8 +316,17 @@ Item{
                                 source: "../../images/helpPage/Open AI.gif"
                                 Layout.fillHeight: true
                                 Layout.fillWidth: true
+                                playing: false
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 fillMode: Image.PreserveAspectFit
+                                MouseArea {
+                                    id: mouseArea2
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onHoveredChanged: {
+                                        openAI.playing = !openAI.playing
+                                    }
+                                }
                             }
 
                             Label {
@@ -567,6 +595,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.66;height:613;width:988}
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:613;width:988}
 }
 ##^##*/

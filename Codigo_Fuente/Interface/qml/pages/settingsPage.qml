@@ -14,9 +14,9 @@ Item{
         id: bg
         color: "#89c2db"
         anchors.fill: parent
-        anchors.rightMargin: 0
+        anchors.rightMargin: 8
         anchors.bottomMargin: 0
-        anchors.leftMargin: 0
+        anchors.leftMargin: -8
         anchors.topMargin: 0
         Rectangle {
             id: content
@@ -95,6 +95,7 @@ Item{
 
             width: 447
             height: 29
+            visible: true
             //opacity: dragArea.held ? 0.8 : 1.0
             border.color: "#0797bd"
             border.width: 2
@@ -143,6 +144,7 @@ Item{
             y: 43
             width: 447
             height: 57
+            visible: true
             color: "#c1e4fd"
             radius: 5
             border.color: "#0797bd"
@@ -233,6 +235,7 @@ Item{
 
         CustomVerticalList2 {
             id: list2
+            visible: true
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
@@ -272,6 +275,7 @@ Item{
 
         Rectangle {
             id: rectangle3
+            visible: true
             color: "#ffffff"
             anchors.fill: parent
             anchors.bottomMargin: 16
@@ -333,6 +337,77 @@ Item{
                         Layout.fillWidth: true
                     }
                 }
+            }
+        }
+
+        ColumnLayout {
+            id: columnLayout
+            x: 95
+            y: 198
+            width: 260
+            height: 230
+
+            Button {
+                id: button
+                text: qsTr("Button")
+                Layout.fillHeight: false
+                Layout.fillWidth: true
+                onClicked: {
+                    pane1.visible = false
+                    pane.visible= !pane.visible
+                    rectangle4.visible = !pane.visible
+                }
+            }
+
+            Pane {
+                id: pane
+                width: 200
+                height: 200
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                visible: false
+                Layout.preferredHeight: 260
+                Layout.preferredWidth: 260
+                Rectangle {
+                    anchors.fill: parent
+                    color: 'red'
+                }
+            }
+
+            Button {
+                id: button1
+                text: qsTr("Button")
+                Layout.fillHeight: false
+                Layout.fillWidth: true
+                onClicked: {
+                    pane.visible = false
+                    pane1.visible= !pane1.visible
+                    rectangle4.visible = !pane1.visible
+                }
+            }
+
+            Pane {
+                id: pane1
+                width: 200
+                height: 200
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                visible: false
+                Layout.preferredHeight: 260
+                Layout.preferredWidth: 260
+                Rectangle {
+                    anchors.fill: parent
+                    color: 'blue'
+                }
+            }
+
+            Rectangle {
+                id: rectangle4
+                width: 200
+                height: 200
+                color: "#00000000"
+                Layout.fillHeight: true
+                Layout.fillWidth: true
             }
         }
     }
@@ -463,6 +538,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.1;height:480;width:840}D{i:21}D{i:22}D{i:18}D{i:17}
+    D{i:0;formeditorZoom:1.1;height:480;width:840}
 }
 ##^##*/
