@@ -30,18 +30,30 @@ Item {
         anchors.leftMargin: 0
         anchors.topMargin: 0
 
+        CustomTopBar{
+            id: bar
+            x: 0
+            y: 0
+            height: 40
+            //anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width/2
+            spacing: 0
+            itemColor : rectangle.color
+            barStyle: 0
+            currentIndex: 0
+            repeaterModel: [{text:"Wikipedia",imgSource:"../../images/icons/wikipedia_icon.png"},
+                             {text:"Google",imgSource:"../../images/icons/google_icon.png"},
+                             {text:"Text",imgSource:"../../images/icons/text_icon.png"},
+                             {text:"Url",imgSource:"../../images/icons/url_icon.svg"}]
+        }
+
         StackLayout {
             id: stackLayout
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: row.bottom
+            anchors.top: bar.bottom
             anchors.bottom: parent.bottom
-            currentIndex: changeStack()
-            // Change to function
-            anchors.rightMargin: 10
-            anchors.leftMargin: 10
-            anchors.bottomMargin: 10
-            anchors.topMargin: 3
+            currentIndex: bar.currentIndex
 
             Item {
                 anchors.fill : parent
@@ -1187,85 +1199,6 @@ Item {
             running: false
             mainColor: '#38A1DB'
             secondaryColor: '#33E2F2'
-        }
-
-        Row {
-            id: row
-            x: 35
-            width: 685
-            height: 42
-            anchors.top: parent.top
-            anchors.topMargin: 5
-
-            Image {
-                id: wikiImage
-                width: 30
-                height: 30
-                anchors.top: parent.top
-                source: "../../images/icons/wikipedia_icon.png"
-                anchors.topMargin: 5
-            }
-
-            RadioButton {
-                id: wikiRadio
-                text: "WikiPedia Search"
-                checked: true
-                display: AbstractButton.TextBesideIcon
-            }
-
-
-            Image {
-                id: googleImage
-                width: 30
-                height: 30
-                anchors.top: parent.top
-                source: "../../images/icons/google_icon.png"
-                anchors.topMargin: 5
-            }
-
-            RadioButton {
-                id: googleRadio
-                text: "Google Search"
-            }
-
-
-            Image {
-                id: textImage
-                width: 30
-                height: 30
-                anchors.top: parent.top
-                source: "../../images/icons/text_icon.png"
-                anchors.topMargin: 5
-            }
-
-            RadioButton {
-                id: textRadio
-                text: "Resumen de Texto"
-            }
-
-
-            Image {
-                id: urlImage
-                width: 30
-                height: 30
-                anchors.top: parent.top
-                source: "../../images/icons/url_icon.svg"
-                anchors.topMargin: 5
-            }
-
-            RadioButton {
-                id: urlRadio
-                text: "Resumen de página Web"
-            }
-
-            WorkerScript {
-                id: thread
-                source: "handler.js"
-                onMessage: {
-                    win.run = messageObject.run;
-                    print(busy.running)
-                }
-            }
         }
     }
 

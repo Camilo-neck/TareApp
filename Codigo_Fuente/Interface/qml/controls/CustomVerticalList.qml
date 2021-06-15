@@ -10,12 +10,16 @@ Item {
     property var names: []
     property var checkBoxValues : []
     property var etiqueta : ""
+    property var labelAction: 0
+    property var selectAll: false
+
+    function count(){return visualModel.items.count}
 
     function getCheckedUrls(){
         var checkedUrls = []
         for(var i = 0; i < visualModel.items.count; i++){
             var element = visualModel.items.get(i).model
-            if(element.isChecked){
+            if(element.isChecked || selectAll){
                 checkedUrls.push(element.url)
             }
         }
@@ -36,7 +40,6 @@ Item {
         }
         return nameList
     }
-
 
 
     /*
@@ -60,7 +63,6 @@ Item {
                               property var url : "'+url+'";
                               property var urlText: "'+urlText+'" ;
                               property var isChecked: false;
-                              property var initialText: urlText;
                               property var labels: []}'
 
         var component = Qt.createQmlObject(ListElementQML,timelineModel,"dynamicSnippet1");
@@ -138,16 +140,17 @@ Item {
                         //width: 650
                         width: timeline.width-5
                         height: 29
-                        //opacity: dragArea.held ? 0.8 : 1.0
                         border.color: "#0797bd"
                         border.width: 2
                         radius: 5
+                        clip: true
 
-                        color: "#c1e4fd"
+                        color: labelAction==0 ? (!checkBox.checked ? "#c1e4fd" : "#6cabd7") : (!checkBox.checked ? "#c1e4fd" : "#693FFD")
 
                         Text{
                             width: 175
-                            text : urlText
+                            text : labelAction==0 ? (!checkBox.checked ? urlText : urlText+etiqueta) : (!checkBox.checked ? urlText : urlText.replace(etiqueta,''))
+                            //text: urlText
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: parent.left
                             anchors.top: parent.top
@@ -158,6 +161,7 @@ Item {
                             anchors.topMargin: 8
                             anchors.bottomMargin: 8
                             anchors.verticalCenterOffset: 0
+
                         }
 
                         CheckBox {
@@ -166,6 +170,7 @@ Item {
                             font.pointSize: 4
                             checkable: true
                             checkState: Qt.Unchecked
+                            checked: selectAll==true ? true : isChecked
 
                             anchors.right: parent.right
                             anchors.top: parent.top
@@ -179,14 +184,6 @@ Item {
                             onClicked: {
                                 isChecked = this.checked
                                 updateCheckBoxValues()
-                                //console.log(checkBoxValues)
-
-                                if(isChecked){
-                                    urlText += " "+etiqueta
-
-                                }else{
-                                    urlText = initialText
-                                }
 
                             }
                         }
