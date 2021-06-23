@@ -11,7 +11,7 @@ Window {
     width: 1080
     height: 720
     minimumWidth: 800
-    minimumHeight: 500
+    minimumHeight: 720
     visible: true
     color: "#00000000"
     title: qsTr("Course APP")
