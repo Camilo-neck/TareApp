@@ -1,31 +1,6 @@
 # This Python file uses the following encoding: utf-8
-import sys
-import os
-import datetime
-from socket import *
-import xlsxwriter
-import xlrd
-import platform
-import subprocess
+from core import *
 
-from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
-
-# Import Circular Progress
-from circular_progress import CircularProgress
-from circular_progress import Ui_SplashScreen
-
-
-from Data import Wiki, Google, Url, MyText, PdfApp, User, FormattedDocument, FileOrganizer, SaveFile
-
-import os
-from win32api import GetFileAttributes
-from win32con import FILE_ATTRIBUTE_HIDDEN,FILE_ATTRIBUTE_SYSTEM  #pywin32
-
-import traceback
-from time import sleep
 
 # Verify Connection
 def is_connected():
@@ -145,9 +120,6 @@ class MainWindow(QObject):
             print(i)
             sleep(1)
 
-    @Slot()
-    def testF(self):
-        print('clicked')
     def getTemplateDict(self, pathToExc):
         # Creating document
         loc = (pathToExc)
