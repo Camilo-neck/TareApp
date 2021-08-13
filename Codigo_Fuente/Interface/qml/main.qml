@@ -573,6 +573,15 @@ Window {
                         anchors.leftMargin: 20
                     }
 
+                    Label {
+                        id: dateLabel
+                        color: "#1efae7"
+                        text: qsTr("Date")
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize: 10
+                    }
+
                     MouseArea {
                         id: mouseArea
                         x: 884
@@ -606,6 +615,7 @@ Window {
                             antialiasing: false
                         }
                     }
+
                 }
             }
         }
@@ -703,6 +713,11 @@ Window {
         function onReadText(text) {
             actualPage.setText = text
         }
+
+        function onPrintTime(time) {
+            dateLabel.text = time
+        }
+
     }
 
 }

@@ -1,7 +1,6 @@
 # This Python file uses the following encoding: utf-8
 from core import *
 
-
 # Verify Connection
 def is_connected():
     s = socket(AF_INET, SOCK_STREAM)
@@ -76,10 +75,7 @@ class SplashScreen(QMainWindow):
 
             engine.rootContext().setContextProperty("backend", MainWindow())
             engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
-            engine.start()
-
-            if not engine.rootObjects():
-                sys.exit(-1)
+            raise
 
         # Increase Counter
         counter += 1
@@ -350,7 +346,7 @@ class MainWindow(QObject):
     # Set timer Function
     def setTime(self):
         now = datetime.datetime.now()
-        formatDate = now.strftime("Now is %H:%M:%S %p of %Y/%m/%d")
+        formatDate = now.strftime("%H:%M:%S %p - %d/%m/%Y")
         self.printTime.emit(formatDate)
 
     # Function Set Name to Label
