@@ -174,7 +174,7 @@ Window {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        source: "../images/icons/hat_logo_temp_icon.svg"
+                        source: "../images/icons/SmoothTask.png"
                         autoTransform: false
                         mipmap: false
                         mirror: false
@@ -187,10 +187,17 @@ Window {
                         fillMode: Image.PreserveAspectFit
                     }
 
+                    ColorOverlay {
+                        anchors.fill: iconApp
+                        source: iconApp
+                        color: "#fff"
+                        antialiasing: false
+                    }
+
                     Label {
                         id: label
                         color: "#ffffff"
-                        text: qsTr("TareApp")
+                        text: qsTr("SmoothTask")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -199,7 +206,7 @@ Window {
                         verticalAlignment: Text.AlignVCenter
                         font.pointSize: 10
                         font.family: "Sans Serif"
-                        anchors.leftMargin: 5
+                        anchors.leftMargin: 10
                     }
                 }
 
