@@ -28,7 +28,7 @@ Item {
                 y: 5
                 height: 44
                 color: "#060607"
-                text: qsTr("Bienvenio a SmoothTask")
+                text: qsTr("Bienvenido a SmoothTask")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter

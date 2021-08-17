@@ -11,6 +11,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+error/
 build/
 develop-eggs/
 dist/

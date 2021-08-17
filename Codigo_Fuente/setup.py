@@ -14,9 +14,9 @@ target = Executable(
 
 # SETUP CX FREEZE
 setup(
-    name = "TareApp",
+    name = "SmoothTask",
     version = "1.0",
-    description = "Valoraciones Financieras",
+    description = "Tus tareas cada vez mas faciles.",
     author = "Camilo A. Cuello",
     options = {'build_exe' : {'include_files' : files}},
     executables = [target]
