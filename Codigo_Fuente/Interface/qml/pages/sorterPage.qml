@@ -405,7 +405,7 @@ Item{
                     Label {
                         id: infoLabel
                         y: 524
-                        width: 390
+                        width: 455
                         height: 21
                         color: "#000000"
                         anchors.left: parent.left
@@ -415,7 +415,7 @@ Item{
                         anchors.bottomMargin: 8
                         font.pointSize: 11
                         anchors.leftMargin: 29
-                        anchors.topMargin: 520
+                        anchors.topMargin: 531
                     }
 
                     Rectangle {
@@ -546,47 +546,47 @@ Item{
                             isFolder: false
                             fileExtensions: ["xlsx"]
                             onFileDropped: (url,name) => {
-                                                btnLoad.btnColorDefault = "#086291"
-                                                //console.log(url)
-                                                var loadList = backend.loadFoldersInfo(url)
+                                               btnLoad.btnColorDefault = "#086291"
+                                               //console.log(url)
+                                               var loadList = backend.loadFoldersInfo(url)
 
-                                                if (loadList.length <= 1){
-                                                    logLabel.text = loadList[0]
-                                                }
+                                               if (loadList.length <= 1){
+                                                   logLabel.text = loadList[0]
+                                               }
 
-                                                else{
-                                                    logLabel.text = ''
+                                               else{
+                                                   logLabel.text = ''
 
-                                                    var folderUrl = loadList[0]
-                                                    var method = loadList[1]
-                                                    var moveToOthers = loadList[2]
-                                                    var folderNames = loadList[3]
-                                                    var extTags = loadList[4]
+                                                   var folderUrl = loadList[0]
+                                                   var method = loadList[1]
+                                                   var moveToOthers = loadList[2]
+                                                   var folderNames = loadList[3]
+                                                   var extTags = loadList[4]
 
-                                                    list2.colorIndex = 0
-                                                    list2.clearModel()
-                                                    for(var i in folderNames){
-                                                        list2.createListObject(folderNames[i],extTags[i])
-                                                    }
+                                                   list2.colorIndex = 0
+                                                   list2.clearModel()
+                                                   for(var i in folderNames){
+                                                       list2.createListObject(folderNames[i],extTags[i])
+                                                   }
 
-                                                    folderLocation = folderUrl
-                                                    folderLabel.text = "Carpeta seleccionada: "+ folderLocation
-                                                    folderLabel.color = '#000000'
-                                                    rectangleTop.border.color = "#FFFFFF"
+                                                   folderLocation = folderUrl
+                                                   folderLabel.text = "Carpeta seleccionada: "+ folderLocation
+                                                   folderLabel.color = '#000000'
+                                                   rectangleTop.border.color = "#FFFFFF"
 
-                                                    if (method===0){ extRadio.checked=true; labelRadio.checked=false}
-                                                    else if (method===1){ extRadio.checked=false; labelRadio.checked=true}
-
-
-                                                    switchDefaultFolder.checked = moveToOthers
-
-                                                    switchDefault.checked = false
-
-                                                    //console.log(loadList)
-                                                }
+                                                   if (method===0){ extRadio.checked=true; labelRadio.checked=false}
+                                                   else if (method===1){ extRadio.checked=false; labelRadio.checked=true}
 
 
-                                            }
+                                                   switchDefaultFolder.checked = moveToOthers
+
+                                                   switchDefault.checked = false
+
+                                                   //console.log(loadList)
+                                               }
+
+
+                                           }
 
                             onFileEntered: () => {btnLoad.btnColorDefault = '#78ede7'}
                             onFileExited: () => {btnLoad.btnColorDefault = "#086291"}
@@ -661,7 +661,7 @@ Item{
 
 
                                                busy1.timerFunction = () => {var isAFolder = addFilesFromFolder(folderUrl)
-                                               if(isAFolder){folderLabel1.text = "Carpeta seleccionada: "+ folderUrl}
+                                                   if(isAFolder){folderLabel1.text = "Carpeta seleccionada: "+ folderUrl}
                                                }
                                                busy1.start()
 
@@ -677,24 +677,23 @@ Item{
                             transformOrigin: Item.Center
                             Image {
                                 id: image
-                                x: 30
-                                y: 5
-                                width: 100
-                                height: 50
+                                width: 84
+                                height: 80
                                 horizontalAlignment: Image.AlignHCenter
                                 verticalAlignment: Image.AlignVCenter
-                                source: "../../images/icons/carpeta.png"
-                                Layout.fillHeight: false
+                                source: "../../images/icons/dropFolder.png"
+                                Layout.fillHeight: true
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 Layout.maximumHeight: 90
                                 Layout.maximumWidth: 100
                                 Layout.preferredHeight: 50
                                 Layout.preferredWidth: 50
-                                Layout.fillWidth: false
+                                Layout.fillWidth: true
                                 asynchronous: false
                                 sourceSize.width: 0
                                 fillMode: Image.PreserveAspectFit
                             }
+
                             Label {
                                 id: dargDropDesc
                                 x: 10
@@ -712,6 +711,7 @@ Item{
                                 Layout.preferredHeight: 50
                                 Layout.preferredWidth: 1000
                             }
+
                         }
                     }
 

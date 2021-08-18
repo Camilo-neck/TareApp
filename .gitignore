@@ -204,3 +204,7 @@ Codigo_Fuente/Interface/UI/*.pyc
 # --------
 Codigo_Fuente/Interface/UI/*.exe
 Codigo_Fuente/Interface/UI/*.dll
+
+
+Codigo_Fuente/.google-cookie
+Codigo_Fuente/main.pyproject.user
