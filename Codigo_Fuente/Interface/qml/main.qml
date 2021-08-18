@@ -8,8 +8,8 @@ import QtQuick.Dialogs 1.3
 
 Window {
     id: mainwindow
-    width: 1080
-    height: 720
+    width: 1280
+    height: 800
     minimumWidth: 800
     minimumHeight: 720
     visible: true
@@ -115,7 +115,7 @@ Window {
                     Label {
                         id: labelTopInfo
                         color: "#1efae7"
-                        text: qsTr("Bienvenidos")
+                        text: qsTr("Bienvenido")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top

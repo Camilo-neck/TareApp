@@ -258,7 +258,6 @@ Item{
                                             generatorAnimation.running = !generatorAnimation.running
                                         }
                                         onClicked: {
-                                            //stackLayout.currentIndex = 4
                                             console.log("En Construcción")
                                         }
                                     }
@@ -346,19 +345,6 @@ Item{
                                 Layout.fillHeight: false
                             }
 
-                            ToolSeparator {
-                                id: toolSeparator0
-                                wheelEnabled: true
-                                orientation: Qt.Horizontal
-                                Layout.fillWidth: true
-                                spacing: 1
-                                contentItem: Rectangle {
-                                    color: "#fa801e"
-                                    implicitHeight: parent.vertical ? 24 : 2
-                                    implicitWidth: parent.vertical ? 2 : 24
-                                }
-                            }
-
                             Rectangle {
                                 id: ques1
                                 width: 850
@@ -400,11 +386,8 @@ Item{
                                     source: "../../images/helpPage/searchOptions.gif"
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     Layout.fillHeight: true
-                                    autoTransform: false
-                                    asynchronous: false
                                     Layout.fillWidth: true
                                     playing: false
-                                    cache: true
                                     speed: 2
                                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                     fillMode: Image.PreserveAspectFit
@@ -441,19 +424,6 @@ Item{
                                     font.bold: true
                                 }
                                 anchors.bottomMargin: 6
-                            }
-
-                            ToolSeparator {
-                                id: toolSeparator
-                                wheelEnabled: true
-                                orientation: Qt.Horizontal
-                                Layout.fillWidth: true
-                                spacing: 1
-                                contentItem: Rectangle {
-                                    color: "#fa801e"
-                                    implicitHeight: parent.vertical ? 24 : 2
-                                    implicitWidth: parent.vertical ? 2 : 24
-                                }
                             }
                             Rectangle {
                                 id: ques2
@@ -511,19 +481,6 @@ Item{
                                     }
                                 }
                             }
-
-                            ToolSeparator {
-                                id: toolSeparator1
-                                wheelEnabled: true
-                                orientation: Qt.Horizontal
-                                spacing: 1
-                                Layout.fillWidth: true
-                                contentItem: Rectangle {
-                                    color: "#fa801e"
-                                    implicitHeight: parent.vertical ? 24 : 2
-                                    implicitWidth: parent.vertical ? 2 : 24
-                                }
-                            }
                             Rectangle {
                                 id: ques3
                                 width: 850
@@ -571,19 +528,6 @@ Item{
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 anchors.bottomMargin: 6
                                 Layout.fillHeight: false
-                            }
-
-                            ToolSeparator {
-                                id: toolSeparator2
-                                wheelEnabled: true
-                                orientation: Qt.Horizontal
-                                spacing: 1
-                                Layout.fillWidth: true
-                                contentItem: Rectangle {
-                                    color: "#fa801e"
-                                    implicitHeight: parent.vertical ? 24 : 2
-                                    implicitWidth: parent.vertical ? 2 : 24
-                                }
                             }
                             Rectangle {
                                 id: ques4
@@ -647,7 +591,7 @@ Item{
                                 radius: 5
                                 Text {
                                     color: "#ffffff"
-                                    text: qsTr("Es tan simple como activar la opción de usar Open AI y tanto el resumen como las palabras clave serán obtenidor mediante la tecnológia GPT-3 de Open AI.")
+                                    text: qsTr("Es tan simple como activar la opción de usar Open AI y tanto el resumen como las palabras clave serán obtenidos mediante la tecnológia GPT-3 de Open AI.")
                                     anchors.fill: parent
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
@@ -662,19 +606,6 @@ Item{
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 anchors.bottomMargin: 6
                                 Layout.fillHeight: false
-                            }
-
-                            ToolSeparator {
-                                id: toolSeparator3
-                                wheelEnabled: true
-                                orientation: Qt.Horizontal
-                                spacing: 1
-                                Layout.fillWidth: true
-                                contentItem: Rectangle {
-                                    color: "#fa801e"
-                                    implicitHeight: parent.vertical ? 24 : 2
-                                    implicitWidth: parent.vertical ? 2 : 24
-                                }
                             }
                             Rectangle {
                                 id: ques5
@@ -691,7 +622,7 @@ Item{
                                     wrapMode: Text.WordWrap
                                     minimumPixelSize: 12
                                     minimumPointSize: 12
-                                    font.pointSize: 20
+                                    font.pointSize: 15
                                     anchors.rightMargin: 0
                                     font.bold: true
                                 }
@@ -708,7 +639,7 @@ Item{
                                 radius: 5
                                 Text {
                                     color: "#ffffff"
-                                    text: qsTr("Cabe resaltar que esta tecnología de inteligencia artificial está en fase Beta, por lo que aún comete ciertos errores, sin embargo puede volver a intentar y la misma tratará de darle una mejor respuesta. Además la misma trabaja con comprensión de textos por lo que a veces realiza análisis erróneos.")
+                                    text: qsTr("Cabe resaltar que esta tecnología de inteligencia artificial está en fase Beta, por lo que aún comete ciertos errores, sin embargo puede volver a intentar y la misma tratará de darle una mejor respuesta. Además que trabaja con comprensión de textos por lo que a veces realiza análisis erróneos.")
                                     anchors.fill: parent
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
