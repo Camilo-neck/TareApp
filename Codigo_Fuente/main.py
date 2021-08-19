@@ -127,6 +127,7 @@ class MainWindow(QObject):
         tDict = {}
         #Add template
         tDict[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
+        tDict[sheet.row_values(1)[0]] = sheet.row_values(1)[1]
         
         return tDict
 
@@ -141,58 +142,57 @@ class MainWindow(QObject):
 
 
     #Generate formatted documents
-    @Slot(str,str)
-    def generateDocuments(self,profilePath, dirPath):
-        if self.currentOs != 'Windows':
-            profilePath = '/'+profilePath
-            dirPath = '/' + dirPath
+    @Slot(str, result = list)
+    def generateDocuments(self,profilePath):
         try:
             #Creating main dictionary
             docDict = self.getTemplateDict(profilePath)
-            #Getting URL information to find the desired docx template
-            dPath = docDict["URL"]
+            #Getting URL information to find the desired docx template and defined dir to save the documents
+            dPath = docDict["URL Plantilla"]
+            dirPath = docDict["URL Documentos"]
             #Creating FormattedDocument object
             Documento = FormattedDocument(dPath,profilePath)
             #Creating User object
             Usuario = User(Documento)
             #Generating formatted document with the user's indications according to the profile
             Usuario.changeDocument(dirPath)
+            return [Usuario.status, Usuario.log]
         except Exception as e:
             print(e)
     
     #Create profile
     @Slot(str,str,str,str)
-    def createProfile(self,templatePath,templateName,dirPath, profileName):
-        if self.currentOs != 'Windows':
-            templatePath = '/' + templatePath
-            dirPath = '/' + dirPath
+    def createProfile(self,templatePath,templateName,profileDir,docsDir):
         #Create document
         document = FormattedDocument(templatePath)
         formatList = list(document.getFormatSet())
         #Creating and setting up Excel file
-        newExc = dirPath+profileName+".xlsx"
+        #newExc = profileDir+profileName+".xlsx"
+        newExc = profileDir
         workbook = xlsxwriter.Workbook(newExc)
         worksheet = workbook.add_worksheet()
-        worksheet.set_column(0, 0, 25)
-        worksheet.set_column(0, 1, 25)
+        worksheet.set_column(0, 0, 28)
+        worksheet.set_column(0, 1, 28)
         bold = workbook.add_format({'bold': True})
         cell_format = workbook.add_format()
         cell_format.set_align('fill')
         #Writting main information to the Excel document with indications to the user
-        worksheet.write('A1', 'URL',bold)
+        worksheet.write('A1', 'URL Plantilla',bold)
+        worksheet.write('A2', 'URL Documentos',bold)
         worksheet.write('B1', templatePath,cell_format)
-        worksheet.write('A2', "PLANTILLA",bold)
-        worksheet.write('B2', templateName)
-        worksheet.write('B3', "VALUE_1",bold)
-        worksheet.write('A3', 'KEY',bold)
-        worksheet.write('A4', 'NOMBRE ARCHIVO')
-        worksheet.write('B4', 'Ingrese un nombre')
-        worksheet.write('A5', 'CREAR PDF')
-        worksheet.write('B5', 'SI/NO')
-        worksheet.write('A6', 'NOMBRE PDF')
-        worksheet.write('B6', 'Ingrese un nombre')
+        worksheet.write('B2', docsDir,cell_format)
+        worksheet.write('A3', "PLANTILLA",bold)
+        worksheet.write('B3', templateName)
+        worksheet.write('A4', 'LLAVE',bold)
+        worksheet.write('B4', "DOCUMENTO 1",bold)
+        worksheet.write('A5', 'NOMBRE ARCHIVO')
+        worksheet.write('B5', 'Ingrese un nombre')
+        worksheet.write('A6', 'CREAR PDF')
+        worksheet.write('B6', 'SI/NO')
+        worksheet.write('A7', 'NOMBRE PDF')
+        worksheet.write('B7', 'Ingrese un nombre')
         index = 0
-        for x in range(7,len(formatList)+7):
+        for x in range(8,len(formatList)+8):
             cell = 'A'+str(x)
             sideCell = 'B' + str(x)
             worksheet.write(cell, formatList[index])

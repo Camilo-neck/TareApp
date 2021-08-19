@@ -258,7 +258,8 @@ Item{
                                             generatorAnimation.running = !generatorAnimation.running
                                         }
                                         onClicked: {
-                                            console.log("En Construcción")
+                                            stackLayout.currentIndex = 4
+                                            //console.log("En Construcción")
                                         }
                                     }
                                 }
@@ -887,6 +888,1223 @@ Item{
 
 
             }
+            Item{
+                id:organizer
+            }
+            Item{
+                id:generatorHelp
+
+                Rectangle {
+                    id: backgroundGen
+                    color: "#89c2db"
+                    anchors.fill: parent
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.topMargin: 0
+
+                    StackLayout {
+                        id: stackLayoutGen
+                        anchors.fill: parent
+                        currentIndex: 1
+                        anchors.rightMargin: 10
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 10
+                        anchors.topMargin: 10
+
+                        Item {
+                            DataFormatTable{
+                                x: -10
+                                y: 126
+                                height: 309
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.leftMargin: 22
+                                anchors.rightMargin: 22
+
+                            }
+                        }
+                        Item{
+                            id:genHelp
+
+                            StackLayout {
+                                id: genHelpLayout
+                                anchors.fill: parent
+                                currentIndex: 0
+
+                                Item {
+                                    id: genHelpHome
+
+                                    Rectangle {
+                                        id: genBg
+                                        color: "#89c2db"
+                                        anchors.right: parent.right
+                                        anchors.fill: parent
+
+
+                                        ScrollView {
+                                            id: scrollViewHome
+                                            x: 0
+                                            y: 0
+                                            anchors.fill: parent
+                                            anchors.bottomMargin: 0
+                                            anchors.leftMargin: 0
+                                            anchors.topMargin: 0
+                                            anchors.rightMargin: 0
+                                            contentWidth: parent.width - 20
+                                            clip:true
+                                            ColumnLayout {
+                                                id: cLayoutHome
+                                                anchors.fill: parent
+                                                anchors.bottomMargin: 50
+                                                anchors.leftMargin: 10
+                                                anchors.topMargin: 1
+                                                spacing: 6
+                                                anchors.rightMargin: 10
+                                                Rectangle {
+                                                    id: titleRectHome
+                                                    width: 342
+                                                    height: 50
+                                                    color: "#04a3c3"
+                                                    radius: 10
+                                                    border.width: 0
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+
+                                                    Label {
+                                                        id: titleLabHome
+                                                        x: -196
+                                                        y: 4
+                                                        height: 42
+                                                        color: "#fff"
+                                                        text: qsTr("Generador de documentos")
+                                                        anchors.left: parent.left
+                                                        anchors.right: parent.right
+                                                        horizontalAlignment: Text.AlignHCenter
+                                                        verticalAlignment: Text.AlignVCenter
+                                                        font.bold: true
+                                                        font.family: "Sans Serif"
+                                                        anchors.rightMargin: 8
+                                                        anchors.leftMargin: 8
+                                                        font.pointSize: 17
+                                                        anchors.horizontalCenter: parent.horizontalCenter
+                                                    }
+                                                }
+
+                                                Rectangle {
+                                                    id: homeRect1
+                                                    x: 40
+                                                    y: 63
+                                                    width: 541
+                                                    //width: genBg.width-50
+                                                    height: 90
+                                                    color: "#04a3c3"
+                                                    radius: 10
+                                                    border.width: 0
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+
+                                                    Label {
+                                                        id: homeLab1
+                                                        x: 20
+                                                        y: 2
+                                                        width: 416
+                                                        height: 87
+                                                        color: "#ffffff"
+                                                        text: "El generador de documentos ahorra su tiempo al modificar formatos específicos en una plantilla de su preferencia. Un ejemplo de plantilla se muestra a continuación:"
+                                                        anchors.left: parent.left
+                                                        anchors.right: parent.right
+                                                        horizontalAlignment: Text.AlignLeft
+                                                        verticalAlignment: Text.AlignVCenter
+                                                        wrapMode: Text.Wrap
+                                                        anchors.rightMargin: 8
+                                                        anchors.leftMargin: 17
+                                                        font.pointSize: 14
+                                                        font.family: "Sans Serif"
+                                                        anchors.horizontalCenter: parent.horizontalCenter
+                                                        anchors.horizontalCenterOffset: 0
+                                                    }
+                                                }
+
+                                                Image {
+                                                    id: homeImg1
+                                                    width: 390
+                                                    height: 397
+                                                    source: "../../images/gifs/GeneratorPage/templateHelp.png"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    fillMode: Image.PreserveAspectFit
+                                                }
+
+
+                                                Rectangle {
+                                                    id: homeRect2
+                                                    x: 40
+                                                    y: 63
+                                                    width: 541
+                                                    height: 110
+                                                    color: "#04a3c3"
+                                                    radius: 10
+                                                    border.width: 0
+                                                    Label {
+                                                        id: homeLab2
+                                                        x: 20
+                                                        y: 12
+                                                        width: 416
+                                                        height: 87
+                                                        color: "#ffffff"
+                                                        text: "En una plantilla, los formatos son las palabras que se encuentran entre corchetes cuadrados, y son estos formatos los que serán reemplazados al momento de usar el generador de documentos."
+                                                        anchors.left: parent.left
+                                                        anchors.right: parent.right
+                                                        horizontalAlignment: Text.AlignLeft
+                                                        verticalAlignment: Text.AlignVCenter
+                                                        wrapMode: Text.Wrap
+                                                        font.pointSize: 14
+                                                        anchors.rightMargin: 8
+                                                        anchors.horizontalCenterOffset: 0
+                                                        anchors.horizontalCenter: parent.horizontalCenter
+                                                        anchors.leftMargin: 17
+                                                        font.family: "Sans Serif"
+                                                    }
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+
+                                                Row {
+                                                    id: rowHome1
+                                                    width: 100
+                                                    height: 100
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    spacing:10
+                                                    anchors.horizontalCenter: parent.Center
+
+                                                    CustomButton {
+                                                        id: profileHelpBtn
+                                                        width: 140
+                                                        height: 75
+                                                        visible: true
+                                                        text: "¿Qué es un\nperfil?"
+                                                        btnColorMouseOver: "#05d5ff"
+                                                        btnColorDefault: "#04a3c3"
+                                                        font.pointSize: 17
+                                                        //Layout.preferredWidth: 250
+                                                        font.family: "Sans Serif"
+                                                        //anchors.horizontalCenter: parent.horizontalCenter
+
+
+                                                        onPressed: {
+                                                            genHelpLayout.currentIndex=1
+                                                        }
+                                                    }
+
+                                                    CustomButton {
+                                                        id: profCreBtn
+                                                        width: 140
+                                                        height: 75
+                                                        visible: true
+                                                        text: "¿Cómo creo\nun perfil?"
+                                                        btnColorMouseOver: "#05d5ff"
+                                                        btnColorDefault: "#04a3c3"
+                                                        font.pointSize: 17
+                                                        //Layout.preferredWidth: 250
+                                                        font.family: "Sans Serif"
+                                                        //anchors.horizontalCenter: parent.horizontalCenter
+                                                        //Layout.maximumHeight: 65535
+                                                        //anchors.horizontalCenterOffset: 1
+                                                        onPressed: {
+                                                            genHelpLayout.currentIndex = 2
+                                                        }
+                                                    }
+
+                                                    CustomButton {
+                                                        id: doceGenBtn
+                                                        width: 151
+                                                        height: 75
+                                                        visible: true
+                                                        text: "¿Cómo genero\ndocumentos?"
+                                                        btnColorMouseOver: "#05d5ff"
+                                                        btnColorDefault: "#04a3c3"
+                                                        font.pointSize: 17
+                                                        //Layout.preferredWidth: 250
+                                                        font.family: "Sans Serif"
+                                                        //anchors.horizontalCenter: parent.horizontalCenter
+                                                        //Layout.maximumHeight: 65535
+                                                        //anchors.horizontalCenterOffset: 191
+                                                        onPressed:{
+                                                            genHelpLayout.currentIndex = 3
+                                                        }
+                                                    }
+                                                }
+
+
+
+
+                                            }
+
+
+                                        }
+
+                                        CustomButton {
+                                            id: backGen
+                                            x: 8
+                                            y: 0
+                                            width: 40
+                                            height: 40
+                                            //Layout.minimumHeight: 40
+                                            //Layout.minimumWidth: 40
+                                            btnColorMouseOver: "#00000000"
+                                            btnColorClicked: "#00000000"
+                                            btnColorDefault: "#00000000"
+                                            Image {
+                                                anchors.fill: parent
+                                                source: "../../images/icons/previous.svg"
+                                                fillMode: Image.PreserveAspectFit
+                                            }
+                                            onPressed: {
+
+                                                stackLayout.currentIndex = 0
+                                                console.log('back')
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Item {
+                                    id: profileHelp
+                                    ScrollView {
+                                        id: scrollViewProfiles
+                                        x: 0
+                                        y: 0
+                                        anchors.fill: parent
+                                        anchors.bottomMargin: 0
+                                        anchors.leftMargin: 0
+                                        anchors.topMargin: 0
+                                        anchors.rightMargin: 0
+                                        contentWidth: parent.width - 20
+                                        clip:false
+
+                                        ColumnLayout {
+                                            id: cLayoutProfiles
+                                            anchors.fill: parent
+                                            anchors.bottomMargin: 50
+                                            anchors.leftMargin: 10
+                                            anchors.topMargin: 1
+                                            spacing: 6
+                                            anchors.rightMargin: 10
+
+
+
+                                            Rectangle {
+                                                id: profRect1
+                                                width: 202
+                                                height: 64
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 0
+
+                                                Label {
+                                                    id: profLab1
+                                                    x: -74
+                                                    y: 6
+                                                    width: 206
+                                                    height: 51
+                                                    color: "#ffffff"
+                                                    text: "¿Cómo funciona un perfil?"
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignHCenter
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    font.bold: true
+                                                    anchors.rightMargin: 4
+                                                    anchors.leftMargin: 4
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.horizontalCenterOffset: 0
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: profRect2
+                                                x: -269
+                                                y: 119
+                                                width: 541
+                                                height: 88
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: profLab2
+                                                    x: -196
+                                                    y: 8
+                                                    width: 526
+                                                    height: 80
+                                                    color: "#ffffff"
+                                                    text: "El primer paso para empezar a generar documentos consiste en comprender el funcionamiento de los perfiles. Un perfil es un archivo de Excel cuyo contenido tiene el siguiente aspecto:"
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Image {
+                                                id: profImg1
+                                                x: -261
+                                                y: 227
+                                                width: 524
+                                                height: 268
+                                                source: "../../images/gifs/GeneratorPage/excelHelp.png"
+                                                sourceSize.height: 250
+                                                sourceSize.width: 500
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                fillMode: Image.PreserveAspectFit
+                                            }
+
+                                            Rectangle {
+                                                id: profRect3
+                                                x: -269
+                                                y: 520
+                                                width: 541
+                                                height: 132
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: profLab3
+                                                    x: -196
+                                                    y: 8
+                                                    width: 526
+                                                    height: 127
+                                                    color: "#ffffff"
+                                                    text: "Iremos recorriendo esta información para explicar su significado. En esta explicación, se sigue la convención de que cada celda en la columna A tiene asignado un valor (o varios valores a partir de la celda A4) en la celda o en el conjunto de celdas que está a su derecha."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: profRect4
+                                                x: -269
+                                                y: 667
+                                                width: 541
+                                                height: 83
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+
+                                                Label {
+                                                    id: profLab4
+                                                    x: 16
+                                                    y: 8
+                                                    width: 526
+                                                    height: 75
+                                                    color: "#ffffff"
+                                                    text: "La primera celda de un perfil corresponde a \"URL Plantilla\", y su valor es la ruta de acceso a la plantilla que quiera usarse para generar los documentos."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Image {
+                                                id: profImg2
+                                                width: 524
+                                                height: 80
+                                                Layout.maximumWidth:524
+                                                source: "../../images/gifs/GeneratorPage/urlopen.png"
+                                                sourceSize.width: 597
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                //fillMode: Image.PreserveAspectFit
+                                            }
+
+                                            Rectangle {
+                                                id: profRect5
+                                                x: -269
+                                                y: 841
+                                                width: 541
+                                                height: 110
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: profLab5
+                                                    x: 16
+                                                    y: 8
+                                                    width: 526
+                                                    height: 75
+                                                    color: "#ffffff"
+                                                    text: "Similar a \"URL Plantilla\", el valor de la celda \"URL Documentos\" también es una ruta, pero esta vez corresponde al directorio de guardado que se busca para los documentos a generar."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Image {
+                                                id: profImg3
+                                                x: -174
+                                                y: 935
+                                                width: 524
+                                                height: 120
+                                                Layout.maximumWidth:524
+                                                //Layout.maximumHeight:120
+                                                source: "../../images/gifs/GeneratorPage/urlsave.png"
+                                                anchors.horizontalCenterOffset:0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                fillMode: Image.PreserveAspectFit
+                                            }
+
+                                            Rectangle {
+                                                id: profRect6
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 90
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: profLab6
+                                                    x: 16
+                                                    y: 8
+                                                    width: 524
+                                                    height: 74
+                                                    color: "#ffffff"
+                                                    text: "El valor de \"PLANTILLA\" es sólamente una ayuda visual, y corresponde al nombre de la plantilla que se va a utilizar, esta vez sin la información completa de la ruta de acceso."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: profRect7
+                                                x: -269
+                                                y: 841
+                                                width: 541
+                                                height: 88
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+
+                                                Label {
+                                                    id: profLab7
+                                                    x: -13
+                                                    y: 11
+                                                    width: 524
+                                                    height: 81
+                                                    color: "#ffffff"
+                                                    text: "A partir de la fila 4, las celdas pueden tener uno o más valores, y es esta misma fila la que busca ilustrar dicha\nconvención."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: profRect8
+                                                x: -269
+                                                y: 841
+                                                width: 541
+                                                height: 110
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+
+                                                Label {
+                                                    id: profLab8
+                                                    x: 68
+                                                    y: 8
+                                                    width: 524
+                                                    height: 96
+                                                    color: "#ffffff"
+                                                    text: "Los valores de \"NOMBRE ARCHIVO\" corresponden a los nombres que tendrán los archivos de Word que se quieran crear. Se crearán tantos archivos como valores tenga \"NOMBRE ARCHIVO\"."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: profRect9
+                                                x: -269
+                                                y: 841
+                                                width: 541
+                                                height: 200
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+
+                                                Label {
+                                                    id: profLab9
+                                                    x: 184
+                                                    y: 8
+                                                    width: 524
+                                                    height: 165
+                                                    color: "#ffffff"
+                                                    text: "Los valores de \"CREAR PDF\" son palabras entre \"SI\" o \"NO\". Si el valor es \"SI\", la aplicación creará un archivo PDF a partir del documento de Word asociado a la columna en donde se encuentre dicho valor, guardándolo en la ruta designada en \"URL Save\". Si el valor es \"NO\", el archivo PDF no será creado. Los valores de \"NOMBRE PDF\" corresponden al nombre que se dará al archivo PDF si la opción en \"CREAR PDF\" es \"SI\"."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+
+                                            Rectangle {
+                                                id: profRect10
+                                                x: -269
+                                                y: 841
+                                                width: 541
+                                                height: 180
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+
+                                                Label {
+                                                    id: profLab10
+                                                    x: 9
+                                                    y: 8
+                                                    width: 524
+                                                    height: 161
+                                                    color: "#ffffff"
+                                                    text: "A partir de aquí, empiezan a aparecer las celdas de los formatos que la plantilla contiene. Los valores de cada formato reemplazarán cada ocurrencia del formato en la plantilla. Posteriormente, la aplicación creará documentos con los cambios realizados de acuerdo a los valores de los formatos, y los guardará en la ruta designada por \"URL Documentos\" con las opciones de guardado definidas en las demás celdas."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+
+
+
+
+
+
+
+                                        }
+
+
+                                    }
+
+                                    CustomButton {
+                                        id: goBack1
+                                        x: 8
+                                        y: 0
+                                        width: 40
+                                        height: 40
+                                        Layout.minimumHeight: 40
+                                        Layout.minimumWidth: 40
+                                        btnColorMouseOver: "#00000000"
+                                        btnColorClicked: "#00000000"
+                                        btnColorDefault: "#00000000"
+                                        Image {
+                                            anchors.fill: parent
+                                            source: "../../images/icons/previous.svg"
+                                            fillMode: Image.PreserveAspectFit
+                                        }
+                                        onPressed: {
+
+                                            genHelpLayout.currentIndex = 0
+                                            console.log('back')
+                                        }
+                                    }
+
+                                }
+                                Item{
+                                    id: profileCreationHelp
+
+                                    ScrollView {
+                                        id: scrollViewCreation
+                                        x: 0
+                                        y: 0
+                                        anchors.fill: parent
+                                        anchors.bottomMargin: 0
+                                        anchors.leftMargin: 0
+                                        anchors.topMargin: 0
+                                        anchors.rightMargin: 0
+                                        contentWidth: parent.width - 20
+                                        //clip:false
+
+                                        ColumnLayout {
+                                            id: cLayoutCreation
+                                            anchors.fill: parent
+                                            anchors.bottomMargin: 50
+                                            anchors.leftMargin: 10
+                                            anchors.topMargin: 1
+                                            spacing: 6
+                                            anchors.rightMargin: 10
+                                            Rectangle {
+                                                id: titleRectCreation
+                                                width: 202
+                                                height: 64
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 0
+
+                                                Label {
+                                                    id: titleLabCreation
+                                                    x: -74
+                                                    y: 6
+                                                    width: 206
+                                                    height: 51
+                                                    color: "#ffffff"
+                                                    text: "¿Cómo creo un perfil?"
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignHCenter
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    font.bold: true
+                                                    anchors.rightMargin: 4
+                                                    anchors.leftMargin: 4
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.horizontalCenterOffset: 0
+                                                }
+                                            }
+                                            Rectangle {
+                                                id: creRect1
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 135
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: creLab1
+                                                    x: 16
+                                                    y: 8
+                                                    width: 524
+                                                    height: 114
+                                                    color: "#ffffff"
+                                                    text: "El primer paso para crear un perfil, consiste en acceder al menú de creación de perfil seleccionando el botón \"Crear perfil\" en color verde. La aplicación tiene un botón en la esquina superior izquierda para regresar al menú inicial de generación de documentos."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.rightMargin: 8
+                                                    anchors.leftMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                }
+                                            }
+                                            AnimatedImage {
+                                                id: creImg1
+                                                //anchors.horizontalCenter: parent.Center
+                                                width: 400
+                                                height: 200
+                                                //horizontalAlignment: Image.AlignHCenter
+                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                source: "../../images/gifs/GeneratorPage/genHelp2.gif"
+                                                //sourceSize.width: 550
+                                                Layout.maximumWidth: 550
+                                                Layout.maximumHeight: 300
+                                                fillMode: Image.PreserveAspectFit
+                                                playing:false
+                                                speed:2
+                                                MouseArea {
+                                                    id: help2Area
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    onHoveredChanged: {
+                                                        creImg1.playing = !creImg1.playing
+                                                    }
+                                                }
+
+                                            }
+
+                                            Rectangle {
+                                                id: creRect2
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 110
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                Label {
+                                                    id: creLab2
+                                                    x: 16
+                                                    y: 8
+                                                    width: 524
+                                                    height: 98
+                                                    color: "#ffffff"
+                                                    text: "Una vez en el menú de creación de perfiles, debemos introducir una plantilla arrastrándola al área designada, o haciéndo clic sobre dicha área para navegar entre los archivos y seleccionar la plantilla."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.rightMargin: 8
+                                                    font.pointSize: 14
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.leftMargin: 8
+                                                }
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+                                            }
+
+                                            AnimatedImage {
+                                                id: creImg2
+                                                width: 400
+                                                height: 200
+                                                source: "../../images/gifs/GeneratorPage/genHelp3.gif"
+                                                fillMode: Image.PreserveAspectFit
+                                                Layout.maximumWidth: 550
+                                                Layout.maximumHeight: 300
+                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                playing:false
+                                                speed:2
+                                                MouseArea {
+                                                    id: help3Area
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    onHoveredChanged: {
+                                                        creImg2.playing = !creImg2.playing
+                                                    }
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: creRect3
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 340
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenterOffset: 2
+                                                Label {
+                                                    id: creLab3
+                                                    x: 16
+                                                    y: 8
+                                                    width: 526
+                                                    height: 114
+                                                    color: "#ffffff"
+                                                    //text: "Una vez en el menú de creación de perfiles, debemos introducir una plantilla arrastrándola al área designada, o haciéndo clic sobre dicha área para navegar entre los archivos y seleccionar la plan"
+                                                    text: "Luego de haber seleccionado una plantilla, es posible designar la ruta deseada para el valor de \"URL Documentos\" utilizando el botón con ícono de carpeta que permite navegar hasta un directorio y seleccionarlo (siendo la carpeta \"Documentos\" el directorio por defecto). Luego, para crear el perfil, se debe oprimir el botón verde \"Generar perfil\" que abrirá un explorador de archivos para designar el directorio de destino del perfil; además, es en esta ventana de exploración en donde se debe designar un nombre para el perfil. Una vez que se ha establecido un directorio y un nombre para el perfil, el paso final para crear el perfil consiste en oprimir el botón \"Guardar\". Es posible abrir el perfil creado navegando hasta su ubicación, o utilizando el botón azul incluido en la aplicación que tiene esta función."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenterOffset: 0
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.leftMargin: 8
+                                                    anchors.rightMargin: 8
+                                                    font.pointSize: 14
+                                                }
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                            }
+
+                                            AnimatedImage {
+                                                id: creImg3
+                                                width: 400
+                                                height: 200
+                                                source: "../../images/gifs/GeneratorPage/genHelp4.gif"
+                                                Layout.maximumWidth: 550
+                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                Layout.maximumHeight: 300
+                                                fillMode: Image.PreserveAspectFit
+                                                playing:false
+                                                speed:2
+                                                MouseArea {
+                                                    id: help4Area
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    onHoveredChanged: {
+                                                        creImg3.playing = !creImg3.playing
+                                                    }
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: creRect4
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 160
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                Label {
+                                                    id: creLab4
+                                                    x: 16
+                                                    y: 8
+                                                    width: 526
+                                                    height: 144
+                                                    color: "#ffffff"
+                                                    text: "El perfil resultante será un archivo de Excel sin diligenciar con la apariencia descrita en la sección \"¿Qué es un perfil?\", por ello, el usuario deberá introducir los valores de las celdas según sus necesidades. Se recomienda al usuario utilizar la función de extender celda que ofrece Excel, en caso de que sean necesarios varios valores para los formatos."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    font.pointSize: 14
+                                                    anchors.leftMargin: 8
+                                                    anchors.rightMargin: 8
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.family: "Sans Serif"
+                                                    anchors.horizontalCenterOffset: 0
+                                                }
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                anchors.horizontalCenterOffset: 2
+                                            }
+
+                                            AnimatedImage {
+                                                id: creImg4
+                                                width: 400
+                                                height: 210
+                                                source: "../../images/gifs/GeneratorPage/excelHelp.gif"
+                                                Layout.maximumWidth: 550
+                                                fillMode: Image.PreserveAspectFit
+                                                Layout.maximumHeight: 210
+                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                playing:false
+                                                speed:2
+                                                MouseArea {
+                                                    id: excHelpArea
+                                                    height: 210
+                                                    anchors.fill: parent
+
+                                                    hoverEnabled: true
+                                                    onHoveredChanged: {
+                                                        creImg4.playing = !creImg4.playing
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+
+                                    }
+
+                                    CustomButton {
+                                        id: goBack3
+                                        x: 8
+                                        y: 0
+                                        width: 40
+                                        height: 40
+                                        Layout.minimumHeight: 40
+                                        Layout.minimumWidth: 40
+                                        btnColorMouseOver: "#00000000"
+                                        btnColorClicked: "#00000000"
+                                        btnColorDefault: "#00000000"
+                                        Image {
+                                            anchors.fill: parent
+                                            source: "../../images/icons/previous.svg"
+                                            fillMode: Image.PreserveAspectFit
+                                        }
+                                        onPressed: {
+
+                                            genHelpLayout.currentIndex = 0
+                                            console.log('back')
+                                        }
+                                    }
+                                }
+
+                                Item {
+                                    id: profileCreationHelp1
+                                    ScrollView {
+                                        id: scrollViewCreation1
+                                        x: 0
+                                        y: 0
+                                        anchors.fill: parent
+                                        clip:false
+                                        ColumnLayout {
+                                            id: cLayoutCreation1
+                                            anchors.fill: parent
+                                            anchors.topMargin: 1
+                                            anchors.leftMargin: 10
+                                            spacing: 6
+
+                                            Rectangle {
+                                                id: titleRectCreation1
+                                                width: 202
+                                                height: 64
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: titleLabCreation1
+                                                    x: -74
+                                                    y: 6
+                                                    width: 206
+                                                    height: 51
+                                                    color: "#ffffff"
+                                                    text: "¿Cómo genero documentos?"
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignHCenter
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.family: "Sans Serif"
+                                                    font.pointSize: 14
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.leftMargin: 4
+                                                    font.bold: true
+                                                    anchors.rightMargin: 4
+                                                }
+                                                anchors.horizontalCenterOffset: 0
+                                            }
+
+                                            Rectangle {
+                                                id: creRect5
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 130
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: creLab5
+                                                    x: 16
+                                                    y: 8
+                                                    width: 524
+                                                    height: 114
+                                                    color: "#ffffff"
+                                                    text: "Para generar documentos, es suficiente con arrastrar o seleccionar un perfil diligenciado en el menú de generación de documentos y luego oprimir el botón \"Generar documentos\". Los documentos serán generados con las opciones contenidas en el perfil."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.family: "Sans Serif"
+                                                    anchors.leftMargin: 8
+                                                    anchors.horizontalCenterOffset: 0
+                                                    font.pointSize: 14
+                                                    anchors.rightMargin: 8
+                                                }
+                                                anchors.horizontalCenterOffset: 2
+                                            }
+
+                                            AnimatedImage {
+                                                id: creImg5
+                                                width: 400
+                                                height: 200
+                                                source: "../../images/gifs/GeneratorPage/genHelp1.gif"
+                                                paused: false
+                                                playing: false
+                                                Layout.maximumWidth: 550
+                                                fillMode: Image.PreserveAspectFit
+                                                Layout.maximumHeight: 300
+                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                speed:2
+                                                MouseArea {
+                                                    id: help1Area
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    onHoveredChanged: {
+                                                        creImg5.playing = !creImg5.playing
+                                                    }
+                                                }
+                                            }
+
+                                            Rectangle {
+                                                id: creRect6
+                                                x: -269
+                                                y: 1032
+                                                width: 541
+                                                height: 210
+                                                color: "#04a3c3"
+                                                radius: 10
+                                                border.width: 0
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                Label {
+                                                    id: creLab6
+                                                    x: 16
+                                                    y: 8
+                                                    width: 524
+                                                    height: 81
+                                                    color: "#d80202"
+                                                    text: "Para evitar errorres, se recomienda cerrar los archivos de Excel que se encuentren abiertos, antes de oprimir el botón \"Generar documentos\"."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.family: "Sans Serif"
+                                                    anchors.leftMargin: 8
+                                                    anchors.horizontalCenterOffset: 0
+                                                    font.pointSize: 14
+                                                    anchors.rightMargin: 8
+                                                }
+
+                                                Label {
+                                                    id: creLab7
+                                                    x: 23
+                                                    y: 82
+                                                    width: 524
+                                                    height: 120
+                                                    color: "#ffffff"
+                                                    text: "En caso de que el perfil seleccionado contenga datos no válidos, la generación fallará y la aplicación informará al usuario del error. En estos casos, corrija su perfil y asegurese de que haya seguido correctamente todas las instrucciones dadas en esta sección de ayuda."
+                                                    anchors.left: parent.left
+                                                    anchors.right: parent.right
+                                                    horizontalAlignment: Text.AlignLeft
+                                                    verticalAlignment: Text.AlignTop
+                                                    wrapMode: Text.Wrap
+                                                    font.pointSize: 14
+                                                    anchors.rightMargin: 8
+                                                    anchors.horizontalCenterOffset: 0
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.family: "Sans Serif"
+                                                    anchors.leftMargin: 8
+                                                }
+                                                anchors.horizontalCenterOffset: 2
+                                            }
+                                            anchors.rightMargin: 10
+                                            anchors.bottomMargin: 50
+                                        }
+                                        anchors.topMargin: 0
+                                        anchors.leftMargin: 0
+                                        contentWidth: parent.width - 20
+                                        anchors.rightMargin: 0
+                                        anchors.bottomMargin: 0
+                                    }
+
+                                    CustomButton {
+                                        id: goBack4
+                                        x: 8
+                                        y: 0
+                                        width: 40
+                                        height: 40
+                                        Layout.minimumHeight: 40
+                                        Layout.minimumWidth: 40
+                                        btnColorMouseOver: "#00000000"
+                                        btnColorClicked: "#00000000"
+                                        btnColorDefault: "#00000000"
+                                        Image {
+                                            anchors.fill: parent
+                                            source: "../../images/icons/previous.svg"
+                                            fillMode: Image.PreserveAspectFit
+                                        }
+                                        onPressed: {
+
+                                            genHelpLayout.currentIndex = 0
+                                            console.log('back')
+                                        }
+                                    }
+                                }
+
+                            }
+
+
+                        }
+                    }
+
+                }
+            }
         }
 
     }
@@ -897,8 +2115,10 @@ Item{
 
 }
 
+
+
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.9;height:613;width:988}
+    D{i:0;autoSize:true;height:480;width:640}
 }
 ##^##*/
