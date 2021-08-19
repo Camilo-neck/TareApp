@@ -258,6 +258,7 @@ Item{
                                             generatorAnimation.running = !generatorAnimation.running
                                         }
                                         onClicked: {
+                                            //stackLayout.currentIndex = 4
                                             console.log("En Construcción")
                                         }
                                     }

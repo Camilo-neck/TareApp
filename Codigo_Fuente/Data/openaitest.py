@@ -23,6 +23,8 @@ def summarized(query):
         return (response["choices"][0]['text'])
     except openai.error.AuthenticationError:
         return "Error de autenticación. Por favor proveer un API key."
+    except openai.error.RateLimitError:
+        return "Error de límite de pedidos. Haz excedido tu límite de requests. Revisa tu plan y pagos."
 
 def keywords(query):
     try:
@@ -43,3 +45,5 @@ def keywords(query):
         return clean_response
     except openai.error.AuthenticationError:
         return "Error de autenticación. Por favor proveer un API key."
+    except openai.error.RateLimitError:
+        return "Error de límite de pedidos. Haz excedido tu límite de requests. Revisa tu plan y pagos."
