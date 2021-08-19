@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'splash_screenAhjfWA.ui'
+## Form generated from reading UI file 'splash_screen.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -73,7 +73,7 @@ class Ui_SplashScreen(object):
 
         self.appName = QLabel(self.texts)
         self.appName.setObjectName(u"appName")
-        self.appName.setMinimumSize(QSize(0, 30))
+        self.appName.setMinimumSize(QSize(0, 40))
         font1 = QFont()
         font1.setPointSize(18)
         self.appName.setFont(font1)
@@ -140,7 +140,7 @@ class Ui_SplashScreen(object):
     def retranslateUi(self, SplashScreen):
         SplashScreen.setWindowTitle(QCoreApplication.translate("SplashScreen", u"Loading", None))
         self.loading.setText(QCoreApplication.translate("SplashScreen", u"Loading...", None))
-        self.appName.setText(QCoreApplication.translate("SplashScreen", u"TareApp", None))
+        self.appName.setText(QCoreApplication.translate("SplashScreen", u"<html><head/><body><p><span style=\" font-size:20pt;\">SmoothTask</span></p></body></html>", None))
         self.version.setText(QCoreApplication.translate("SplashScreen", u"V1.0.0 - Beta 1", None))
     # retranslateUi
 

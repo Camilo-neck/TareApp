@@ -1,31 +1,5 @@
 # This Python file uses the following encoding: utf-8
-import sys
-import os
-import datetime
-from socket import *
-import xlsxwriter
-import xlrd
-import platform
-import subprocess
-
-from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
-
-# Import Circular Progress
-from circular_progress import CircularProgress
-from circular_progress import Ui_SplashScreen
-
-
-from Data import Wiki, Google, Url, MyText, PdfApp, User, FormattedDocument, FileOrganizer, SaveFile
-
-import os
-from win32api import GetFileAttributes
-from win32con import FILE_ATTRIBUTE_HIDDEN,FILE_ATTRIBUTE_SYSTEM  #pywin32
-
-import traceback
-from time import sleep
+from core import *
 
 # Verify Connection
 def is_connected():
@@ -101,10 +75,7 @@ class SplashScreen(QMainWindow):
 
             engine.rootContext().setContextProperty("backend", MainWindow())
             engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
-            engine.start()
-
-            if not engine.rootObjects():
-                sys.exit(-1)
+            raise
 
         # Increase Counter
         counter += 1
@@ -145,9 +116,6 @@ class MainWindow(QObject):
             print(i)
             sleep(1)
 
-    @Slot()
-    def testF(self):
-        print('clicked')
     def getTemplateDict(self, pathToExc):
         # Creating document
         loc = (pathToExc)
@@ -378,7 +346,7 @@ class MainWindow(QObject):
     # Set timer Function
     def setTime(self):
         now = datetime.datetime.now()
-        formatDate = now.strftime("Now is %H:%M:%S %p of %Y/%m/%d")
+        formatDate = now.strftime("%H:%M:%S %p - %d/%m/%Y")
         self.printTime.emit(formatDate)
 
     # Function Set Name to Label
@@ -395,5 +363,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     window = SplashScreen()
+    app.setWindowIcon(QIcon('Interface/images/icon.ico'))
 
     sys.exit(app.exec_())

@@ -6,6 +6,7 @@ TabBar {
     property var repeaterModel: []
     property var itemColor: 'white'
     property var barStyle: 0
+    property var radio: 0
     background: {color: itemColor}
 
     Repeater {
@@ -30,6 +31,7 @@ TabBar {
             background: Rectangle {
                 height: bar.height
                 color: bar.currentIndex===index ? itemColor : '#0998e9'
+                radius: radio
                 Image {
                     id: tabBtnImg
                     width: bar.height-5

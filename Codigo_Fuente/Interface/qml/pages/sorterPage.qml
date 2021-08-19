@@ -12,8 +12,8 @@ Item{
     property var urls : list1.urls
     property var names : list1.names
     property var folderLocation: ""
-    property var fNames : ["Imagenes","Videos","Musica y Audios","Archivos de texto","Carpetas comprimidas","Archivos de Office"]
-    property var fExtensions : ["jpg png jpeg","mp4 avi mov mkv gif","mp3 wab aac ogg","txt pdf","rar zip","docx doc pptx xlsx"]
+    // property var fNames : ["Imagenes","Videos","Musica y Audios","Archivos de texto","Carpetas comprimidas","Archivos de Office"]
+    // property var fExtensions : ["jpg png jpeg","mp4 avi mov mkv gif","mp3 wab aac ogg","txt pdf","rar zip","docx doc pptx xlsx"]
 
     property var folderUrl2: ""
 
@@ -81,17 +81,17 @@ Item{
         StackLayout {
             id: stackLayout
             x: 10
-            y: 39
-            height: 564
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: row.bottom
-            anchors.bottom: bar.top
+            anchors.top: bar.bottom
+            anchors.bottom: parent.bottom
+            anchors.topMargin: -1
             currentIndex: bar.currentIndex
-            anchors.bottomMargin: -603
+            anchors.bottomMargin: 10
             anchors.leftMargin: 10
             Item {
                 id: item1
+                Layout.fillWidth: true
                 Rectangle {
                     id: rectangle3
                     color: "#97d4f0"
@@ -333,12 +333,46 @@ Item{
                         Layout.preferredHeight: 40
                         onClicked: {
                             if(checked){
+
+                                /*
                                 list2.colorIndex = 0
                                 list2.clearModel()
                                 for(var i in fNames){
                                     list2.createListObject(fNames[i],fExtensions[i])
                                 }
                                 extRadio.checked = true
+                                */
+
+                                //////////////////////
+
+                                var url = Qt.resolvedUrl("../../")+"images/defaultFiles/defaultFolders.xlsx"
+                                url = url.replace(/^(file:\/{3})/,"")
+                                //console.log(url)
+                                var loadList = backend.loadFoldersInfo(url)
+
+                               if (loadList.length <= 1){
+                                   var logText = loadList[0]
+                                   if (logText === "El archivo no existe en la ruta especificada"){
+                                       logText = "No existe un archivo para carpetas por defecto"
+                                   }
+                                   logLabel.text = logText
+                               }
+
+                               else{
+
+                                   var folderNames = loadList[3]
+                                   var extTags = loadList[4]
+
+                                   list2.colorIndex = 0
+                                   list2.clearModel()
+                                   for(var i in folderNames){
+                                       list2.createListObject(folderNames[i],extTags[i])
+                                   }
+
+                                  extRadio.checked = true
+                                  logLabel.text = ""
+                               }
+
                             }else{
                                 list2.colorIndex = 0
                                 list2.clearModel()
@@ -409,35 +443,41 @@ Item{
                         height: 21
                         color: "#000000"
                         anchors.left: parent.left
-                        anchors.top: parent.top
+                        anchors.top: organizeBttn.bottom
                         anchors.bottom: parent.bottom
-                        anchors.rightMargin: 10
                         anchors.bottomMargin: 8
                         font.pointSize: 11
                         anchors.leftMargin: 29
-                        anchors.topMargin: 531
+                        anchors.topMargin: 6
                     }
 
                     Rectangle {
                         id: logRect
-                        x: 498
-                        y: 447
-                        width: 314
-                        height: 109
                         color: "#b3a7e3f6"
                         radius: 10
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: list2.bottom
+                        anchors.bottom: parent.bottom
+                        anchors.rightMargin: 158
+                        anchors.leftMargin: 498
+                        anchors.topMargin: 6
+                        anchors.bottomMargin: 8
 
                         Label {
                             id: logLabel
-                            x: -278
-                            y: 0
-                            width: 200
-                            height: 200
                             color: "#000000"
-                            anchors.fill: parent
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             font.pointSize: 11
-                            anchors.leftMargin: 0
                             wrapMode: Text.WordWrap
+                            anchors.topMargin: 0
+                            anchors.rightMargin: 0
+                            anchors.leftMargin: 0
+                            anchors.bottomMargin: 0
+                            clip: true
                         }
                     }
 
@@ -526,6 +566,7 @@ Item{
                         width: 140
                         height: 42
                         text: "Cargar"
+                        anchors.right: parent.right
                         anchors.leftMargin: 0
                         Layout.preferredHeight: 40
                         Layout.fillWidth: true
@@ -533,12 +574,13 @@ Item{
                         font.family: "Sans Serif"
                         Layout.preferredWidth: 250
                         anchors.bottomMargin: 0
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: 10
                         Layout.maximumHeight: 65535
                         btnColorClicked: "#ec0606"
                         btnColorDefault: "#086291"
                         font.pointSize: 10
                         btnColorMouseOver: "#78ede7"
+
 
                         DropFilesArea {
                             id : dropSaveFile
@@ -546,6 +588,7 @@ Item{
                             isFolder: false
                             fileExtensions: ["xlsx"]
                             onFileDropped: (url,name) => {
+                                               console.log("Entry")
                                                btnLoad.btnColorDefault = "#086291"
                                                //console.log(url)
                                                var loadList = backend.loadFoldersInfo(url)
@@ -553,6 +596,8 @@ Item{
                                                if (loadList.length <= 1){
                                                    logLabel.text = loadList[0]
                                                }
+
+                                               else if(loadList[0] === "_DEFAULT_FILE"){}
 
                                                else{
                                                    logLabel.text = ''
@@ -947,7 +992,6 @@ Item{
 
 
             anchors.rightMargin: 8
-            anchors.topMargin: 3
         }
 
         CustomTopBar {
@@ -975,6 +1019,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;height:613;width:988}
+    D{i:0;formeditorZoom:0.9;height:613;width:988}
 }
 ##^##*/

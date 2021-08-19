@@ -33,13 +33,14 @@ Item {
         CustomTopBar{
             id: bar
             x: 0
-            y: 0
+            y: 5
             height: 40
             //anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width/2
             spacing: 0
             itemColor : rectangle.color
             barStyle: 0
+            radio: 4
             currentIndex: 0
             repeaterModel: [{text:"Wikipedia",imgSource:"../../images/icons/wikipedia_icon.png"},
                              {text:"Google",imgSource:"../../images/icons/google_icon.png"},
@@ -1206,25 +1207,34 @@ Item {
         target: backend
 
         function onResponse(text) {
-            if (wikiRadio.checked){
-                textWiki.text = text
-            }else if (googleRadio.checked) {
-                textGoogle.text = text
-            }else if (textRadio.checked) {
-                usrResult.text = text
-            }else if (urlRadio.checked) {
-                textUrl.text = text
+            switch (bar.currentIndex){
+                case 0:
+                    textWiki.text = text
+                    break;
+                case 1:
+                    textGoogle.text = text
+                    break;
+                case 2:
+                    usrResult.text = text
+                    break;
+                case 3:
+                   textUrl.text = text
+                    break;
             }
         }
         function onKeys(text) {
-            if (wikiRadio.checked){
-                wordsWiki.text = text
-            }else if (googleRadio.checked) {
-                wordsGoogle.text = text
-            }else if (textRadio.checked) {
-                usrWords.text = text
-            }else if (urlRadio.checked) {
-                wordsUrl.text = text
+            switch (bar.currentIndex){
+                case 0:
+                    wordsWiki.text = text
+                    break;
+                case 1:
+                    wordsGoogle.text = text
+                    break;
+                case 2:
+                    usrWords.text = text
+                    break;
+                case 3:
+                    wordsUrl.text = text
             }
         }
     }

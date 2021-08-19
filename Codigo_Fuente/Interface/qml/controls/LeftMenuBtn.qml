@@ -13,7 +13,7 @@ Button {
     property color btnColorClicked: "#00a1f1"
     property int iconWidth: 18
     property int iconHeight: 18
-    property color activeMenuColor: "#c00"
+    property color activeMenuColor: "#dc560a"
     property color activeMenuColorRight : "#89c2db"
     property bool isActiveMenu: false
 

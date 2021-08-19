@@ -8,10 +8,10 @@ import QtQuick.Dialogs 1.3
 
 Window {
     id: mainwindow
-    width: 1080
-    height: 720
+    width: 1280
+    height: 800
     minimumWidth: 800
-    minimumHeight: 500
+    minimumHeight: 720
     visible: true
     color: "#00000000"
     title: qsTr("Course APP")
@@ -115,7 +115,7 @@ Window {
                     Label {
                         id: labelTopInfo
                         color: "#1efae7"
-                        text: qsTr("Bienvenidos")
+                        text: qsTr("Bienvenido")
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -174,7 +174,7 @@ Window {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
-                        source: "../images/icons/hat_logo_temp_icon.svg"
+                        source: "../images/icons/SmoothTask.png"
                         autoTransform: false
                         mipmap: false
                         mirror: false
@@ -187,10 +187,17 @@ Window {
                         fillMode: Image.PreserveAspectFit
                     }
 
+                    ColorOverlay {
+                        anchors.fill: iconApp
+                        source: iconApp
+                        color: "#fff"
+                        antialiasing: false
+                    }
+
                     Label {
                         id: label
                         color: "#ffffff"
-                        text: qsTr("TareApp")
+                        text: qsTr("SmoothTask")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -199,7 +206,7 @@ Window {
                         verticalAlignment: Text.AlignVCenter
                         font.pointSize: 10
                         font.family: "Sans Serif"
-                        anchors.leftMargin: 5
+                        anchors.leftMargin: 10
                     }
                 }
 
@@ -450,7 +457,7 @@ Window {
                                     btnHelp.isActiveMenu = false
 
                                     location.text = qsTr("| File organizer")
-                                    labelTopInfo.text = qsTr("Organiza tus archivos facilmente.")
+                                    labelTopInfo.text = qsTr("Organiza y Etiqueta tus archivos facilmente.")
                                     stackView.push(Qt.resolvedUrl("pages/sorterPage.qml"))
 
                                 }
@@ -573,6 +580,15 @@ Window {
                         anchors.leftMargin: 20
                     }
 
+                    Label {
+                        id: dateLabel
+                        color: "#1efae7"
+                        text: qsTr("Date")
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pointSize: 10
+                    }
+
                     MouseArea {
                         id: mouseArea
                         x: 884
@@ -606,6 +622,7 @@ Window {
                             antialiasing: false
                         }
                     }
+
                 }
             }
         }
@@ -703,6 +720,11 @@ Window {
         function onReadText(text) {
             actualPage.setText = text
         }
+
+        function onPrintTime(time) {
+            dateLabel.text = time
+        }
+
     }
 
 }

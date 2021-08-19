@@ -123,7 +123,8 @@ class SaveFile():
         for x in range(rowsCount): rowsList.append(sheet.row_values(x))
 
         folderPath = rowsList[0][1]
-        if not os.path.isdir(folderPath):
+        isDefaultFile = folderPath == "_DEFAULT_FILE"
+        if not os.path.isdir(folderPath) and not isDefaultFile:
             self.ok = False
             self.log = 'La ruta de la carpeta a ordenar no existe'
             return None

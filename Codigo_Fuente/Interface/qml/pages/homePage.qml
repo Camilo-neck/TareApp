@@ -14,95 +14,21 @@ Item {
         anchors.topMargin: 0
 
         Rectangle {
-            id: rectangleTop
-            color: "#ffffff"
-            height: 69
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 50
-            anchors.leftMargin: 50
-            anchors.topMargin: 40
-            radius: 12
-
-            GridLayout {
-                anchors.fill: parent
-                anchors.rightMargin: 10
-                anchors.leftMargin: 10
-                rows: 1
-                columns:  3
-                CustomTextField {
-                    id: inputText
-                    font.pointSize: 10
-                    font.family: "Sans Serif"
-                    bgColor: "#03a678"
-                    placeholderTextColor: "#ffffff"
-                    Layout.fillWidth: true
-                    Layout.fillHeight: false
-                    Keys.onEnterPressed: {
-                        backend.welcomeText(inputText.text)
-                        inputText.text = ""
-                    }
-                    Keys.onReturnPressed: {
-                        backend.welcomeText(inputText.text)
-                        inputText.text = ""
-                    }
-
-                }
-
-                CustomButton {
-                    id: customBtn
-                    text: "Button"
-                    font.pointSize: 10
-                    font.family: "Sans Serif"
-                    btnColorMouseOver: "#84ee80"
-                    btnColorDefault: "#02735e"
-                    Layout.maximumWidth: 150
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 250
-
-                    // Change Show/Hide Frame
-                    onClicked: {
-                        backend.welcomeText(inputText.text)
-                        inputText.text = ""
-                    }
-
-                }
-
-                Switch {
-                    id: switchHome
-                    Layout.fillHeight: false
-                    Layout.fillWidth: false
-                    checked: true
-                    Layout.preferredHeight: 40
-                    Layout.preferredWidth: 68
-
-                    onToggled: {
-                        backend.showHideRectangle(switchHome.checked)
-                    }
-                }
-            }
-
-
-        }
-
-        Rectangle {
             id: rectangleVisible
             color: "#ffffff"
             radius: 12
             anchors.fill: parent
-            anchors.rightMargin: 50
-            anchors.bottomMargin: 31
-            anchors.leftMargin: 50
-            anchors.topMargin: 137
+            anchors.rightMargin: 40
+            anchors.bottomMargin: 15
+            anchors.leftMargin: 40
+            anchors.topMargin: 15
 
             Label {
                 id: welcomeLabel
                 y: 5
-                height: 33
+                height: 44
                 color: "#060607"
-                text: qsTr("Welcome")
+                text: qsTr("Bienvenido a SmoothTask")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 horizontalAlignment: Text.AlignHCenter
@@ -110,49 +36,56 @@ Item {
                 font.family: "Sans Serif"
                 anchors.rightMargin: 8
                 anchors.leftMargin: 12
-                font.pointSize: 16
+                font.pointSize: 36
             }
 
-            Label {
-                id: dateLabel
-                y: 31
-                height: 33
-                color: "#21a8c0"
-                text: qsTr("Date")
-                anchors.left: parent.left
-                anchors.right: parent.right
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: "Sans Serif"
-                font.bold: false
-                anchors.rightMargin: 8
-                anchors.leftMargin: 12
-                font.pointSize: 14
-            }
+            Rectangle {
+                id: rectangle
+                x: 105
+                y: 169
+                width: 200
+                height: 200
+                color: "#00000000"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -5
+                anchors.horizontalCenterOffset: 0
+                anchors.horizontalCenter: parent.horizontalCenter
 
-            ScrollView {
-                id: scrollView
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: dateLabel.bottom
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 10
-                anchors.bottomMargin: 17
-                anchors.rightMargin: 10
-                anchors.leftMargin: 10
+                Image {
+                    id: image
+                    x: 114
+                    y: -126
+                    width: 450
+                    height: 350
+                    anchors.top: welcomeLabel.bottom
+                    source: "../../images/icons/SmoothTaskLogo.png"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.topMargin: 5
+                    fillMode: Image.PreserveAspectFit
+                }
 
                 Text {
                     id: textHome
+                    x: 0
+                    y: 234
+                    width: 678
                     color: "#131418"
-                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\n</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">GNU GENERAL PUBLIC LICENSE</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Version 3, 29 June 2007</span></p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Copyright (c) 2021 </span><span style=\" font-size:10pt; font-weight:600;\">Camilo A. Cuello</span></p>\n<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; color:#f98125;\">Attention</span><span style=\" font-size:10pt;\">: this project was created with the Open Souce tools from Qt Company,</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">this project can be used for studies or personal non-commercial projects. </span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">If you are going to use it for </span><span style=\" font-size:10pt; font-weight:600; color:#f98125;\">commercial use</span><span style=\" font-size:10pt; font-weight:600;\">, you need to purchase a license at &quot;https://www.qt.io&quot;.</span></p>\n<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Search page Powered by</span><span style=\" font-size:10pt; color:#00aaff;\"> </span><span style=\" font-size:10pt; font-weight:600; color:#55aaff;\">Open AI GPT-3 API.</span></p></body></html>"
-                    anchors.fill: parent
+                    text: "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\np, li { white-space: pre-wrap; }\n</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">UNIVERSIDAD NACIONAL DE COLOMBIA</span></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Programacón Orientada a objetos - G6 - Alexei Ochoa</span></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Version 1.0.0, </span><span style=\" font-size:10pt; font-weight:600;\">Beta</span></p>\n<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Copyright (c) 2021 </span><span style=\" font-size:10pt; font-weight:600;\">Camilo A. Cuello, Juan A. Orozco, David Solis</span></p>\n<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600;\"><br /></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; color:#f98125;\">Attention</span><span style=\" font-size:10pt;\">: El diseño de este proyecto fue basado en el desarrollado por </span><span style=\" font-size:10pt; font-weight:600; color:#f98125;\">Wanderson Pimienta</span><span style=\" font-size:10pt;\">, </span></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">diseñador gráfico y </span><span style=\" font-size:10pt; color:#000000;\">Youtuber brasilero</span><span style=\" font-size:10pt;\">.</span></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\"> La aplicación de base es de </span><span style=\" font-size:10pt; font-weight:600; color:#f98125;\">código abierto</span><span style=\" font-size:10pt;\"> y sin licencia.</span></p>\n<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Consultor</span><span style=\" font-size:10pt;\"> patrocinado por</span><span style=\" font-size:10pt; color:#00aaff;\"> </span><span style=\" font-size:10pt; font-weight:600; color:#55aaff;\">Open AI GPT-3 API.</span></p></body></html>"
+                    anchors.top: image.bottom
+                    anchors.bottom: parent.bottom
                     font.pixelSize: 16
+                    anchors.bottomMargin: 10
+                    anchors.topMargin: 5
+                    anchors.horizontalCenter: parent.horizontalCenter
                     minimumPointSize: 14
                     minimumPixelSize: 14
                     font.family: "Sans Serif"
                     textFormat: Text.RichText
-                    }
+                }
+
             }
+
+
         }
     }
 
@@ -175,6 +108,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:800}
+    D{i:0;autoSize:true;height:613;width:988}D{i:5}D{i:6}
 }
 ##^##*/
