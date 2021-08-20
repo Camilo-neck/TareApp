@@ -96,7 +96,7 @@ class FormattedDocument:
         #Creating the main dictionary using the Excel file information
         dictionary = {}
         rowsList = []
-        for x in range(6,rows):
+        for x in range(7,rows):
             rowsList.append(sheet.row_values(x))
         for row in rowsList:
             for x in range(len(row)):
@@ -125,7 +125,7 @@ class FormattedDocument:
         #Adding URL information
         NameAndPdf[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
         #Adding 'NOMBRE ARCHIVO', 'CREAR PDF', 'NOMBRE PDF' with its values to the dictionary using the aux list
-        for x in range(3,7):
+        for x in range(4,8):
             rowsList.append(sheet.row_values(x))
         for row in rowsList:
             NameAndPdf[row[0]] = list(map(lambda v: self.actualDate.strftime(v),row[1:]))
@@ -165,6 +165,17 @@ class FormattedDocument:
         doc.SaveAs(out_file, FileFormat=wdFormatPDF)
         doc.Close()
         word.Quit()
+    
+    def validateTemplate(self):
+        mainDictionary = self.getFormatDict()
+        formatList = self.getFormatSet().copy()
+        for x in range(len(formatList)):
+            newStr = "\\" + formatList[x][:-1] + "\\]"
+            formatList[x] = newStr
+        if set(mainDictionary) == set(formatList):
+            return True
+        else:
+            return False
 
 
 class User:
@@ -172,88 +183,36 @@ class User:
     def __init__(self,document,profiles=None):
         self.document = document
         self.profiles = profiles
+        self.status = 0
+        self.log = ""
 
     def changeDocument(self,dirPath):
         #Initializing information
         pathToExc = self.document.getExcDoc()
         self.document.DictFromExc(pathToExc)
         dictionary = self.document.getFormatDict()
-
-        #Replacement process
-        (length,dictNamePdf) = self.document.lgthNamePdfTemp(pathToExc)
-        for x in range(length-1):
-            self.document.docxDoc = docx.Document(self.document.path)
-            for word, replacement in dictionary.items():
-                doc = self.document.getDocxDoc()
-                word_re=re.compile(word)
-                self.document.docx_replace_regex(doc,word_re , replacement[x])
-            
-            #Saving and creating pdf if the user desires it in the Excel file contents
-            fullPath = dirPath +dictNamePdf["NOMBRE ARCHIVO"][x]+ ".docx"
-            doc.save(fullPath)
-            if dictNamePdf["CREAR PDF"][x] == "SI":
-                pdfpath = dirPath +dictNamePdf["NOMBRE PDF"][x]+".pdf"
-                self.document.create_pdf(fullPath,pdfpath)
-
-# def getTemplateDict(pathToExc):
-#         # Creating document
-#         loc = (pathToExc)
-#         wb = xlrd.open_workbook(loc)
-#         sheet = wb.sheet_by_index(0)
-#         sheet.cell_value(0, 0)
-#         #Getting row number
-#         rows = sheet.nrows
-#         tDict = {}
-#         #Add template
-#         tDict[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
-        
-#         return tDict
-
-
-# def writeProfile(templatePath,templateName,dirPath, profileName):
-#     #Create document
-#     document = FormattedDocument(templatePath)
-#     formatList = list(document.getFormatSet())
-#     #Creating and setting up Excel file
-#     newExc = dirPath+profileName+".xlsx"
-#     workbook = xlsxwriter.Workbook(newExc)
-#     worksheet = workbook.add_worksheet()
-#     worksheet.set_column(0, 0, 25)
-#     worksheet.set_column(0, 1, 25)
-#     bold = workbook.add_format({'bold': True})
-#     cell_format = workbook.add_format()
-#     cell_format.set_align('fill')
-#     #Writting main information to the Excel document with indications to the user
-#     worksheet.write('A1', 'URL',bold)
-#     worksheet.write('B1', templatePath,cell_format)
-#     worksheet.write('A2', "PLANTILLA",bold)
-#     worksheet.write('B2', templateName)
-#     worksheet.write('B3', "VALUE_1",bold)
-#     worksheet.write('A3', 'KEY',bold)
-#     worksheet.write('A4', 'NOMBRE ARCHIVO')
-#     worksheet.write('B4', 'Ingrese un nombre')
-#     worksheet.write('A5', 'CREAR PDF')
-#     worksheet.write('B5', 'SI/NO')
-#     worksheet.write('A6', 'NOMBRE PDF')
-#     worksheet.write('B6', 'Ingrese un nombre')
-#     index = 0
-#     for x in range(7,len(formatList)+7):
-#         cell = 'A'+str(x)
-#         sideCell = 'B' + str(x)
-#         worksheet.write(cell, formatList[index])
-#         worksheet.write(sideCell, "Ingrese un valor")
-#         index += 1
-#     #Closing...
-#     workbook.close()
-
-# def generateDocuments(profilePath, dirPath):
-#     #Creating main dictionary
-#     docDict = getTemplateDict(profilePath)
-#     #Getting URL information to find the desired docx template
-#     dPath = docDict["URL"]
-#     #Creating FormattedDocument object
-#     Documento = FormattedDocument(dPath,profilePath)
-#     #Creating User object
-#     Usuario = User(Documento)
-#     #Generating formatted document with the user's indications according to the profile
-#     Usuario.changeDocument(dirPath)
+        try:
+            if self.document.validateTemplate() and os.path.isdir(dirPath):
+                #Replacement process
+                (length,dictNamePdf) = self.document.lgthNamePdfTemp(pathToExc)
+                for x in range(length-1):
+                    self.document.docxDoc = docx.Document(self.document.path)
+                    for word, replacement in dictionary.items():
+                        doc = self.document.getDocxDoc()
+                        word_re=re.compile(word)
+                        self.document.docx_replace_regex(doc,word_re , replacement[x])
+                    
+                    #Saving and creating pdf if the user desires it in the Excel file contents
+                    fullPath = dirPath + "/"+dictNamePdf["NOMBRE ARCHIVO"][x]+ ".docx"
+                    doc.save(fullPath)
+                    if dictNamePdf["CREAR PDF"][x] == "SI":
+                        
+                        pdfpath = dirPath + "/"+dictNamePdf["NOMBRE PDF"][x]+".pdf"
+                        self.document.create_pdf(fullPath,pdfpath)
+                self.log="Documentos generados correctamente"
+            else:
+                self.status = 1
+                self.log="Hubo un problema al generar los documentos,\npor favor, revise la información de su perfil"
+        except Exception as e:
+            self.status = 1
+            self.log = str(e)

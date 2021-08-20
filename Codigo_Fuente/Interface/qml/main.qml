@@ -300,7 +300,6 @@ Window {
                                 onClicked: {
                                     btnHome.isActiveMenu = true
                                     btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -314,85 +313,6 @@ Window {
                             }
 
                             LeftMenuBtn {
-                                id: btnOpen
-                                width: 70
-                                text: qsTr("Open")
-                                btnColorDefault: "#012e40"
-                                btnIconSource: "../images/icons/open_icon.svg"
-
-                                onPressed: {
-                                    btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = true
-                                    btnSearch.isActiveMenu = false
-                                    btnPdf.isActiveMenu = false
-                                    btnSorter.isActiveMenu = false
-                                    btnPdfgen.isActiveMenu = false
-                                    btnHelp.isActiveMenu = false
-
-                                    location.text = qsTr("| Text Editor")
-                                    labelTopInfo.text = qsTr("Edita tus archivos de texto.")
-                                    stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
-                                    fileOpen.open()
-                                }
-
-                                FileDialog {
-                                    id: fileOpen
-                                    title: "Please Choose a file"
-                                    selectMultiple: false
-                                    nameFilters: ["Text File (*.txt)"]
-                                    onAccepted: {
-                                        backend.openFile(fileOpen.fileUrl)
-                                    }
-                                }
-                            }
-
-                            LeftMenuBtn {
-                                id: btnSave
-                                width: leftMenu.width
-                                text: qsTr("Save")
-                                btnColorDefault: "#012e40"
-                                btnIconSource: "../images/icons/save_icon.svg"
-                                onPressed: {
-                                    fileSave.open()
-                                }
-
-                                FileDialog {
-                                    id: fileSave
-                                    title: "Save file"
-                                    folder: shortcuts.home
-                                    nameFilters: ["Text File (*.txt)"]
-                                    selectExisting: false
-                                    onAccepted: {
-                                        backend.getTextField(actualPage.getText)
-                                        backend.writeFile(fileSave.fileUrl)
-                                    }
-                                }
-                            }
-
-                            LeftMenuBtn {
-                                id: btnEdit
-                                width: leftMenu.width
-                                text: qsTr("Edit File")
-                                btnColorDefault: "#012e40"
-                                btnIconSource: "../images/icons/icon_editor.png"
-                                onClicked: {
-                                    btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = true
-                                    btnSearch.isActiveMenu = false
-                                    btnPdf.isActiveMenu = false
-                                    btnSorter.isActiveMenu = false
-                                    btnPdfgen.isActiveMenu = false
-                                    btnHelp.isActiveMenu = false
-
-                                    location.text = qsTr("| Text Editor")
-                                    labelTopInfo.text = qsTr("Edita tus archivos de texto.")
-                                    stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
-                                }
-                            }
-
-                            LeftMenuBtn {
                                 id: btnSearch
                                 width: leftMenu.width
                                 text: qsTr("Consultor")
@@ -402,7 +322,6 @@ Window {
                                 onClicked: {
                                     btnHome.isActiveMenu = false
                                     btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -425,7 +344,6 @@ Window {
                                 onClicked: {
                                     btnHome.isActiveMenu = false
                                     btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
                                     btnSorter.isActiveMenu = false
@@ -449,7 +367,6 @@ Window {
                                 onClicked: {
                                     btnHome.isActiveMenu = false
                                     btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = true
@@ -472,7 +389,6 @@ Window {
                                 onClicked: {
                                     btnHome.isActiveMenu = false
                                     btnSettings.isActiveMenu = false
-                                    btnEdit.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -501,7 +417,6 @@ Window {
                         onClicked: {
                             btnHome.isActiveMenu = false
                             btnSettings.isActiveMenu = false
-                            btnEdit.isActiveMenu = false
                             btnSearch.isActiveMenu = false
                             btnPdf.isActiveMenu = false
                             btnSorter.isActiveMenu = false
@@ -528,7 +443,6 @@ Window {
                         onClicked: {
                             btnHome.isActiveMenu = false
                             btnSettings.isActiveMenu = true
-                            btnEdit.isActiveMenu = false
                             stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
                         }
                     }
