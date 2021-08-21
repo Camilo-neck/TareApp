@@ -57,12 +57,14 @@ Window {
     Rectangle {
         id: bg
         color: "#2c313c"
+        radius: 0
         border.color: "#353b48"
         border.width: 1
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
+        clip: true
         anchors.rightMargin: windowMargin
         anchors.bottomMargin: windowMargin
         anchors.leftMargin: windowMargin
@@ -72,10 +74,12 @@ Window {
         Rectangle {
             id: container
             color: "#00000000"
+            radius: 12
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
+            clip: false
             anchors.topMargin: 1
             anchors.bottomMargin: 1
             anchors.leftMargin: 1
