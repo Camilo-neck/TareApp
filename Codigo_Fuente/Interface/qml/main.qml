@@ -304,7 +304,7 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
-                        anchors.topMargin: 35
+                        anchors.topMargin: 25
                         initialItem: Qt.resolvedUrl("pages/homePage.qml")
                     }
                 }
@@ -384,7 +384,7 @@ Window {
             }
             Rectangle {
                 id: topBar
-                height: 36
+                height: 28
                 color: "#ffffff"
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -552,6 +552,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:720;width:1080}D{i:26}D{i:25}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}
 }
 ##^##*/
