@@ -355,6 +355,7 @@ Item{
                 font.family: "Sans Serif"
                 onClicked: {
                     list2.createListObject()
+                }
 
                 CustomVerticalList2 {
                     id: list2
@@ -714,7 +715,6 @@ Item{
 
 
 
-
     Connections {
         target: backend
         function onResponse(text) {
@@ -790,7 +790,7 @@ Item{
         */
 
 
-}
+}}
 
 
 /*##^##

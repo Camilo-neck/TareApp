@@ -791,6 +791,15 @@ Item{
                                     anchors.bottomMargin: 8
                                     anchors.leftMargin: 8
                                     anchors.topMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: pdf1Area
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage1.playing = !animatedImage1.playing
+                                        }
+                                    }
                                 }
                             }
 
@@ -833,7 +842,17 @@ Item{
                                     anchors.bottomMargin: 8
                                     anchors.rightMargin: 8
                                     anchors.leftMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: pdf2Area
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage2.playing = !animatedImage2.playing
+                                        }
+                                    }
                                 }
+                                
                                 Layout.fillWidth: false
                                 Layout.fillHeight: false
                             }
@@ -876,7 +895,17 @@ Item{
                                     anchors.bottomMargin: 8
                                     anchors.rightMargin: 8
                                     anchors.leftMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: pdf3Area
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage3.playing = !animatedImage3.playing
+                                        }
+                                    }
                                 }
+
                                 Layout.fillWidth: false
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                                 Layout.fillHeight: false
