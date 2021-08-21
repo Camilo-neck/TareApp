@@ -17,7 +17,7 @@ Window {
     title: qsTr("SmoothTask")
 
     //REMOVE TITLE BAR
-    flags: Qt.Window | Qt.FramelessWindowHint
+    //flags: Qt.Window | Qt.FramelessWindowHint
 
     // Properties
     property int windowStatus: 0
@@ -60,15 +60,8 @@ Window {
         radius: 0
         border.color: "#353b48"
         border.width: 1
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
         clip: true
-        anchors.rightMargin: windowMargin
-        anchors.bottomMargin: windowMargin
-        anchors.leftMargin: windowMargin
-        anchors.topMargin: windowMargin
         z: 1
 
         Rectangle {
@@ -80,190 +73,18 @@ Window {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             clip: false
-            anchors.topMargin: 1
-            anchors.bottomMargin: 1
-            anchors.leftMargin: 1
-            anchors.rightMargin: 1
+            anchors.topMargin: 0
+            anchors.bottomMargin: 0
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
 
-            Rectangle {
-                id: topBar
-                height: 60
-                color: "#ffffff"
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.rightMargin: 0
-                anchors.leftMargin: 0
-                anchors.topMargin: 0
-
-                ToggleButton {
-                    checked: true
-                    btnColorDefault: "#012e40"
-                    onClicked: animationMenu.running = true
-                }
-
-                Rectangle {
-                    id: topBarDescription
-                    x: 70
-                    y: 438
-                    width: 528
-                    height: 25
-                    color: "#03738c"
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 70
-                    anchors.bottomMargin: 0
-
-                    Label {
-                        id: labelTopInfo
-                        color: "#1efae7"
-                        text: qsTr("Bienvenido")
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        horizontalAlignment: Text.AlignLeft
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: "Sans Serif"
-                        font.pointSize: 10
-                        anchors.bottomMargin: 0
-                        anchors.rightMargin: 300
-                        anchors.leftMargin: 20
-                        anchors.topMargin: 0
-                    }
-
-                    Label {
-                        id: location
-                        color: "#1efae7"
-                        text: qsTr("| Home")
-                        anchors.left: labelTopInfo.right
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        horizontalAlignment: Text.AlignRight
-                        verticalAlignment: Text.AlignVCenter
-                        font.family: "Sans Serif"
-                        font.pointSize: 10
-                        anchors.rightMargin: 10
-                        anchors.leftMargin: 0
-                        anchors.bottomMargin: 0
-                        anchors.topMargin: 0
-                    }
-                }
-
-                Rectangle {
-                    id: titleBar
-                    height: 35
-                    color: "#012e40"
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.rightMargin: 105
-                    anchors.leftMargin: 70
-                    anchors.topMargin: 0
-
-                    DragHandler {
-                        onActiveChanged: if(active) {
-                                             mainwindow.startSystemMove()
-                                             internal.ifMaximizedWindowRestore()
-                                         }
-                    }
-
-                    Image {
-                        id: iconApp
-                        width: 25
-                        height: 25
-                        anchors.left: parent.left
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        source: "../images/icons/SmoothTask.png"
-                        autoTransform: false
-                        mipmap: false
-                        mirror: false
-                        smooth: true
-                        cache: true
-                        asynchronous: false
-                        anchors.bottomMargin: 0
-                        anchors.leftMargin: 5
-                        anchors.topMargin: 0
-                        fillMode: Image.PreserveAspectFit
-                    }
-
-                    ColorOverlay {
-                        anchors.fill: iconApp
-                        source: iconApp
-                        color: "#fff"
-                        antialiasing: false
-                    }
-
-                    Label {
-                        id: label
-                        color: "#ffffff"
-                        text: qsTr("SmoothTask")
-                        anchors.left: iconApp.right
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        anchors.bottom: parent.bottom
-                        horizontalAlignment: Text.AlignLeft
-                        verticalAlignment: Text.AlignVCenter
-                        font.pointSize: 10
-                        font.family: "Sans Serif"
-                        anchors.leftMargin: 10
-                    }
-                }
-
-                Row {
-                    id: row
-                    anchors.left: titleBar.right
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.bottom: topBarDescription.top
-                    anchors.leftMargin: 0
-                    anchors.rightMargin: 0
-                    anchors.bottomMargin: 0
-                    anchors.topMargin: 0
-
-                    TopBarButton {
-                        id: maximizeRestoreBtn
-                        btnIconSource: "../images/icons/icon_maximize.png"
-                        btnColorMouseOver: "#ecd393"
-                        btnColorClicked: "#fffb26"
-                        anchors.leftMargin: 35
-                        onClicked: internal.maximizeRestore()
-                    }
-
-                    TopBarButton {
-                        id: closeBtn
-                        btnColorMouseOver: "#ff9e95"
-                        btnColorClicked: "#df0707"
-                        btnIconSource: "../images/icons/icon_close.png"
-                        anchors.leftMargin: 70
-                        onClicked: mainwindow.close()
-                    }
-
-                    TopBarButton {
-                        id: minimizeBtn
-                        btnColorMouseOver: "#b7f4a9"
-                        btnColorClicked: "#4afb00"
-                        onClicked: {
-
-                            mainwindow.showMinimized()
-                            internal.restoreMargins()
-
-                        }
-
-                    }
-                }
-            }
 
             Rectangle {
                 id: content
                 color: "#00000000"
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: topBar.bottom
+                anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 anchors.topMargin: 0
 
@@ -287,14 +108,27 @@ Window {
                         easing.type: Easing.OutBounce
                     }
 
+                    ToggleButton {
+                        x: 0
+                        y: -61
+                        checked: true
+                        btnColorDefault: "#012e40"
+                        onClicked: animationMenu.running = true
+                    }
+
                     ScrollView {
                         width: 70
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
                         anchors.bottomMargin: 90
-                        anchors.fill: parent
-                        anchors.topMargin: 0
+                        anchors.topMargin: 70
+
                         Column {
                             id: columnMenus
                             anchors.fill: parent
+
                             LeftMenuBtn {
                                 id: btnHome
                                 width: leftMenu.width
@@ -405,7 +239,9 @@ Window {
                                 }
                             }
 
+
                         }
+
                     }
 
                     LeftMenuBtn {
@@ -450,6 +286,7 @@ Window {
                             stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
                         }
                     }
+
                 }
 
                 Rectangle {
@@ -459,6 +296,7 @@ Window {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
+                    anchors.topMargin: 0
                     clip: true
                     anchors.bottomMargin: 25
                     anchors.leftMargin: 0
@@ -466,6 +304,7 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
+                        anchors.topMargin: 35
                         initialItem: Qt.resolvedUrl("pages/homePage.qml")
                     }
                 }
@@ -541,6 +380,68 @@ Window {
                         }
                     }
 
+                }
+            }
+            Rectangle {
+                id: topBar
+                height: 36
+                color: "#ffffff"
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                anchors.rightMargin: 0
+                anchors.leftMargin: 70
+
+                Rectangle {
+                    id: topBarDescription
+                    x: 70
+                    width: 528
+                    color: "#03738c"
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.topMargin: 0
+                    anchors.rightMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.bottomMargin: 0
+
+                    Label {
+                        id: labelTopInfo
+                        color: "#1efae7"
+                        text: qsTr("Bienvenido")
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+                        font.family: "Sans Serif"
+                        font.pointSize: 10
+                        anchors.bottomMargin: 0
+                        anchors.rightMargin: 300
+                        anchors.leftMargin: 20
+                        anchors.topMargin: 0
+                    }
+
+                    Label {
+                        id: location
+                        color: "#1efae7"
+                        text: qsTr("| Home")
+                        anchors.left: labelTopInfo.right
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                        font.family: "Sans Serif"
+                        font.pointSize: 10
+                        anchors.rightMargin: 10
+                        anchors.leftMargin: 0
+                        anchors.bottomMargin: 0
+                        anchors.topMargin: 0
+                    }
                 }
             }
         }
@@ -651,6 +552,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.9;height:720;width:1080}
+    D{i:0;formeditorZoom:0.9;height:720;width:1080}D{i:26}D{i:25}
 }
 ##^##*/

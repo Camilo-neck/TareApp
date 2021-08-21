@@ -63,7 +63,7 @@ StackLayout {
         //Background for the entire content of this page
         Rectangle {
             id: bg
-            color: "#04a3c3"
+            color: "#89c2db"
             anchors.fill: parent
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
@@ -71,7 +71,7 @@ StackLayout {
             anchors.topMargin: 0
             Rectangle {
                 id: rectangleVisible
-                color: "#89c2db"
+                color: "#04a3c3"
                 radius: 12
                 anchors.fill: parent
                 anchors.rightMargin: 30
@@ -87,7 +87,7 @@ StackLayout {
                     y: 31
                     width: 520
                     height: 368
-                    color: "#04a3c3"
+                    color: "#89c2db"
                     radius: 12
                     anchors.horizontalCenterOffset: 0
                     anchors.horizontalCenter: parent.horizontalCenter
