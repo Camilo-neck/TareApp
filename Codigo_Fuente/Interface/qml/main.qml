@@ -14,7 +14,7 @@ Window {
     minimumHeight: 720
     visible: true
     color: "#00000000"
-    title: qsTr("Course APP")
+    title: qsTr("SmoothTask")
 
     //REMOVE TITLE BAR
     flags: Qt.Window | Qt.FramelessWindowHint
