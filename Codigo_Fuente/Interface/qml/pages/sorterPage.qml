@@ -345,7 +345,7 @@ Item{
 
                                 //////////////////////
 
-                                var url = Qt.resolvedUrl("../../")+"images/defaultFiles/defaultFolders.xlsx"
+                                var url = Qt.resolvedUrl("../../")+"defaultFiles/defaultFolders.xlsx"
                                 url = url.replace(/^(file:\/{3})/,"")
                                 //console.log(url)
                                 var loadList = backend.loadFoldersInfo(url)

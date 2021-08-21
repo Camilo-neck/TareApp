@@ -385,7 +385,7 @@ Item{
                                     id: options
                                     width: parent.width-10
                                     height: parent.height
-                                    source: "../../images/helpPage/searchOptions.gif"
+                                    source: "../../images/gifs/ConsultorPage/searchOptions.gif"
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
@@ -464,7 +464,7 @@ Item{
                                 AnimatedImage {
                                     id: consult
                                     anchors.fill: parent
-                                    source: "../../images/helpPage/searchHelp.gif"
+                                    source: "../../images/gifs/ConsultorPage/searchHelp.gif"
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
                                     playing: false
@@ -569,7 +569,7 @@ Item{
                                     id: openAI
                                     width: parent.width
                                     height: parent.height
-                                    source: "../../images/helpPage/Open AI.gif"
+                                    source: "../../images/gifs/ConsultorPage/Open AI.gif"
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
                                     playing: false
@@ -968,7 +968,7 @@ Item{
                             }
 
                             Rectangle {
-                                id: rectangle20
+                                id: rectSort1
                                 width: 850
                                 height: 63
                                 color: "#06384f"
@@ -977,7 +977,7 @@ Item{
                                 Layout.fillWidth: false
                                 Text {
                                     color: "#ffffff"
-                                    text: "FOLDER SORTER"
+                                    text: "FOLDER ORGANIZER"
                                     anchors.fill: parent
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
@@ -989,6 +989,262 @@ Item{
                                     font.bold: true
                                 }
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort2
+                                width: 850
+                                height: 63
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Para organizar una carpeta se deben tener en cuenta los siguientes aspectos: Ruta de la carpeta a ordenar, metodo por el cual se ordenaran los archivos, el cual puede ser por extension o por etiquetas o palabras clave en el nombre de los archivos y por ultimo si se desean mover los archivos no especificados a una carpeta por defecto con el nombre \"otros\""
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort3
+                                width: 850
+                                height: 120
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Una vez escogida una carpeta a ordenar puede dar click al boton con el icono \"+\" para agregar una subcarpeta con las especificaciones que usted indique para que los archivos que las cumplan sean movidos a esa carpeta, en la parte izquierda se debe colocar el nombre de la subcarpeta y en la parte derecha las extensiones o palabras clave separadas por espacios. Si desea eliminar alguna subcarpeta de la lista puede hacerlo dando click en el boton con el icono \"-\" en la parte izquierda o vaciar la lista por completo. Tambien puede habilitar las carpetas por defecto las cuales tienen algunas configuraciones generales para clasificar archivos segun su extension"
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort4
+                                width: 744
+                                height: 450
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+
+                                AnimatedImage {
+                                    id: animatedImage4
+                                    anchors.fill: parent
+                                    source: "../../images/gifs/SorterPage/helpSubFolders.gif"
+                                    anchors.rightMargin: 8
+                                    anchors.bottomMargin: 8
+                                    anchors.leftMargin: 8
+                                    anchors.topMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: sort1Area
+                                        anchors.fill: parent
+                                        anchors.bottomMargin: 0
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage4.playing = !animatedImage4.playing
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            Rectangle {
+                                id: rectSort5
+                                width: 850
+                                height: 75
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Una vez termine de realizar los ajustes, para ordenar su carpeta de click sobre el boton naranja que dice \"Ordenar\" y su carpeta sera ordenada automaticamente segun sus especificaciones\nNOTA: Este proceso es irreversible, asi que revise cuidadosamete las especificaciones que indico y la ruta de la carpeta a ordenar para evitar resultados no deseados "
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort6
+                                width: 744
+                                height: 450
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+
+                                AnimatedImage {
+                                    id: animatedImage5
+                                    anchors.fill: parent
+                                    source: "../../images/gifs/SorterPage/sorting.gif"
+                                    anchors.rightMargin: 8
+                                    anchors.bottomMargin: 8
+                                    anchors.leftMargin: 8
+                                    anchors.topMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: sort2Area
+                                        anchors.fill: parent
+                                        anchors.bottomMargin: 0
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage5.playing = !animatedImage5.playing
+                                        }
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                id: rectSort7
+                                width: 850
+                                height: 75
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Esta aplicacion le permite guardar sus especificaciones para utilizarlas en un futuro, utilize el boton \"Guardar\" para crear un archivo de extencion \".xlsx\" que contendra las especificaciones actuales, luego podra usar el boton \"Cargar\" para abrir un archivo de guardado y ordenar rapidamente con los ajustes guardados"
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort8
+                                width: 850
+                                height: 63
+                                color: "#06384f"
+                                radius: 5
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "ETIQUETAR ARCHIVOS"
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    minimumPixelSize: 12
+                                    font.pointSize: 20
+                                    minimumPointSize: 12
+                                    font.bold: true
+                                }
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort9
+                                width: 850
+                                height: 90
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Para etiquetar archivos escoja o arraste una carpeta, la aplicacion le mostratra una lista con los archivos dentro de ella, en el recuadro verde puede ingresar una etiqueta o palabra clave para agregar o retirar del nombre de los archivos que seleccione, para ello recuerde cambiar el modo de \"añadir\" o \"retirar\""
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
+                                anchors.bottomMargin: 6
+                            }
+
+                            Rectangle {
+                                id: rectSort10
+                                width: 744
+                                height: 450
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+
+                                AnimatedImage {
+                                    id: animatedImage6
+                                    anchors.fill: parent
+                                    source: "../../images/gifs/SorterPage/labelHelp.gif"
+                                    anchors.rightMargin: 8
+                                    anchors.bottomMargin: 8
+                                    anchors.leftMargin: 8
+                                    anchors.topMargin: 8
+                                    playing: false
+                                    MouseArea {
+                                        id: sort3Area
+                                        anchors.fill: parent
+                                        anchors.bottomMargin: 0
+                                        hoverEnabled: true
+                                        onHoveredChanged: {
+                                            animatedImage6.playing = !animatedImage6.playing
+                                        }
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                id: rectSort11
+                                width: 850
+                                height: 90
+                                color: "#06384f"
+                                radius: 5
+                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                Layout.fillHeight: false
+                                Layout.fillWidth: false
+                                Text {
+                                    color: "#ffffff"
+                                    text: "Esta herramienta es especialmente util para marcar archivos y luego encontrarlos con mayor facilidad, clasificarlos u ordenarlos con nuestra herramienta \"Folder organizer\", por ejemplo puede marcar sus canciones favoritas con la etiqueta [FAV]"
+                                    anchors.fill: parent
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    wrapMode: Text.WordWrap
+                                    anchors.rightMargin: 0
+                                    font.pointSize: 10.5
+                                    font.bold: true
+                                }
                                 anchors.bottomMargin: 6
                             }
 
