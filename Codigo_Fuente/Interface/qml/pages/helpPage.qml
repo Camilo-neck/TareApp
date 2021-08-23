@@ -1359,6 +1359,7 @@ Item{
                                                         anchors.leftMargin: 8
                                                         font.pointSize: 17
                                                         anchors.horizontalCenter: parent.horizontalCenter
+
                                                     }
                                                     Layout.fillWidth: false
                                                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -1396,6 +1397,7 @@ Item{
                                                         font.family: "Sans Serif"
                                                         anchors.horizontalCenter: parent.horizontalCenter
                                                         anchors.horizontalCenterOffset: 0
+                                                        font.bold: true
                                                     }
                                                     Layout.fillWidth: false
                                                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -1456,6 +1458,7 @@ Item{
                                                         anchors.horizontalCenter: parent.horizontalCenter
                                                         anchors.leftMargin: 13
                                                         font.family: "Sans Serif"
+                                                        font.bold: true
                                                     }
                                                     anchors.horizontalCenter: parent.horizontalCenter
                                                 }
@@ -1478,6 +1481,7 @@ Item{
                                                         btnColorDefault: "#06384f"
                                                         customRadius: 5
                                                         font.pointSize: 17
+                                                        font.bold: true
 
                                                         //Layout.preferredWidth: 250
                                                         font.family: "Sans Serif"
@@ -1499,6 +1503,7 @@ Item{
                                                         btnColorDefault: "#06384f"
                                                         customRadius: 5
                                                         font.pointSize: 17
+                                                        font.bold: true
                                                         //Layout.preferredWidth: 250
                                                         font.family: "Sans Serif"
                                                         //anchors.horizontalCenter: parent.horizontalCenter
@@ -1511,7 +1516,7 @@ Item{
 
                                                     CustomButton {
                                                         id: doceGenBtn
-                                                        width: 151
+                                                        width: 175
                                                         height: 75
                                                         visible: true
                                                         text: "¿Cómo genero\ndocumentos?"
@@ -1519,6 +1524,7 @@ Item{
                                                         btnColorDefault: "#06384f"
                                                         customRadius: 5
                                                         font.pointSize: 17
+                                                        font.bold: true
                                                         //Layout.preferredWidth: 250
                                                         font.family: "Sans Serif"
                                                         //anchors.horizontalCenter: parent.horizontalCenter
@@ -1626,7 +1632,7 @@ Item{
                                                 x: -269
                                                 y: 119
                                                 width: 850
-                                                height: 50
+                                                height: 77
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -1651,21 +1657,31 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
-
-                                            Image {
-                                                id: profImg1
-                                                x: -261
-                                                y: 227
-                                                width: 524
-                                                height: 268
-                                                source: "../../images/gifs/GeneratorPage/excelHelp.png"
-                                                sourceSize.height: 250
-                                                sourceSize.width: 500
+                                            Rectangle {
+                                                id: rectangleImg1
+                                                width: 540
+                                                height: 300
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
                                                 anchors.horizontalCenterOffset: 1
                                                 anchors.horizontalCenter: parent.horizontalCenter
-                                                fillMode: Image.PreserveAspectFit
+                                                Image {
+                                                    id: profImg1
+
+                                                    width: 524
+                                                    height: 268
+                                                    source: "../../images/gifs/GeneratorPage/excelHelp.png"
+                                                    //sourceSize.height: 250
+                                                    //sourceSize.width: 500
+                                                    anchors.verticalCenter:parent.verticalCenter
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    fillMode: Image.PreserveAspectFit
+                                                }
                                             }
 
                                             Rectangle {
@@ -1673,7 +1689,7 @@ Item{
                                                 x: -269
                                                 y: 520
                                                 width: 850
-                                                height: 90
+                                                height: 110
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -1698,6 +1714,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -1732,19 +1749,30 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
-
-                                            Image {
-                                                id: profImg2
-                                                width: 524
-                                                height: 80
-                                                Layout.maximumWidth:524
-                                                source: "../../images/gifs/GeneratorPage/urlopen.png"
-                                                sourceSize.width: 597
-                                                anchors.horizontalCenterOffset: 2
+                                            Rectangle {
+                                                id: rectangleImg2
+                                                width: 540
+                                                height: 100
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
                                                 anchors.horizontalCenter: parent.horizontalCenter
-                                                //fillMode: Image.PreserveAspectFit
+                                                Image {
+                                                    id: profImg2
+                                                    width: 524
+                                                    height: 80
+                                                    Layout.maximumWidth:524
+                                                    source: "../../images/gifs/GeneratorPage/urlopen.png"
+                                                    sourceSize.width: 597
+                                                    anchors.verticalCenter:parent.verticalCenter
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    //fillMode: Image.PreserveAspectFit
+                                                }
                                             }
 
                                             Rectangle {
@@ -1752,7 +1780,7 @@ Item{
                                                 x: -269
                                                 y: 841
                                                 width: 850
-                                                height: 50
+                                                height: 72
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -1777,21 +1805,31 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
-
-                                            Image {
-                                                id: profImg3
-                                                x: -174
-                                                y: 935
-                                                width: 524
-                                                height: 120
-                                                Layout.maximumWidth:524
-                                                //Layout.maximumHeight:120
-                                                source: "../../images/gifs/GeneratorPage/urlsave.png"
-                                                anchors.horizontalCenterOffset:0
+                                            Rectangle {
+                                                id: rectangleImg3
+                                                width: 540
+                                                height: 140
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
                                                 anchors.horizontalCenter: parent.horizontalCenter
-                                                fillMode: Image.PreserveAspectFit
+                                                Image {
+                                                    id: profImg3
+
+                                                    width: 524
+                                                    height: 120
+                                                    Layout.maximumWidth:524
+                                                    //Layout.maximumHeight:120
+                                                    source: "../../images/gifs/GeneratorPage/urlsave.png"
+                                                    anchors.verticalCenter:parent.verticalCenter
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    fillMode: Image.PreserveAspectFit
+                                                }
                                             }
 
                                             Rectangle {
@@ -1824,6 +1862,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -1858,6 +1897,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -1866,7 +1906,7 @@ Item{
                                                 x: -269
                                                 y: 841
                                                 width: 850
-                                                height: 50
+                                                height: 72
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -1892,6 +1932,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -1900,7 +1941,7 @@ Item{
                                                 x: -269
                                                 y: 841
                                                 width: 850
-                                                height: 140
+                                                height: 150
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -1912,7 +1953,7 @@ Item{
                                                     x: 184
                                                     y: 8
                                                     width: 834
-                                                    height: 124
+                                                    height: 150
                                                     color: "#ffffff"
                                                     text: "Los valores de \"CREAR PDF\" son palabras entre \"SI\" o \"NO\". Si el valor es \"SI\", la aplicación creará un archivo PDF a partir del documento de Word asociado a la columna en donde se encuentre dicho valor, guardándolo en la ruta designada en \"URL Save\". Si el valor es \"NO\", el archivo PDF no será creado. Los valores de \"NOMBRE PDF\" corresponden al nombre que se dará al archivo PDF si la opción en \"CREAR PDF\" es \"SI\"."
                                                     anchors.left: parent.left
@@ -1926,6 +1967,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -1961,6 +2003,7 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
 
@@ -2052,6 +2095,7 @@ Item{
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
                                                     anchors.horizontalCenterOffset: 0
+
                                                 }
                                             }
                                             Rectangle {
@@ -2084,31 +2128,45 @@ Item{
                                                     font.pointSize: 14
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenter: parent.horizontalCenter
+                                                    font.bold: true
                                                 }
                                             }
-                                            AnimatedImage {
-                                                id: creImg1
-                                                //anchors.horizontalCenter: parent.Center
-                                                width: 400
-                                                height: 200
-                                                //horizontalAlignment: Image.AlignHCenter
-                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                                source: "../../images/gifs/GeneratorPage/genHelp2.gif"
-                                                //sourceSize.width: 550
-                                                Layout.maximumWidth: 550
-                                                Layout.maximumHeight: 300
-                                                fillMode: Image.PreserveAspectFit
-                                                playing:false
-                                                speed:2
-                                                MouseArea {
-                                                    id: help2Area
-                                                    anchors.fill: parent
-                                                    hoverEnabled: true
-                                                    onHoveredChanged: {
-                                                        creImg1.playing = !creImg1.playing
+                                            Rectangle {
+                                                id: rectangleImg4
+                                                width: 540
+                                                height: 220
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                AnimatedImage {
+                                                    id: creImg1
+                                                    //anchors.horizontalCenter: parent.Center
+                                                    width: 400
+                                                    height: 200
+                                                    //horizontalAlignment: Image.AlignHCenter
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    source: "../../images/gifs/GeneratorPage/genHelp2.gif"
+                                                    //sourceSize.width: 550
+                                                    Layout.maximumWidth: 550
+                                                    Layout.maximumHeight: 300
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    fillMode: Image.PreserveAspectFit
+                                                    playing:false
+                                                    speed:2
+                                                    MouseArea {
+                                                        id: help2Area
+                                                        anchors.fill: parent
+                                                        hoverEnabled: true
+                                                        onHoveredChanged: {
+                                                            creImg1.playing = !creImg1.playing
+                                                        }
                                                     }
-                                                }
 
+                                                }
                                             }
 
                                             Rectangle {
@@ -2139,28 +2197,41 @@ Item{
                                                     anchors.horizontalCenter: parent.horizontalCenter
                                                     anchors.horizontalCenterOffset: 0
                                                     anchors.leftMargin: 8
+                                                    font.bold: true
                                                 }
                                                 anchors.horizontalCenter: parent.horizontalCenter
                                                 anchors.horizontalCenterOffset: 2
                                             }
-
-                                            AnimatedImage {
-                                                id: creImg2
-                                                width: 400
-                                                height: 200
-                                                source: "../../images/gifs/GeneratorPage/genHelp3.gif"
-                                                fillMode: Image.PreserveAspectFit
-                                                Layout.maximumWidth: 550
-                                                Layout.maximumHeight: 300
-                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                                playing:false
-                                                speed:2
-                                                MouseArea {
-                                                    id: help3Area
-                                                    anchors.fill: parent
-                                                    hoverEnabled: true
-                                                    onHoveredChanged: {
-                                                        creImg2.playing = !creImg2.playing
+                                            Rectangle {
+                                                id: rectangleImg5
+                                                width: 540
+                                                height: 220
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                AnimatedImage {
+                                                    id: creImg2
+                                                    width: 400
+                                                    height: 200
+                                                    source: "../../images/gifs/GeneratorPage/genHelp3.gif"
+                                                    fillMode: Image.PreserveAspectFit
+                                                    Layout.maximumWidth: 550
+                                                    Layout.maximumHeight: 300
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    playing:false
+                                                    speed:2
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    MouseArea {
+                                                        id: help3Area
+                                                        anchors.fill: parent
+                                                        hoverEnabled: true
+                                                        onHoveredChanged: {
+                                                            creImg2.playing = !creImg2.playing
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2170,7 +2241,7 @@ Item{
                                                 x: -269
                                                 y: 1032
                                                 width: 850
-                                                height: 220
+                                                height: 250
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -2195,37 +2266,50 @@ Item{
                                                     anchors.leftMargin: 8
                                                     anchors.rightMargin: 8
                                                     font.pointSize: 14
+                                                    font.bold: true
                                                 }
                                                 anchors.horizontalCenter: parent.horizontalCenter
                                             }
+                                            Rectangle {
+                                                id: rectangleImg6
+                                                width: 540
+                                                height: 290
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
 
-                                            AnimatedImage {
-                                                id: creImg3
-                                                width: 400
-                                                height: 200
-                                                source: "../../images/gifs/GeneratorPage/genHelp4.gif"
-                                                Layout.maximumWidth: 550
-                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                                Layout.maximumHeight: 300
-                                                fillMode: Image.PreserveAspectFit
-                                                playing:false
-                                                speed:2
-                                                MouseArea {
-                                                    id: help4Area
-                                                    anchors.fill: parent
-                                                    hoverEnabled: true
-                                                    onHoveredChanged: {
-                                                        creImg3.playing = !creImg3.playing
+                                                AnimatedImage {
+                                                    id: creImg3
+                                                    width: 480
+                                                    height: 280
+                                                    source: "../../images/gifs/GeneratorPage/genHelp4.gif"
+                                                    Layout.maximumWidth: 550
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    Layout.maximumHeight: 300
+                                                    fillMode: Image.PreserveAspectFit
+                                                    playing:false
+                                                    speed:2
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    MouseArea {
+                                                        id: help4Area
+                                                        anchors.fill: parent
+                                                        hoverEnabled: true
+                                                        onHoveredChanged: {
+                                                            creImg3.playing = !creImg3.playing
+                                                        }
                                                     }
                                                 }
                                             }
-
                                             Rectangle {
                                                 id: creRect4
                                                 x: -269
                                                 y: 1032
                                                 width: 850
-                                                height: 110
+                                                height: 130
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -2248,30 +2332,43 @@ Item{
                                                     anchors.horizontalCenter: parent.horizontalCenter
                                                     font.family: "Sans Serif"
                                                     anchors.horizontalCenterOffset: 0
+                                                    font.bold: true
                                                 }
                                                 anchors.horizontalCenter: parent.horizontalCenter
                                                 anchors.horizontalCenterOffset: 2
                                             }
+                                            Rectangle {
+                                                id: rectangleImg7
+                                                width: 540
+                                                height: 250
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                AnimatedImage {
+                                                    id: creImg4
+                                                    width: 480
+                                                    height: 280
+                                                    source: "../../images/gifs/GeneratorPage/excelHelp.gif"
+                                                    Layout.maximumWidth: 550
+                                                    fillMode: Image.PreserveAspectFit
+                                                    Layout.maximumHeight: 300
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    playing:false
+                                                    speed:2
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    MouseArea {
+                                                        id: excHelpArea
+                                                        height: 210
+                                                        anchors.fill: parent
 
-                                            AnimatedImage {
-                                                id: creImg4
-                                                width: 400
-                                                height: 210
-                                                source: "../../images/gifs/GeneratorPage/excelHelp.gif"
-                                                Layout.maximumWidth: 550
-                                                fillMode: Image.PreserveAspectFit
-                                                Layout.maximumHeight: 210
-                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                                playing:false
-                                                speed:2
-                                                MouseArea {
-                                                    id: excHelpArea
-                                                    height: 210
-                                                    anchors.fill: parent
-
-                                                    hoverEnabled: true
-                                                    onHoveredChanged: {
-                                                        creImg4.playing = !creImg4.playing
+                                                        hoverEnabled: true
+                                                        onHoveredChanged: {
+                                                            creImg4.playing = !creImg4.playing
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2357,7 +2454,7 @@ Item{
                                                 x: -269
                                                 y: 1032
                                                 width: 850
-                                                height: 80
+                                                height: 110
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -2381,28 +2478,41 @@ Item{
                                                     anchors.horizontalCenterOffset: 0
                                                     font.pointSize: 14
                                                     anchors.rightMargin: 8
+                                                    font.bold: true
                                                 }
                                                 anchors.horizontalCenterOffset: 2
                                             }
-
-                                            AnimatedImage {
-                                                id: creImg5
-                                                width: 400
-                                                height: 200
-                                                source: "../../images/gifs/GeneratorPage/genHelp1.gif"
-                                                paused: false
-                                                playing: false
-                                                Layout.maximumWidth: 550
-                                                fillMode: Image.PreserveAspectFit
-                                                Layout.maximumHeight: 300
-                                                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                                                speed:2
-                                                MouseArea {
-                                                    id: help1Area
-                                                    anchors.fill: parent
-                                                    hoverEnabled: true
-                                                    onHoveredChanged: {
-                                                        creImg5.playing = !creImg5.playing
+                                            Rectangle {
+                                                id: rectangleImg8
+                                                width: 540
+                                                height: 290
+                                                color: "#06384f"
+                                                radius: 5
+                                                Layout.fillHeight: false
+                                                Layout.fillWidth: false
+                                                anchors.horizontalCenterOffset: 1
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                AnimatedImage {
+                                                    id: creImg5
+                                                    width: 480
+                                                    height: 280
+                                                    source: "../../images/gifs/GeneratorPage/genHelp1.gif"
+                                                    paused: false
+                                                    playing: false
+                                                    Layout.maximumWidth: 550
+                                                    fillMode: Image.PreserveAspectFit
+                                                    Layout.maximumHeight: 300
+                                                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                                                    speed:2
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    MouseArea {
+                                                        id: help1Area
+                                                        anchors.fill: parent
+                                                        hoverEnabled: true
+                                                        onHoveredChanged: {
+                                                            creImg5.playing = !creImg5.playing
+                                                        }
                                                     }
                                                 }
                                             }
@@ -2412,7 +2522,7 @@ Item{
                                                 x: -269
                                                 y: 1032
                                                 width: 850
-                                                height: 135
+                                                height: 165
                                                 color: "#06384f"
                                                 radius: 5
                                                 border.width: 0
@@ -2423,7 +2533,7 @@ Item{
                                                     y: 8
                                                     width: 524
                                                     height: 81
-                                                    color: "#d80202"
+                                                    color: "#F92C2C"
                                                     text: "Para evitar errorres, se recomienda cerrar los archivos de Excel que se encuentren abiertos, antes de oprimir el botón \"Generar documentos\"."
                                                     anchors.left: parent.left
                                                     anchors.right: parent.right
@@ -2436,6 +2546,7 @@ Item{
                                                     anchors.horizontalCenterOffset: 0
                                                     font.pointSize: 14
                                                     anchors.rightMargin: 8
+                                                    font.bold: true
                                                 }
 
                                                 Label {
@@ -2457,6 +2568,7 @@ Item{
                                                     anchors.horizontalCenter: parent.horizontalCenter
                                                     font.family: "Sans Serif"
                                                     anchors.leftMargin: 8
+                                                    font.bold: true
                                                 }
                                                 anchors.horizontalCenterOffset: 2
                                             }
