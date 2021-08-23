@@ -163,6 +163,7 @@ Item{
                         font.family: "Sans Serif"
                         Layout.maximumWidth: 70
                         onClicked: {
+                            {
                             var names = list2.getNames()
                             var extensions = list2.getExtensions()
 
@@ -175,18 +176,18 @@ Item{
                                 }
                             }
 
-
                             if(folderLocation!=="" && validFolders && list2.getLength()>0){
                                 logLabel.text = ""
                                 folderLabel.color = "#000000"
-                                var method = getMethod()
-                                var moveToDefault = switchDefaultFolder.checked
-                                var path = folderLocation
-                                var ignoredExt = [".py"]
-                                var log = backend.organizeFiles(method,path,names,extensions,ignoredExt,moveToDefault)
-                                if(log===''){infoLabel.text = 'Carpeta Ordenada Satisfactoriamente'}
-                                else{logLabel.text = log}
-
+                                if (backend.confirm(folderLocation) == true) {
+                                    var method = getMethod()
+                                    var moveToDefault = switchDefaultFolder.checked
+                                    var path = folderLocation
+                                    var ignoredExt = [".py"]
+                                    var log = backend.organizeFiles(method,path,names,extensions,ignoredExt,moveToDefault)
+                                    if(log===''){infoLabel.text = 'Carpeta Ordenada Satisfactoriamente'}
+                                    else{logLabel.text = log}
+                                }
                             }else{
                                 if(folderLocation===""){
                                     folderLabel.color = "#F50000"
@@ -201,9 +202,8 @@ Item{
                                     infoLabel.text = ""
                                 }
 
+                                }
                             }
-
-
                         }
                         font.pointSize: 10
                         Layout.fillWidth: true

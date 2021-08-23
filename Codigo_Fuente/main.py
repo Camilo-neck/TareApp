@@ -110,6 +110,14 @@ class MainWindow(QObject):
     # Keys
     keys = Signal(str)
 
+    @Slot(str, result=bool)
+    def confirm(self, url) -> bool:
+        result = QMessageBox(QMessageBox.Warning, "Advertencia!", f'¿Está seguro de ordenar {url} ?\n Esta acción es irreversible.')
+        yes = QMessageBox.addButton(result, "Si", QMessageBox.AcceptRole)
+        Cancel = QMessageBox.addButton(result, "Cancelar", QMessageBox.RejectRole)
+        result.exec_()
+        return result.clickedButton() == yes
+
     @Slot()
     def longF(self):
         for i in range(5):
