@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 from core import *
+import traceback
 
 # Verify Connection
 def is_connected():
@@ -296,10 +297,12 @@ class MainWindow(QObject):
 
     # get Pdf Num pages
     @Slot(str, result=int)
-    def getPages(self, str):
-        p = PdfApp(str)
-        return p.getPages()
-
+    def getPages(self, str1):
+        if str1 != '':
+            p = PdfApp(str1)
+            return p.getPages()
+        return 0
+        
     # Send text
     @Slot(str, bool, str, result=str)
     def startSearch(self, text, openai, engine):

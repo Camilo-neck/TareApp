@@ -52,7 +52,7 @@ class FileOrganizer():
         file_name , ext = os.path.splitext(file)
         file = '\\'+file
         if ext in self.ignored_ext: #the ignored extensions won´t be moved to any folder
-            self.log += "\nEl archivo",file,"No se movio ya que este se encuentra en la lista de ignorados"
+            self.log += "\nEl archivo " + file[1:] + " No se movio ya que este se encuentra en la lista de ignorados"
             return None
 
         for folder in self.folders:
@@ -68,7 +68,7 @@ class FileOrganizer():
             if condition:
                 final_path = self.path + '/'+folder['name']
                 try: shutil.move(self.path + file, final_path)
-                except shutil.Error as e: self.log += "\nNo se pudo mover el archivo "+file #str(e) //// if there was an error when moving the file it will continue with the next file
+                except shutil.Error as e: self.log += "\nNo se pudo mover el archivo "+file[1:] #str(e) //// if there was an error when moving the file it will continue with the next file
                 return None
 
         if self.moveToDefault == True: #move the file to default folder if it wasn´t moved to any folder and if moveDefault == True

@@ -32,6 +32,7 @@ Item {
         pagesList.clearModel()
 
         var numPages = backend.getPages(fileUrl[0])
+
         //console.log(numPages)
         for(var i = 0; i<numPages;i++){
             //urls.push(formatUrls(String(fileUrls[i])))
