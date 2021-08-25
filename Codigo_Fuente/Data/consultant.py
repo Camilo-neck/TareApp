@@ -1,7 +1,5 @@
-from os import link, system
 import requests
 from bs4 import BeautifulSoup
-import traceback
 
 saludo = "What do you want to do?"
 

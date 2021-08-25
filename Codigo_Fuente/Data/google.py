@@ -1,4 +1,4 @@
-from . import openaitest
+from . import openai
 from . consultant import *
 from random import randint
 from googlesearch import search
@@ -11,8 +11,8 @@ class Google(Consultant):
     def consult(self):
         if self.openai_response == True:
             return super().consult()  + \
-                openaitest.summarized(self.summarize(link = self.google_url(self.query), sentences=20)) + \
-                f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI.", openaitest.keywords(self.summarize(link = self.google_url(self.query), sentences=20))
+                openai.summarized(self.summarize(link = self.google_url(self.query), sentences=20)) + \
+                f"\nObtenido de: {self.__url}\n" "\nResumen realizado con la tecnología GPT-3 de Open AI.", openai.keywords(self.summarize(link = self.google_url(self.query), sentences=20))
         else:
             return super().consult()  + self.summarize(link = self.google_url(self.query))+ f"\nObtenido de: {self.__url}\n", self.words(link = self.google_url(self.query))
         
