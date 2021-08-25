@@ -15,25 +15,6 @@ class Consultant():
     def consult(self):
         return "Su resultado es:\n"
         
-    # Get info from API
-    # def summarize(self, texto = None, link = None, sentences):
-    #      if link is None: payload = {'texto': texto}
-    #      else : payload = {'url': link}
-    #      res = requests.post(self.__APIURL, data=payload)
-    #      text = ""
-    #      if res.ok:
-    #          soup = BeautifulSoup(res.text, 'html.parser')
-    #          container = soup.find('div', id="ideas_principales")
-    #          table = container.find('table', class_='table')
-    #          texto = table.find_all('td')
-    #          clean_text = [v.text.strip() for v in texto]
-
-    #          for paragraph in clean_text:
-    #              text += paragraph + '. \n'
-                
-    #          return text
-    #      return "Error"
-
     def summarize(self, texto = None, link = None, sentences = 5):
         if texto == None: payload = {'key': '88f4300d2c9b101261ea613148ee4395',
                 'url': link,
