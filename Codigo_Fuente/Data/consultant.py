@@ -68,10 +68,3 @@ class Consultant():
 
     def __str__(self) -> str:
         return f"Your actual query is {self.query} and we are gonna search by "
-
-def main():
-    global saludo
-
-
-if __name__ == '__main__':
-    main()
