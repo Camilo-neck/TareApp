@@ -1,6 +1,5 @@
 # This Python file uses the following encoding: utf-8
 from core import *
-import traceback
 
 # Verify Connection
 def is_connected():
