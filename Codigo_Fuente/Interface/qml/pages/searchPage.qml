@@ -517,7 +517,7 @@ Item {
                         Label {
                             id: label3
                             color: "#000000"
-                            text: qsTr("REALIZA TU BÚSQUEDA EN GOOGLE GOOGLE (FEEL LUCKY)")
+                            text: qsTr("REALIZA TU BÚSQUEDA EN GOOGLE (ME SIENTO CON SUERTE)")
                             anchors.left: parent.left
                             anchors.top: parent.top
                             anchors.leftMargin: 80
