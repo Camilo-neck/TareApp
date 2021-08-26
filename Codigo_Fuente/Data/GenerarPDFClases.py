@@ -30,8 +30,8 @@ class FormattedDocument:
     def get_path(self):
         return self.path
 
-    def set_path(self,stringPath):
-        self.path = stringPath
+    def set_path(self,string_path):
+        self.path = string_path
     
     def get_exc_doc(self):
         return self.exc_doc
@@ -49,12 +49,12 @@ class FormattedDocument:
         #Returning data
         return '\n'.join(full_text)
     
-    def getplain_text(self):
+    def get_plain_text(self):
         return self.plain_text
     
     def set_format_amount(self):
         #Getting the plain text information from the document
-        to_str_doc = self.getplain_text()
+        to_str_doc = self.get_plain_text()
         #Searching all format patterns using regex
         all_formats_list = re.findall("(\[\w*\d*\])",to_str_doc)
         #Creating a list with all formats with no repetition
@@ -70,7 +70,7 @@ class FormattedDocument:
     
     def set_format_set(self):
         #Getting the plain text information from the document
-        to_str_doc = self.getplain_text()
+        to_str_doc = self.get_plain_text()
         #Searching all format patterns using regex
         all_formats_list = re.findall("(\[\w*\d*\])",to_str_doc)
         #Creating a list with all formats with no repetition

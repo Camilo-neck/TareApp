@@ -163,7 +163,7 @@ class MainWindow(QObject):
             #Creating User object
             usuario = User(documento)
             #Generating formatted document with the user's indications according to the profile
-            usuario.changeDocument(dir_path)
+            usuario.change_document(dir_path)
             return [usuario.status, usuario.log]
         except Exception as e:
             print(e)
@@ -173,7 +173,7 @@ class MainWindow(QObject):
     def createProfile(self,template_path,template_name,profile_dir,docs_dir):
         #Create document
         document = FormattedDocument(template_path)
-        format_list = list(document.getFormatSet())
+        format_list = list(document.get_format_set())
         #Creating and setting up Excel file
         #new_exc = profile_dir+profile_name+".xlsx"
         new_exc = profile_dir
@@ -225,14 +225,14 @@ class MainWindow(QObject):
             folder_names = []
             ext_tags = []
 
-            if l.organizeMethod == 0: value = 'extensions'
+            if l.organize_method == 0: value = 'extensions'
             else: value = 'keywords'
 
             for folder in l.folders:
                 folder_names.append(folder['name'])
                 ext_tags.append(folder[value])
 
-            return [l.folderPath,l.organizeMethod,l.move_to_default,folder_names,ext_tags]
+            return [l.folder_path,l.organize_method,l.move_to_default,folder_names,ext_tags]
         return [l.log]
 
     # Ordenar Carpetas
@@ -242,7 +242,7 @@ class MainWindow(QObject):
             path = '/' + path
 
         organizer = FileOrganizer(path,names,ext_tags,sort_method,ignored_ext,move_to_default)
-        organizer.organizeAllFiles()
+        organizer.organize_all_files()
         return organizer.log
 
     # Obtener lista de archivos de una carpeta
@@ -292,14 +292,14 @@ class MainWindow(QObject):
             output_path = '/' + output_path
 
         p = PdfApp(paths = path, outPath = output_path, pagesList = pages_list)
-        p.buildPdf()
+        p.build_pdf()
 
     # get Pdf Num pages
     @Slot(str, result=int)
     def getPages(self, str1):
         if str1 != '':
             p = PdfApp(str1)
-            return p.getPages()
+            return p.get_pages()
         return 0
         
     # Send text
@@ -328,46 +328,11 @@ class MainWindow(QObject):
 
         return str(texto)
 
-    # Read Text
-    @Slot(str)
-    def getTextField(self, text):
-        self.textField = text
-
-    # Save File
-    @Slot(str)
-    def writeFile(self, file_path):
-        file = open(QUrl(file_path).toLocalFile(), "w")
-        file.write(self.textField)
-        file.close()
-
-    # Open File
-    @Slot(str)
-    def openFile(self, file_path):
-        file = open(QUrl(file_path).toLocalFile(), encoding="UTF-8")
-        text = file.read()
-        file.close()
-        self.readText.emit(str(text))
-
-    # Show / Hide Rectangle
-    @Slot(bool)
-    def showHideRectangle(self, is_checked):
-        self.isVisible.emit(is_checked)
-
     # Set timer Function
     def setTime(self):
         now = datetime.datetime.now()
         format_date = now.strftime("%H:%M:%S %p - %d/%m/%Y")
         self.printTime.emit(format_date)
-
-    # Function Set Name to Label
-    @Slot(str)
-    def welcomeText(self, name):
-        if name == '':
-            self.setName.emit("Welcome")
-        else:
-            self.setName.emit(f"Welcome, {name}")
-
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
