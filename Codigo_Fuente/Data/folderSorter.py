@@ -7,37 +7,37 @@ pkg_resources.require("xlrd==1.2.0")
 import xlrd
 import xlsxwriter
 
-def createFoldersList(folderNames,extTags,organizeMethod):
+def create_folders_list(folder_names,ext_tags,organize_method):
     folders = []
-    for name,e in zip(folderNames,extTags):         
+    for name,e in zip(folder_names,ext_tags):         
         folder = {}
         folder['name'] = name 
-        if organizeMethod == 0: folder['extensions'] = e
+        if organize_method == 0: folder['extensions'] = e
         else: folder['keywords'] = e
         folders.append(folder)
 
     return folders
 
 class FileOrganizer():
-    def __init__(self,path,folderNames,extTags,organizeMethod,ignored_ext,moveToDefault):
-        self.defaultFolder = {'name' : 'Otros'}
+    def __init__(self,path,folder_names,ext_tags,organize_method,ignored_ext,move_to_default):
+        self.default_folder = {'name' : 'Otros'}
         self.path = path
-        self.organizeMethod = organizeMethod
-        self.folders = createFoldersList(folderNames,extTags,organizeMethod)
+        self.organize_method = organize_method
+        self.folders = create_folders_list(folder_names,ext_tags,organize_method)
         for folder in self.folders:
-            if self.organizeMethod==0: folder['extensions'] = [f'.{ext}' for ext in folder['extensions'].split(' ')]
+            if self.organize_method==0: folder['extensions'] = [f'.{ext}' for ext in folder['extensions'].split(' ')]
             else: folder['keywords'] = [keyword for keyword in folder['keywords'].split(' ')]
 
         self.ignored_ext = ignored_ext
-        self.moveToDefault = moveToDefault
+        self.move_to_default = move_to_default
         self.log = ''
 
-    def createFolders(self):
+    def create_folders(self):
         #try to create the indicate folders
-        foldersM = self.folders[:]
-        if self.moveToDefault == True: foldersM.append(self.defaultFolder)
+        folders_m = self.folders[:]
+        if self.move_to_default == True: folders_m.append(self.default_folder)
 
-        for folder in foldersM:
+        for folder in folders_m:
             name = folder['name']
             try:
                 os.mkdir(os.path.join(self.path, name))
@@ -47,7 +47,7 @@ class FileOrganizer():
                     print("La carpeta",name,"ya existe")
                 else: raise #if there is another error it will raise it (for example invalid name)
                 
-    def organizeFile(self,file):
+    def organize_file(self,file):
 
         file_name , ext = os.path.splitext(file)
         file = '\\'+file
@@ -57,8 +57,8 @@ class FileOrganizer():
 
         for folder in self.folders:
             #depending on the method the condition to move the file will be different
-            if self.organizeMethod == 0: condition = ext in folder['extensions']
-            elif self.organizeMethod == 1:
+            if self.organize_method == 0: condition = ext in folder['extensions']
+            elif self.organize_method == 1:
                 condition = False
                 for keyword in folder['keywords']:
                     if keyword in file:
@@ -68,16 +68,16 @@ class FileOrganizer():
             if condition:
                 final_path = self.path + '/'+folder['name']
                 try: shutil.move(self.path + file, final_path)
-                except shutil.Error as e: self.log += "\nNo se pudo mover el archivo "+file[1:] #str(e) //// if there was an error when moving the file it will continue with the next file
+                except shutil.Error: self.log += "\nNo se pudo mover el archivo "+file[1:] #str(e) //// if there was an error when moving the file it will continue with the next file
                 return None
 
-        if self.moveToDefault == True: #move the file to default folder if it wasn´t moved to any folder and if moveDefault == True
-            final_path = self.path + '/'+self.defaultFolder['name']
+        if self.move_to_default == True: #move the file to default folder if it wasn´t moved to any folder and if moveDefault == True
+            final_path = self.path + '/'+self.default_folder['name']
             shutil.move(self.path + file, final_path)
 
-    def organizeAllFiles(self):
+    def organize_all_files(self):
         #try to sort all files, if one folder name is invalid it will stop the function via return None
-        try: self.createFolders()
+        try: self.create_folders()
         except OSError as e:
             if e.errno == errno.EINVAL:
                 self.log = "Una de las carpetas posee un nombre invalido"
@@ -87,99 +87,99 @@ class FileOrganizer():
             for file in os.listdir(self.path): 
                 if not os.path.isdir(self.path+'//'+file): #if the file isn´t a folder it will try to sort it into a folder
                     print(">>>>>>>>>>FILE:",file)
-                    self.organizeFile(file)
+                    self.organize_file(file)
                 else: print(">>>>>>>>>>FOLDER:",file) #if the file is a folder it will be ignored
 
 class SaveFile():
     def __init__(self):
-        self.folderPath = ''
-        self.organizeMethod = -1
-        self.moveToDefault = None
+        self.folder_path = ''
+        self.organize_method = -1
+        self.move_to_default = None
         self.folders = []
         self.log = ''
         self.ok = False
     
-    def setAttributes(self, folderPath,folderNames,extTags,organizeMethod,moveToDefault):
-        self.folderPath = folderPath
-        self.organizeMethod = organizeMethod
-        self.moveToDefault = moveToDefault
-        self.folders = createFoldersList(folderNames,extTags,organizeMethod)
+    def set_attributes(self, folder_path,folder_names,ext_tags,organize_method,move_to_default):
+        self.folder_path = folder_path
+        self.organize_method = organize_method
+        self.move_to_default = move_to_default
+        self.folders = create_folders_list(folder_names,ext_tags,organize_method)
     
-    def load(self, loadPath):
-        if not os.path.isfile(loadPath):
+    def load(self, load_path):
+        if not os.path.isfile(load_path):
             self.ok = False
-            self.log = 'El archivo no existe en la ruta especificada'
+            self.log = 'El archivo iste en la ruta especificada'
             return None
 
         # Creating Excel document objects
-        loc = (loadPath)
+        loc = (load_path)
         wb = xlrd.open_workbook(loc)
         sheet = wb.sheet_by_index(0)
         sheet.cell_value(0, 0)
         #Getting row number
-        rowsCount = sheet.nrows
+        rows_count = sheet.nrows
         #get the Excel file information
-        rowsList = []
-        for x in range(rowsCount): rowsList.append(sheet.row_values(x))
+        rows_list = []
+        for x in range(rows_count): rows_list.append(sheet.row_values(x))
 
-        folderPath = rowsList[0][1]
-        isDefaultFile = folderPath == "_DEFAULT_FILE"
-        if not os.path.isdir(folderPath) and not isDefaultFile:
+        folder_path = rows_list[0][1]
+        is_default_file = folder_path == "_DEFAULT_FILE"
+        if not os.path.isdir(folder_path) and not is_default_file:
             self.ok = False
             self.log = 'La ruta de la carpeta a ordenar no existe'
             return None
 
 
-        strMethod = rowsList[1][1]
-        organizeMethod = (lambda strMethod : 0 if strMethod =='POR EXTENSION' else (1 if strMethod =='POR ETIQUETA' else -1))(strMethod)
-        if organizeMethod == -1:
+        str_method = rows_list[1][1]
+        organize_method = (lambda str_method : 0 if str_method =='POR EXTENSION' else (1 if str_method =='POR ETIQUETA' else -1))(str_method)
+        if organize_method == -1:
             self.ok = False
             self.log = 'Metodo invalido'
             return None
 
-        strMoveToDefault = rowsList[2][1]
-        moveToDefault = (lambda strMoveToDefault: strMoveToDefault=='SI')(strMoveToDefault)
+        str_move_to_default = rows_list[2][1]
+        move_to_default = (lambda str_move_to_default: str_move_to_default=='SI')(str_move_to_default)
         
-        folderNames = []
-        extTags = []
-        for row in rowsList[3:]:
-            folderNames.append(row[0])
-            extTags.append(row[1])
+        folder_names = []
+        ext_tags = []
+        for row in rows_list[3:]:
+            folder_names.append(row[0])
+            ext_tags.append(row[1])
 
-        self.setAttributes(folderPath, folderNames, extTags, organizeMethod, moveToDefault)
+        self.set_attributes(folder_path, folder_names, ext_tags, organize_method, move_to_default)
 
         self.ok = True
 
-    def save(self, savePath):#savePath must be non existing xlsx file
+    def save(self, save_path):#save_path must be non existing xlsx file
         #Creating and setting up Excel file
-        if os.path.isfile(savePath):
+        if os.path.isfile(save_path):
             self.ok = False
             self.log = "El archivo de excel ya existe"
             return None
-        newExc = savePath
-        #print('RUTA EXCEL:',newExc)
-        workbook = xlsxwriter.Workbook(newExc)
+        new_exc = save_path
+        #print('RUTA EXCEL:',new_exc)
+        workbook = xlsxwriter.Workbook(new_exc)
         worksheet = workbook.add_worksheet()
         bold = workbook.add_format({'bold': True})
         cell_format = workbook.add_format()
         cell_format.set_align('fill')
         #Writting main information to the Excel document with indications
-        cellNames = ["RUTA CARPETA","METODO","MOVER A OTROS   "]
+        cell_names = ["RUTA CARPETA","METODO","MOVER A OTROS   "]
 
-        if self.organizeMethod==0 : method = 'POR EXTENSION'
+        if self.organize_method==0 : method = 'POR EXTENSION'
         else: method = 'POR ETIQUETA'
 
-        if self.moveToDefault: toDefault = 'SI'
-        else: toDefault = 'NO'
+        if self.move_to_default: to_default = 'SI'
+        else: to_default = 'NO'
 
-        cellValues = [self.folderPath,method,toDefault]
+        cell_values = [self.folder_path,method,to_default]
 
-        if self.organizeMethod==0 : value = 'extensions'
+        if self.organize_method==0 : value = 'extensions'
         else: value = 'keywords'
         
         for folder in self.folders:
-            cellNames.append(folder['name'])
-            cellValues.append(folder[value])
+            cell_names.append(folder['name'])
+            cell_values.append(folder[value])
 
         worksheet.data_validation('B2', {'validate': 'list',
                                   'source': ['POR EXTENSION', 'POR ETIQUETA'],
@@ -191,56 +191,18 @@ class SaveFile():
                                   'input_title': 'Mover a Carpeta Otros:',
                                   'input_message': 'Mover archivos no especificados a una carpeta por defecto'})
 
-        for i, (name,value) in enumerate(zip(cellNames,cellValues)):
+        for i, (name,value) in enumerate(zip(cell_names,cell_values)):
             cell = 'A'+str(i+1)
-            sideCell = 'B'+str(i+1)
+            side_cell = 'B'+str(i+1)
 
             worksheet.write(cell, name,bold)
-            worksheet.write(sideCell, value)
+            worksheet.write(side_cell, value)
                 
             #print(name,value)
 
-        worksheet.set_column(0, 0, max([len(name) for name in cellNames]))
-        worksheet.set_column(1, 1, max([len(value) for value in cellValues]))
+        worksheet.set_column(0, 0, max([len(name) for name in cell_names]))
+        worksheet.set_column(1, 1, max([len(value) for value in cell_values]))
         
         #Closing...
         workbook.close()
         self.ok = True
-
-# testOrganizer = FileOrganizer("D:\\Users\\JUAN OROZCO\\Desktop\\Test files",['f1','f2'],['png jpeg','mp4 wav'],0,['.py'],False)
-# print(testOrganizer.folders)
-# print('end')
-
-
-
-# testSave = SaveFile()
-# testSave.load(r"D:\Users\JUAN OROZCO\Desktop\testSave\descargasInfo.xlsx")
-
-# if testSave.ok:
-#     print('RUTA:',testSave.folderPath)
-#     print('METODO:',testSave.organizeMethod)
-#     print('MOVER A OTROS:',testSave.moveToDefault)
-#     print('CARPETAS:',testSave.folders)
-
-#     testSave.moveToDefault = True
-#     testSave.save(r"D:\Users\JUAN OROZCO\Desktop\testSave\descargasInfo_True.xlsx")
-#     if not testSave.ok: print(testSave.log)
-
-# else:
-#     print(testSave.log)
-
-
-# s = SaveFile()
-# s.load(r"D:\Users\JUAN OROZCO\Desktop\testSave\prueba4.xlsx")
-# if s.ok:
-#     print('RUTA:',s.folderPath)
-#     print('METODO:',s.organizeMethod)
-#     print('MOVER A OTROS:',s.moveToDefault)
-#     print('CARPETAS:',s.folders)
-
-#     folder = {'name':'pythonF','keywords':'python'}
-#     s.folders.append(folder)
-
-#     s.save(r"D:\Users\JUAN OROZCO\Desktop\testSave\prueba5.xlsx")
-
-# else: print(s.log)

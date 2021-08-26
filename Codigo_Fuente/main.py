@@ -83,6 +83,7 @@ class SplashScreen(QMainWindow):
 class MainWindow(QObject):
     def __init__(self):
         QObject.__init__(self)
+        self.file_tag = 'file:///'
         # Qtimer - Run Timer
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.setTime())
@@ -114,7 +115,7 @@ class MainWindow(QObject):
     def confirm(self, url) -> bool:
         result = QMessageBox(QMessageBox.Warning, "Advertencia!", f'¿Está seguro de ordenar {url} ?\n Esta acción es irreversible.')
         yes = QMessageBox.addButton(result, "Si", QMessageBox.AcceptRole)
-        Cancel = QMessageBox.addButton(result, "Cancelar", QMessageBox.RejectRole)
+        QMessageBox.addButton(result, "Cancelar", QMessageBox.RejectRole)
         result.exec_()
         return result.clickedButton() == yes
 
@@ -124,60 +125,59 @@ class MainWindow(QObject):
             print(i)
             sleep(1)
 
-    def getTemplateDict(self, pathToExc):
+    def getTemplateDict(self, path_to_exc):
         # Creating document
-        loc = (pathToExc)
+        loc = (path_to_exc)
         wb = xlrd.open_workbook(loc)
         sheet = wb.sheet_by_index(0)
         sheet.cell_value(0, 0)
         #Getting row number
-        rows = sheet.nrows
-        tDict = {}
+        t_dict = {}
         #Add template
-        tDict[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
-        tDict[sheet.row_values(1)[0]] = sheet.row_values(1)[1]
+        t_dict[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
+        t_dict[sheet.row_values(1)[0]] = sheet.row_values(1)[1]
         
-        return tDict
+        return t_dict
 
     #Open Excel profile
     @Slot(str)
-    def openProfile(self,profilePath):
-        #Opening the profile in 'profilePath'
+    def openProfile(self,profile_path):
+        #Opening the profile in 'profile_path'
         if self.currentOs == 'Windows':
-            os.startfile(profilePath)
+            os.startfile(profile_path)
         else:
-            subprocess.call(["xdg-open", '/'+profilePath])
+            subprocess.call(["xdg-open", '/'+profile_path])
 
 
     #Generate formatted documents
     @Slot(str, result = list)
-    def generateDocuments(self,profilePath):
+    def generateDocuments(self,profile_path):
         try:
             #Creating main dictionary
-            docDict = self.getTemplateDict(profilePath)
+            doc_dict = self.getTemplateDict(profile_path)
             #Getting URL information to find the desired docx template and defined dir to save the documents
-            dPath = docDict["URL Plantilla"]
-            dirPath = docDict["URL Documentos"]
+            d_path = doc_dict["URL Plantilla"]
+            dir_path = doc_dict["URL Documentos"]
             #Creating FormattedDocument object
-            Documento = FormattedDocument(dPath,profilePath)
+            documento = FormattedDocument(d_path,profile_path)
             #Creating User object
-            Usuario = User(Documento)
+            usuario = User(documento)
             #Generating formatted document with the user's indications according to the profile
-            Usuario.changeDocument(dirPath)
-            return [Usuario.status, Usuario.log]
+            usuario.changeDocument(dir_path)
+            return [usuario.status, usuario.log]
         except Exception as e:
             print(e)
     
     #Create profile
     @Slot(str,str,str,str)
-    def createProfile(self,templatePath,templateName,profileDir,docsDir):
+    def createProfile(self,template_path,template_name,profile_dir,docs_dir):
         #Create document
-        document = FormattedDocument(templatePath)
-        formatList = list(document.getFormatSet())
+        document = FormattedDocument(template_path)
+        format_list = list(document.getFormatSet())
         #Creating and setting up Excel file
-        #newExc = profileDir+profileName+".xlsx"
-        newExc = profileDir
-        workbook = xlsxwriter.Workbook(newExc)
+        #new_exc = profile_dir+profile_name+".xlsx"
+        new_exc = profile_dir
+        workbook = xlsxwriter.Workbook(new_exc)
         worksheet = workbook.add_worksheet()
         worksheet.set_column(0, 0, 28)
         worksheet.set_column(0, 1, 28)
@@ -187,10 +187,10 @@ class MainWindow(QObject):
         #Writting main information to the Excel document with indications to the user
         worksheet.write('A1', 'URL Plantilla',bold)
         worksheet.write('A2', 'URL Documentos',bold)
-        worksheet.write('B1', templatePath,cell_format)
-        worksheet.write('B2', docsDir,cell_format)
+        worksheet.write('B1', template_path,cell_format)
+        worksheet.write('B2', docs_dir,cell_format)
         worksheet.write('A3', "PLANTILLA",bold)
-        worksheet.write('B3', templateName)
+        worksheet.write('B3', template_name)
         worksheet.write('A4', 'LLAVE',bold)
         worksheet.write('B4', "DOCUMENTO 1",bold)
         worksheet.write('A5', 'NOMBRE ARCHIVO')
@@ -200,21 +200,21 @@ class MainWindow(QObject):
         worksheet.write('A7', 'NOMBRE PDF')
         worksheet.write('B7', 'Ingrese un nombre')
         index = 0
-        for x in range(8,len(formatList)+8):
+        for x in range(8,len(format_list)+8):
             cell = 'A'+str(x)
-            sideCell = 'B' + str(x)
-            worksheet.write(cell, formatList[index])
-            worksheet.write(sideCell, "Ingrese un valor")
+            side_cell = 'B' + str(x)
+            worksheet.write(cell, format_list[index])
+            worksheet.write(side_cell, "Ingrese un valor")
             index += 1
         #Closing...
         workbook.close()
 
     # Guardar info carpetas
     @Slot(str,str,list,list,int,bool)
-    def saveFoldersInfo(self,savingPath,path,names,extTags,method,moveToDefault):
+    def saveFoldersInfo(self,saving_path,path,names,ext_tags,method,move_to_default):
         s = SaveFile()
-        s.setAttributes(path,names,extTags,method,moveToDefault)
-        s.save(savingPath)
+        s.setAttributes(path,names,ext_tags,method,move_to_default)
+        s.save(saving_path)
 
     # Cargar info carpetas
     @Slot(str,result=list)
@@ -222,49 +222,49 @@ class MainWindow(QObject):
         l = SaveFile()
         l.load(path)
         if l.ok:
-            folderNames = []
-            extTags = []
+            folder_names = []
+            ext_tags = []
 
             if l.organizeMethod == 0: value = 'extensions'
             else: value = 'keywords'
 
             for folder in l.folders:
-                folderNames.append(folder['name'])
-                extTags.append(folder[value])
+                folder_names.append(folder['name'])
+                ext_tags.append(folder[value])
 
-            return [l.folderPath,l.organizeMethod,l.moveToDefault,folderNames,extTags]
+            return [l.folderPath,l.organizeMethod,l.move_to_default,folder_names,ext_tags]
         return [l.log]
 
     # Ordenar Carpetas
     @Slot(int,str,list,list,list,bool,result=str)
-    def organizeFiles(self, sortMethod,path,names,extTags,ignored_ext,moveToDefault):
+    def organizeFiles(self, sort_method,path,names,ext_tags,ignored_ext,move_to_default):
         if self.currentOs != 'Windows':
             path = '/' + path
 
-        organizer = FileOrganizer(path,names,extTags,sortMethod,ignored_ext,moveToDefault)
+        organizer = FileOrganizer(path,names,ext_tags,sort_method,ignored_ext,move_to_default)
         organizer.organizeAllFiles()
         return organizer.log
 
     # Obtener lista de archivos de una carpeta
     @Slot(str, result = list)
-    def getFilesFromFolder(self, folderUrl):
-        if not os.path.isdir(folderUrl): return ["NULL"]
-        fullList = map(lambda f: os.path.join(folderUrl,f) ,os.listdir(folderUrl))
-        return list(filter(lambda f: (os.path.isfile(f) and not is_hidden(f)), fullList))
+    def getFilesFromFolder(self, folder_url):
+        if not os.path.isdir(folder_url): return ["NULL"]
+        full_list = map(lambda f: os.path.join(folder_url,f) ,os.listdir(folder_url))
+        return list(filter(lambda f: (os.path.isfile(f) and not is_hidden(f)), full_list))
 
     # Etiquetar archivos, borrar etiquetas
     @Slot(str,str,int)
     def tagFiles(self, urls,etiqueta,action):
 
-        if self.currentOs != 'Windows': urls = ['/'+e.replace('file:///','') for e in urls.split(',')]
-        else: urls = [e.replace('file:///','') for e in urls.split(',')]
+        if self.currentOs != 'Windows': urls = ['/'+e.replace(self.file_tag,'') for e in urls.split(',')]
+        else: urls = [e.replace(self.file_tag,'') for e in urls.split(',')]
 
         for path in urls:
-            fileName, ext = os.path.splitext(path)
+            file_name, ext = os.path.splitext(path)
             print("FILE PATH >>>>>>>>",path)
             try:
-                if action==0: os.rename(path , fileName+etiqueta+ext)
-                elif action==1: os.rename(path , fileName.replace(etiqueta,'')+ext)
+                if action==0: os.rename(path , file_name+etiqueta+ext)
+                elif action==1: os.rename(path , file_name.replace(etiqueta,'')+ext)
             except:
                 print("ERROR")
 
@@ -274,9 +274,9 @@ class MainWindow(QObject):
 
         if ".pdf" not in output_path: output_path += ".pdf"
         if self.currentOs != 'Windows': 
-            file_paths = ['/'+e.replace('file:///','') for e in file_paths.split(',')]
+            file_paths = ['/'+e.replace(self.file_tag,'') for e in file_paths.split(',')]
             output_path = '/'+output_path
-        else: file_paths = [e.replace('file:///','') for e in file_paths.split(',')]
+        else: file_paths = [e.replace(self.file_tag,'') for e in file_paths.split(',')]
 
         p = PdfApp(paths = file_paths,outPath = output_path)
         p.merge_pdfs()
@@ -286,7 +286,7 @@ class MainWindow(QObject):
     def buildPdf(self,path, pages_list ,output_path):
 
         if ".pdf" not in output_path: output_path += ".pdf"
-        path = output_path.replace('file:///','')
+        path = output_path.replace(self.file_tag,'')
         if self.currentOs != 'Windows':
             path = '/' + path
             output_path = '/' + output_path
@@ -335,29 +335,29 @@ class MainWindow(QObject):
 
     # Save File
     @Slot(str)
-    def writeFile(self, filePath):
-        file = open(QUrl(filePath).toLocalFile(), "w")
+    def writeFile(self, file_path):
+        file = open(QUrl(file_path).toLocalFile(), "w")
         file.write(self.textField)
         file.close()
 
     # Open File
     @Slot(str)
-    def openFile(self, filePath):
-        file = open(QUrl(filePath).toLocalFile(), encoding="UTF-8")
+    def openFile(self, file_path):
+        file = open(QUrl(file_path).toLocalFile(), encoding="UTF-8")
         text = file.read()
         file.close()
         self.readText.emit(str(text))
 
     # Show / Hide Rectangle
     @Slot(bool)
-    def showHideRectangle(self, isChecked):
-        self.isVisible.emit(isChecked)
+    def showHideRectangle(self, is_checked):
+        self.isVisible.emit(is_checked)
 
     # Set timer Function
     def setTime(self):
         now = datetime.datetime.now()
-        formatDate = now.strftime("%H:%M:%S %p - %d/%m/%Y")
-        self.printTime.emit(formatDate)
+        format_date = now.strftime("%H:%M:%S %p - %d/%m/%Y")
+        self.printTime.emit(format_date)
 
     # Function Set Name to Label
     @Slot(str)

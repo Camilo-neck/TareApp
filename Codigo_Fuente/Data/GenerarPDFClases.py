@@ -13,80 +13,80 @@ import locale
 
 class FormattedDocument:
     #Defining constructor for class
-    def __init__(self, path, ExcDoc=None):
+    def __init__(self, path, exc_doc=None):
         self.path = path
-        self.plainText = self.setPlainText()
-        self.formatAmount = self.setFormatAmount()
-        self.formatSet = self.setFormatSet()
-        self.formatDictionary = {}
-        self.docxDoc = docx.Document(self.path)
-        self.ExcDoc = ExcDoc
+        self.plain_text = self.set_plain_text()
+        self.format_amount = self.set_format_amount()
+        self.format_set = self.set_format_set()
+        self.format_dictionary = {}
+        self.docx_doc = docx.Document(self.path)
+        self.exc_doc =exc_doc 
         #Stablish region for the language used in date formating
         locale.setlocale(locale.LC_TIME, '')
-        #Create actualDate object
-        self.actualDate = dt.now()
+        #Create actual_date object
+        self.actual_date = dt.now()
 
     #Defining methods to get or modify class attributes
-    def getPath(self):
+    def get_path(self):
         return self.path
 
-    def setPath(self,stringPath):
+    def set_path(self,stringPath):
         self.path = stringPath
     
-    def getExcDoc(self):
-        return self.ExcDoc
+    def get_exc_doc(self):
+        return self.exc_doc
     
-    def getDocxDoc(self):
-        return self.docxDoc
+    def get_docx_doc(self):
+        return self.docx_doc
     
-    def setPlainText(self):
+    def set_plain_text(self):
         #Creating docx document
         doc = docx.Document(self.path)
         #Saving each paragraph in the doxc document
-        fullText = []
+        full_text = []
         for para in doc.paragraphs:
-            fullText.append(para.text)
+            full_text.append(para.text)
         #Returning data
-        return '\n'.join(fullText)
+        return '\n'.join(full_text)
     
-    def getPlainText(self):
-        return self.plainText
+    def getplain_text(self):
+        return self.plain_text
     
-    def setFormatAmount(self):
+    def set_format_amount(self):
         #Getting the plain text information from the document
-        toStrDoc = self.getPlainText()
+        to_str_doc = self.getplain_text()
         #Searching all format patterns using regex
-        allFormatsList = re.findall("(\[\w*\d*\])",toStrDoc)
+        all_formats_list = re.findall("(\[\w*\d*\])",to_str_doc)
         #Creating a list with all formats with no repetition
-        FormatsNoRep = []
-        for element in allFormatsList:
-            if (element not in FormatsNoRep):
-                FormatsNoRep.append(element)
+        formats_no_rep = []
+        for element in all_formats_list:
+            if (element not in formats_no_rep):
+                formats_no_rep.append(element)
         #Returning data
-        return len(FormatsNoRep)
+        return len(formats_no_rep)
     
-    def getFormatAmount(self):
-        return self.formatAmount
+    def get_format_amount(self):
+        return self.format_amount
     
-    def setFormatSet(self):
+    def set_format_set(self):
         #Getting the plain text information from the document
-        toStrDoc = self.getPlainText()
+        to_str_doc = self.getplain_text()
         #Searching all format patterns using regex
-        allFormatsList = re.findall("(\[\w*\d*\])",toStrDoc)
+        all_formats_list = re.findall("(\[\w*\d*\])",to_str_doc)
         #Creating a list with all formats with no repetition
-        FormatsNoRep = []
-        for element in allFormatsList:
-            if (element not in FormatsNoRep):
-                FormatsNoRep.append(element)
+        formats_no_rep = []
+        for element in all_formats_list:
+            if (element not in formats_no_rep):
+                formats_no_rep.append(element)
         #Returning data
-        return FormatsNoRep
+        return formats_no_rep
     
-    def getFormatSet(self):
-        return self.formatSet
+    def get_format_set(self):
+        return self.format_set
     
-    def DictFromExc(self, pathToExc):
+    def dict_from_exc(self, path_to_exc):
         # Creating Excel document objects
-        loc = (pathToExc)
+        loc = (path_to_exc)
         wb = xlrd.open_workbook(loc)
         sheet = wb.sheet_by_index(0)
         sheet.cell_value(0, 0)
@@ -94,47 +94,45 @@ class FormattedDocument:
         rows = sheet.nrows
         #Creating the main dictionary using the Excel file information
         dictionary = {}
-        rowsList = []
+        rows_list = []
         for x in range(7,rows):
-            rowsList.append(sheet.row_values(x))
-        for row in rowsList:
+            rows_list.append(sheet.row_values(x))
+        for row in rows_list:
             for x in range(len(row)):
                 if isinstance(row[x], float):
                     row[x] = str(int(row[x]))
-        for row in rowsList:
+        for row in rows_list:
             #set dict keys and values (if date format is presented in value it will be changued via mapping)   
-            dictionary['\\' +row[0][:-1] + '\\]'] = list(map(lambda v: self.actualDate.strftime(v),row[1:]))
+            dictionary['\\' +row[0][:-1] + '\\]'] = list(map(lambda v: self.actual_date.strftime(v),row[1:]))
 
         #Returning dict
-        self.formatDictionary = dictionary
+        self.format_dictionary = dictionary
         
     
-    def lgthNamePdfTemp(self,pathToExc):
+    def lgth_name_pdf_temp(self,path_to_exc):
         # Creating document
-        loc = (pathToExc)
+        loc = (path_to_exc)
         wb = xlrd.open_workbook(loc)
         sheet = wb.sheet_by_index(0)
         sheet.cell_value(0, 0)
-        #Getting row number
-        rows = sheet.nrows
         #Creating a dictionary that will contain some information about the user's preferences
         #Creating an auxiliary list
-        NameAndPdf = {}
-        rowsList = []
+        name_and_pdf = {}
+        rows_list = []
         #Adding URL information
-        NameAndPdf[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
+        name_and_pdf[sheet.row_values(0)[0]] = sheet.row_values(0)[1]
         #Adding 'NOMBRE ARCHIVO', 'CREAR PDF', 'NOMBRE PDF' with its values to the dictionary using the aux list
         for x in range(4,8):
-            rowsList.append(sheet.row_values(x))
-        for row in rowsList:
-            NameAndPdf[row[0]] = list(map(lambda v: self.actualDate.strftime(v),row[1:]))
+            rows_list.append(sheet.row_values(x))
+        for row in rows_list:
+            name_and_pdf[row[0]] = list(map(lambda v: self.actual_date.strftime(v),row[1:]))
         
         #Returning data
-        return len(rowsList[0]), NameAndPdf
+        return len(rows_list[0]), name_and_pdf
         
     
-    def getFormatDict(self):
-        return self.formatDictionary
+    def get_format_dict(self):
+        return self.format_dictionary
     
     def docx_replace_regex(self, doc_obj, regex , replace):
         #Checking all paragraphs
@@ -154,24 +152,24 @@ class FormattedDocument:
                     self.docx_replace_regex(cell, regex , replace)
         
     
-    def create_pdf(self,docPath,name):
+    def create_pdf(self,doc_path,name):
         #This function creates and saves a PDF from a docx file
-        wdFormatPDF = 17
-        in_file = os.path.abspath(docPath)
+        wd_format_pdf = 17
+        in_file = os.path.abspath(doc_path)
         out_file = os.path.abspath(name)
         word = comtypes.client.CreateObject('Word.Application')
         doc = word.Documents.Open(in_file)
-        doc.SaveAs(out_file, FileFormat=wdFormatPDF)
+        doc.SaveAs(out_file, FileFormat=wd_format_pdf)
         doc.Close()
         word.Quit()
     
-    def validateTemplate(self):
-        mainDictionary = self.getFormatDict()
-        formatList = self.getFormatSet().copy()
-        for x in range(len(formatList)):
-            newStr = "\\" + formatList[x][:-1] + "\\]"
-            formatList[x] = newStr
-        if set(mainDictionary) == set(formatList):
+    def validate_template(self):
+        main_dictionary = self.get_format_dict()
+        format_list = self.getformat_set().copy()
+        for x in range(len(format_list)):
+            new_str = "\\" + format_list[x][:-1] + "\\]"
+            format_list[x] = new_str
+        if set(main_dictionary) == set(format_list):
             return True
         else:
             return False
@@ -185,29 +183,29 @@ class User:
         self.status = 0
         self.log = ""
 
-    def changeDocument(self,dirPath):
+    def change_document(self,dir_path):
         #Initializing information
-        pathToExc = self.document.getExcDoc()
-        self.document.DictFromExc(pathToExc)
-        dictionary = self.document.getFormatDict()
+        path_to_exc = self.document.getexc_doc()
+        self.document.dict_from_exc(path_to_exc)
+        dictionary = self.document.get_format_dict()
         try:
-            if self.document.validateTemplate() and os.path.isdir(dirPath):
+            if self.document.validate_template() and os.path.isdir(dir_path):
                 #Replacement process
-                (length,dictNamePdf) = self.document.lgthNamePdfTemp(pathToExc)
+                (length,dict_name_pdf) = self.document.lgth_name_pdf_temp(path_to_exc)
                 for x in range(length-1):
-                    self.document.docxDoc = docx.Document(self.document.path)
+                    self.document.docx_doc = docx.Document(self.document.path)
                     for word, replacement in dictionary.items():
-                        doc = self.document.getDocxDoc()
+                        doc = self.document.get_docx_doc()
                         word_re=re.compile(word)
                         self.document.docx_replace_regex(doc,word_re , replacement[x])
                     
                     #Saving and creating pdf if the user desires it in the Excel file contents
-                    fullPath = dirPath + "/"+dictNamePdf["NOMBRE ARCHIVO"][x]+ ".docx"
-                    doc.save(fullPath)
-                    if dictNamePdf["CREAR PDF"][x] == "SI":
+                    full_path = dir_path + "/"+dict_name_pdf["NOMBRE ARCHIVO"][x]+ ".docx"
+                    doc.save(full_path)
+                    if dict_name_pdf["CREAR PDF"][x] == "SI":
                         
-                        pdfpath = dirPath + "/"+dictNamePdf["NOMBRE PDF"][x]+".pdf"
-                        self.document.create_pdf(fullPath,pdfpath)
+                        pdfpath = dir_path + "/"+dict_name_pdf["NOMBRE PDF"][x]+".pdf"
+                        self.document.create_pdf(full_path,pdfpath)
                 self.log="Documentos generados correctamente"
             else:
                 self.status = 1
