@@ -1,4 +1,5 @@
 # This Python file uses the following encoding: utf-8
+from shutil import ExecError
 from core import *
 
 # Verify Connection
@@ -75,7 +76,7 @@ class SplashScreen(QMainWindow):
 
             engine.rootContext().setContextProperty("backend", MainWindow())
             engine.load(os.path.join(os.path.dirname(__file__), "Interface/qml/main.qml"))
-            raise
+            raise ExecError
 
         # Increase Counter
         counter += 1
