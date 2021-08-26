@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-from shutil import ExecError
 from core import *
 
 # Verify Connection
