@@ -166,7 +166,7 @@ Window {
                                     btnPdfgen.isActiveMenu = false
                                     btnHelp.isActiveMenu = false
 
-                                    location.text = qsTr("| Search")
+                                    location.text = qsTr("| Consultor")
                                     labelTopInfo.text = qsTr("Investiga con la mayor facilidad.")
                                     stackView.push(Qt.resolvedUrl("pages/searchPage.qml"))
                                 }

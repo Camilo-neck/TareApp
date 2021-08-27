@@ -1,4 +1,4 @@
-from . import openaitest
+from . import openai
 from . consultant import *
 
 class MyText(Consultant):
@@ -8,8 +8,8 @@ class MyText(Consultant):
     def consult(self):
         if self.openai_response == True:
             return super().consult() + \
-                openaitest.summarized(self.summarize(texto = self.query, sentences=20)) + \
-                "\n\nResumen realizado con la tecnología GPT-3 de Open AI.", openaitest.keywords(self.query)
+                openai.summarized(self.summarize(texto = self.query, sentences=20)) + \
+                "\n\nResumen realizado con la tecnología GPT-3 de Open AI.", openai.keywords(self.query)
         else:
             return super().consult() + self.summarize(texto = self.query), self.words(texto=self.query)
 
