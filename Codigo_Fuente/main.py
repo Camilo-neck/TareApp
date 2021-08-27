@@ -1,6 +1,5 @@
 # This Python file uses the following encoding: utf-8
 from core import *
-import traceback
 
 # Verify Connection
 def is_connected():
@@ -285,15 +284,14 @@ class MainWindow(QObject):
     # Build PDF
     @Slot(str,list,str)
     def buildPdf(self,path, pages_list ,output_path):
-
         if ".pdf" not in output_path: output_path += ".pdf"
-        path = output_path.replace('file:///','')
         if self.currentOs != 'Windows':
             path = '/' + path
             output_path = '/' + output_path
 
         p = PdfApp(paths = path, outPath = output_path, pagesList = pages_list)
         p.buildPdf()
+        
 
     # get Pdf Num pages
     @Slot(str, result=int)

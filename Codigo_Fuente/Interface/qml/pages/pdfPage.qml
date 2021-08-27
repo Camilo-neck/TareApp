@@ -11,7 +11,7 @@ import "../controls"
 Item {
     id: pdfPage
     property var urls: pdfsList.urls
-    property var pdfBuildUrl: dropFiles2.filePaths
+    property var pdfBuildUrl: filesArea2.filePaths
     property var pages: pagesList.urls
     property var defaultFolder: String(StandardPaths.standardLocations(StandardPaths.DocumentsLocation)[0]).replace("file:///","")
     property var folderLocation: defaultFolder
@@ -521,6 +521,7 @@ Item {
                                     modifyPdfText.placeholderTextColor = "#c3d3e1"
                                     modifyInfoLabel.text = "PDFS MODIFICADO SATISFACTORIAMENTE"
                                     modifyPdfText.text = ""
+
                                     //index = 1
                                     //urls = []
 
