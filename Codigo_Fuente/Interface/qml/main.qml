@@ -137,7 +137,6 @@ Window {
                                 isActiveMenu: true
                                 onClicked: {
                                     btnHome.isActiveMenu = true
-                                    btnSettings.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -159,7 +158,6 @@ Window {
                                 isActiveMenu: false
                                 onClicked: {
                                     btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
                                     btnSearch.isActiveMenu = true
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -181,7 +179,6 @@ Window {
                                 isActiveMenu: false
                                 onClicked: {
                                     btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = true
                                     btnSorter.isActiveMenu = false
@@ -204,7 +201,6 @@ Window {
                                 isActiveMenu: false
                                 onClicked: {
                                     btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = true
@@ -226,7 +222,6 @@ Window {
                                 btnIconSource: "../images/icons/docx_icon.png"
                                 onClicked: {
                                     btnHome.isActiveMenu = false
-                                    btnSettings.isActiveMenu = false
                                     btnSearch.isActiveMenu = false
                                     btnPdf.isActiveMenu = false
                                     btnSorter.isActiveMenu = false
@@ -256,7 +251,6 @@ Window {
                         anchors.bottomMargin: 25
                         onClicked: {
                             btnHome.isActiveMenu = false
-                            btnSettings.isActiveMenu = false
                             btnSearch.isActiveMenu = false
                             btnPdf.isActiveMenu = false
                             btnSorter.isActiveMenu = false
@@ -267,23 +261,6 @@ Window {
 
                             location.text = qsTr("| Ayuda")
                             labelTopInfo.text = qsTr("Obten ayuda sobre el uso de nuestras aplicaciones.")
-                        }
-                    }
-
-                    LeftMenuBtn {
-                        id: btnSettings
-                        x: 0
-                        y: 488
-                        width: leftMenu.width
-                        text: qsTr("Settings")
-                        anchors.bottom: parent.bottom
-                        btnColorDefault: "#012e40"
-                        btnIconSource: "../images/icons/settings_icon.svg"
-                        anchors.bottomMargin: 90
-                        onClicked: {
-                            btnHome.isActiveMenu = false
-                            btnSettings.isActiveMenu = true
-                            stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
                         }
                     }
 
