@@ -284,7 +284,6 @@ class MainWindow(QObject):
     # Build PDF
     @Slot(str,list,str)
     def buildPdf(self,path, pages_list ,output_path):
-
         if ".pdf" not in output_path: output_path += ".pdf"
         path = output_path.replace(self.file_tag,'')
         if self.currentOs != 'Windows':
